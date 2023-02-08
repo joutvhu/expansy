@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.function.Function;
 
 public abstract class MatchFunctions<E> {
+    public abstract Matcher<E> space();
+
+    public abstract Matcher<E> spaces();
+
     public abstract Matcher<E> equals(String value);
 
     public abstract Matcher<E> maybe(String value);
@@ -29,9 +33,9 @@ public abstract class MatchFunctions<E> {
 
     public abstract Matcher<E> is(ElementAnalyzer<E> elementAnalyzer);
 
-    public final Matcher<E> are(ElementAnalyzer<E>... elementAnalyzers) {
-        return are(Arrays.asList(elementAnalyzers));
+    public final Matcher<E> is(ElementAnalyzer<E>... elementAnalyzers) {
+        return is(Arrays.asList(elementAnalyzers));
     }
 
-    public abstract Matcher<E> are(List<ElementAnalyzer<E>> elementAnalyzers);
+    public abstract Matcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers);
 }
