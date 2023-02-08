@@ -27,7 +27,7 @@ public abstract class MatchFunctions<E> {
 
     public abstract Matcher<E> match(String regex);
 
-    public abstract Matcher<E> match(String regex, int maxLength);
+    public abstract Matcher<E> match(String regex, int length);
 
     public abstract Matcher<E> match(Function<String, Boolean> checker);
 

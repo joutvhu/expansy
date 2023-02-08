@@ -2,24 +2,27 @@ package com.joutvhu.dynamic.expression.analysis.match;
 
 import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
 import com.joutvhu.dynamic.expression.analysis.match.function.EqualsMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.function.FunctionMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.function.RegexMatcher;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
 public class DefaultMatcher<E> extends Matcher<E> {
     private String name;
-
-    public String takeName() {
-        String result = this.name;
-        this.name = null;
-        return result;
-    }
+    private List<Matcher<E>> matchers = new ArrayList<>();
 
     @Override
     public MatchFunctions<E> name(String name) {
         this.name = name;
         return this;
+    }
+
+    String takeName() {
+        String result = this.name;
+        this.name = null;
+        return result;
     }
 
     @Override
@@ -34,7 +37,7 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> equals(String value) {
-        return new EqualsMatcher<>(this, value);
+        return add(new EqualsMatcher<>(this, value));
     }
 
     @Override
@@ -44,7 +47,7 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> oneOf(List<String> values) {
-        return this;
+        return add(new EqualsMatcher<>(this, values));
     }
 
     @Override
@@ -59,17 +62,17 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> match(String regex) {
-        return new RegexMatcher<>(this, regex);
+        return add(new RegexMatcher<>(this, regex, null));
     }
 
     @Override
-    public Matcher<E> match(String regex, int maxLength) {
-        return this;
+    public Matcher<E> match(String regex, int length) {
+        return add(new RegexMatcher<>(this, regex, length));
     }
 
     @Override
     public Matcher<E> match(Function<String, Boolean> checker) {
-        return this;
+        return add(new FunctionMatcher<>(this, checker));
     }
 
     @Override
@@ -80,5 +83,10 @@ public class DefaultMatcher<E> extends Matcher<E> {
     @Override
     public Matcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers) {
         return null;
+    }
+
+    private Matcher<E> add(Matcher<E> matcher) {
+        this.matchers.add(matcher);
+        return matcher;
     }
 }

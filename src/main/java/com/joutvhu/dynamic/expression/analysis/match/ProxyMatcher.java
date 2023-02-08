@@ -5,7 +5,7 @@ import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
 import java.util.List;
 import java.util.function.Function;
 
-public class ProxyMatcher<E> extends Matcher<E> {
+public abstract class ProxyMatcher<E> extends Matcher<E> {
     protected String name;
     protected Matcher<E> parent;
 
@@ -60,8 +60,8 @@ public class ProxyMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public Matcher<E> match(String regex, int maxLength) {
-        return parent.match(regex, maxLength);
+    public Matcher<E> match(String regex, int length) {
+        return parent.match(regex, length);
     }
 
     @Override
