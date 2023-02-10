@@ -11,6 +11,8 @@ public abstract class MatchFunctions<E> {
 
     public abstract Matcher<E> spaces();
 
+    public abstract Matcher<E> spaces(int time);
+
     public abstract Matcher<E> equals(String value);
 
     public abstract Matcher<E> maybe(String value);

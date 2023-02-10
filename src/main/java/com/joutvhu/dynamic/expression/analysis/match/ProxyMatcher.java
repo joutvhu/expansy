@@ -30,6 +30,11 @@ public abstract class ProxyMatcher<E> extends Matcher<E> {
     }
 
     @Override
+    public Matcher<E> spaces(int time) {
+        return parent.spaces(time);
+    }
+
+    @Override
     public Matcher<E> equals(String value) {
         return parent.equals(value);
     }

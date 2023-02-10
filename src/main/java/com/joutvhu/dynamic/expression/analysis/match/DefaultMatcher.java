@@ -1,9 +1,11 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
 import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
+import com.joutvhu.dynamic.expression.analysis.match.function.AnalyzerMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.function.EqualsMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.function.FunctionMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.function.RegexMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.function.RepeatMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +29,17 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> space() {
-        return null;
+        return add(new RepeatMatcher<>(this, " ", 1, 1));
     }
 
     @Override
     public Matcher<E> spaces() {
-        return null;
+        return add(new RepeatMatcher<>(this, " ", 0, null));
+    }
+
+    @Override
+    public Matcher<E> spaces(int time) {
+        return add(new RepeatMatcher<>(this, " ", 0, time));
     }
 
     @Override
@@ -42,7 +49,7 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> maybe(String value) {
-        return this;
+        return add(new RepeatMatcher<>(this, value, 0, 1));
     }
 
     @Override
@@ -52,12 +59,12 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> repeat(String value, int time) {
-        return this;
+        return add(new RepeatMatcher<>(this, value, 0, time));
     }
 
     @Override
     public Matcher<E> repeat(String value, int minTime, int maxTime) {
-        return this;
+        return add(new RepeatMatcher<>(this, value, minTime, maxTime));
     }
 
     @Override
@@ -77,12 +84,12 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> is(ElementAnalyzer<E> elementAnalyzer) {
-        return this;
+        return add(new AnalyzerMatcher<E>(this, elementAnalyzer));
     }
 
     @Override
     public Matcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers) {
-        return null;
+        return add(new AnalyzerMatcher<E>(this, elementAnalyzers));
     }
 
     private Matcher<E> add(Matcher<E> matcher) {
