@@ -5,102 +5,130 @@ import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
 import java.util.List;
 import java.util.function.Function;
 
-public abstract class ProxyMatcher<E> extends Matcher<E> {
+public final class ProxyMatcher<E, T extends Matcher<E>> implements MatchFunctions<E, T> {
     protected String name;
-    protected Matcher<E> parent;
+    protected T parent;
 
-    public ProxyMatcher(DefaultMatcher<E> parent) {
+    public ProxyMatcher(T parent, String name) {
         this.parent = parent;
-        this.name = parent.takeName();
+        this.name = name;
     }
 
     @Override
-    public MatchFunctions<E> name(String name) {
-        return parent.name(name);
+    public LoopMatcher<E, T> loop(int time) {
+        return new LoopMatcher<>(parent, time);
     }
 
     @Override
-    public Matcher<E> space() {
-        return parent.space();
+    public LoopMatcher<E, T> loop(int minTime, Integer maxTime) {
+        return new LoopMatcher<>(parent, minTime, maxTime);
     }
 
     @Override
-    public Matcher<E> spaces() {
-        return parent.spaces();
+    public T space() {
+        parent.space();
+        return parent;
     }
 
     @Override
-    public Matcher<E> spaces(int time) {
-        return parent.spaces(time);
+    public T spaces() {
+        parent.spaces();
+        return parent;
     }
 
     @Override
-    public Matcher<E> equals(String value) {
-        return parent.equals(value);
+    public T spaces(int time) {
+        parent.spaces(time);
+        return parent;
     }
 
     @Override
-    public Matcher<E> equals(List<String> values) {
-        return parent.equals(values);
+    public T equals(String value) {
+        parent.equals(value);
+        return parent;
     }
 
     @Override
-    public Matcher<E> maybe(String value) {
-        return parent.maybe(value);
+    public T equals(String... values) {
+        parent.equals(values);
+        return parent;
     }
 
     @Override
-    public Matcher<E> repeat(String value, int time) {
-        return parent.repeat(value, time);
+    public T equals(List<String> values) {
+        parent.equals(values);
+        return parent;
     }
 
     @Override
-    public Matcher<E> repeat(String value, int minTime, int maxTime) {
-        return parent.repeat(value, minTime, maxTime);
+    public T maybe(String value) {
+        parent.maybe(value);
+        return parent;
     }
 
     @Override
-    public Matcher<E> match(String regex) {
-        return parent.match(regex);
+    public T repeat(String value, int time) {
+        parent.repeat(value, time);
+        return parent;
     }
 
     @Override
-    public Matcher<E> match(String regex, int length) {
-        return parent.match(regex, length);
+    public T repeat(String value, int minTime, int maxTime) {
+        parent.repeat(value, minTime, maxTime);
+        return parent;
     }
 
     @Override
-    public Matcher<E> match(Function<String, Boolean> checker) {
-        return parent.match(checker);
+    public T match(String regex) {
+        parent.match(regex);
+        return parent;
     }
 
     @Override
-    public Matcher<E> analyzer(String analyzerName) {
-        return parent.analyzer(analyzerName);
+    public T match(String regex, int length) {
+        parent.match(regex, length);
+        return parent;
     }
 
     @Override
-    public Matcher<E> analyzer(List<String> analyzerNames) {
-        return parent.analyzer(analyzerNames);
+    public T match(Function<String, Boolean> checker) {
+        parent.match(checker);
+        return parent;
     }
 
     @Override
-    public Matcher<E> is(ElementAnalyzer<E> elementAnalyzer) {
-        return parent.is(elementAnalyzer);
+    public T analyzer(String analyzerName) {
+        parent.analyzer(analyzerName);
+        return parent;
     }
 
     @Override
-    public Matcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers) {
-        return parent.is(elementAnalyzers);
+    public T analyzer(String... analyzerNames) {
+        parent.analyzer(analyzerNames);
+        return parent;
     }
 
     @Override
-    public LoopMatcher<E> loop(int time) {
-        return  parent.loop(time);
+    public T analyzer(List<String> analyzerNames) {
+        parent.analyzer(analyzerNames);
+        return parent;
     }
 
     @Override
-    public LoopMatcher<E> loop(int minTime, int maxTime) {
-        return  parent.loop(minTime, maxTime);
+    public T is(ElementAnalyzer<E> elementAnalyzer) {
+        parent.is(elementAnalyzer);
+        return parent;
+    }
+
+    @Override
+    public T is(ElementAnalyzer<E>... elementAnalyzers) {
+        parent.is(elementAnalyzers);
+        return parent;
+    }
+
+    @Override
+    public T is(List<ElementAnalyzer<E>> elementAnalyzers) {
+        parent.is(elementAnalyzers);
+        return parent;
     }
 }

@@ -2,50 +2,47 @@ package com.joutvhu.dynamic.expression.analysis.match;
 
 import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-public abstract class MatchFunctions<E> {
-    public abstract Matcher<E> space();
+public interface MatchFunctions<E, T extends Matcher<E>> {
+    T space();
 
-    public abstract Matcher<E> spaces();
+    T spaces();
 
-    public abstract Matcher<E> spaces(int time);
+    T spaces(int time);
 
-    public abstract Matcher<E> equals(String value);
+    T equals(String value);
 
-    public final Matcher<E> equals(String... values) {
-        return equals(Arrays.asList(values));
-    }
+    T equals(String... values);
 
-    public abstract Matcher<E> equals(List<String> values);
+    T equals(List<String> values);
 
-    public abstract Matcher<E> maybe(String value);
+    T maybe(String value);
 
-    public abstract Matcher<E> repeat(String value, int time);
+    T repeat(String value, int time);
 
-    public abstract Matcher<E> repeat(String value, int minTime, int maxTime);
+    T repeat(String value, int minTime, int maxTime);
 
-    public abstract Matcher<E> match(String regex);
+    T match(String regex);
 
-    public abstract Matcher<E> match(String regex, int length);
+    T match(String regex, int length);
 
-    public abstract Matcher<E> match(Function<String, Boolean> checker);
+    T match(Function<String, Boolean> checker);
 
-    public abstract Matcher<E> analyzer(String analyzerName);
+    T analyzer(String analyzerName);
 
-    public final Matcher<E> analyzer(String... analyzerNames) {
-        return analyzer(Arrays.asList(analyzerNames));
-    }
+    T analyzer(String... analyzerNames);
 
-    public abstract Matcher<E> analyzer(List<String> analyzerNames);
+    T analyzer(List<String> analyzerNames);
 
-    public abstract Matcher<E> is(ElementAnalyzer<E> elementAnalyzer);
+    T is(ElementAnalyzer<E> elementAnalyzer);
 
-    public final Matcher<E> is(ElementAnalyzer<E>... elementAnalyzers) {
-        return is(Arrays.asList(elementAnalyzers));
-    }
+    T is(ElementAnalyzer<E>... elementAnalyzers);
 
-    public abstract Matcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers);
+    T is(List<ElementAnalyzer<E>> elementAnalyzers);
+
+    LoopMatcher<E, ?> loop(int time);
+
+    LoopMatcher<E, ?> loop(int minTime, Integer maxTime);
 }

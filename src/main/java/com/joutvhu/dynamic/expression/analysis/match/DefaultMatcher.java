@@ -8,112 +8,134 @@ import com.joutvhu.dynamic.expression.analysis.match.func.RegexMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.RepeatMatcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
-public class DefaultMatcher<E> extends Matcher<E> {
+public class DefaultMatcher<E> implements Matcher<E> {
     private String name;
-    List<Matcher<E>> matchers = new ArrayList<>();
+    List<MatchFunction<E>> matchers = new ArrayList<>();
 
     @Override
-    public MatchFunctions<E> name(String name) {
+    public MatchFunctions<E, DefaultMatcher<E>> name(String name) {
         this.name = name;
+        return new ProxyMatcher<>(this, name);
+    }
+
+    @Override
+    public LoopMatcher<E, DefaultMatcher<E>> loop(int time) {
+        LoopMatcher<E, DefaultMatcher<E>> matcher = new LoopMatcher<>(this, time);
+        matchers.add(matcher);
+        return matcher;
+    }
+
+    @Override
+    public LoopMatcher<E, DefaultMatcher<E>> loop(int minTime, Integer maxTime) {
+        LoopMatcher<E, DefaultMatcher<E>> matcher = new LoopMatcher<>(this, minTime, maxTime);
+        matchers.add(matcher);
+        return matcher;
+    }
+
+    @Override
+    public DefaultMatcher<E> space() {
+        matchers.add(new EqualsMatcher<>(this, " "));
         return this;
     }
 
-    String takeName() {
-        String result = this.name;
-        this.name = null;
-        return result;
+    @Override
+    public DefaultMatcher<E> spaces() {
+        matchers.add(new RepeatMatcher<>(this, " ", 0, null));
+        return this;
     }
 
     @Override
-    public Matcher<E> space() {
-        return add(new EqualsMatcher<>(this, " "));
+    public DefaultMatcher<E> spaces(int time) {
+        matchers.add(new RepeatMatcher<>(this, " ", 0, time));
+        return this;
     }
 
     @Override
-    public Matcher<E> spaces() {
-        return add(new RepeatMatcher<>(this, " ", 0, null));
+    public DefaultMatcher<E> equals(String value) {
+        matchers.add(new EqualsMatcher<>(this, value));
+        return this;
     }
 
     @Override
-    public Matcher<E> spaces(int time) {
-        return add(new RepeatMatcher<>(this, " ", 0, time));
+    public DefaultMatcher<E> equals(String... values) {
+        return equals(Arrays.asList(values));
     }
 
     @Override
-    public Matcher<E> equals(String value) {
-        return add(new EqualsMatcher<>(this, value));
+    public DefaultMatcher<E> equals(List<String> values) {
+        matchers.add(new EqualsMatcher<>(this, values));
+        return this;
     }
 
     @Override
-    public Matcher<E> equals(List<String> values) {
-        return add(new EqualsMatcher<>(this, values));
+    public DefaultMatcher<E> maybe(String value) {
+        matchers.add(new RepeatMatcher<>(this, value, 0, 1));
+        return this;
     }
 
     @Override
-    public Matcher<E> maybe(String value) {
-        return add(new RepeatMatcher<>(this, value, 0, 1));
+    public DefaultMatcher<E> repeat(String value, int time) {
+        matchers.add(new RepeatMatcher<>(this, value, 0, time));
+        return this;
     }
 
     @Override
-    public Matcher<E> repeat(String value, int time) {
-        return add(new RepeatMatcher<>(this, value, 0, time));
+    public DefaultMatcher<E> repeat(String value, int minTime, int maxTime) {
+        matchers.add(new RepeatMatcher<>(this, value, minTime, maxTime));
+        return this;
     }
 
     @Override
-    public Matcher<E> repeat(String value, int minTime, int maxTime) {
-        return add(new RepeatMatcher<>(this, value, minTime, maxTime));
+    public DefaultMatcher<E> match(String regex) {
+        matchers.add(new RegexMatcher<>(this, regex, null));
+        return this;
     }
 
     @Override
-    public Matcher<E> match(String regex) {
-        return add(new RegexMatcher<>(this, regex, null));
+    public DefaultMatcher<E> match(String regex, int length) {
+        matchers.add(new RegexMatcher<>(this, regex, length));
+        return this;
     }
 
     @Override
-    public Matcher<E> match(String regex, int length) {
-        return add(new RegexMatcher<>(this, regex, length));
+    public DefaultMatcher<E> match(Function<String, Boolean> checker) {
+        matchers.add(new FunctionMatcher<>(this, checker));
+        return this;
     }
 
     @Override
-    public Matcher<E> match(Function<String, Boolean> checker) {
-        return add(new FunctionMatcher<>(this, checker));
+    public DefaultMatcher<E> analyzer(String analyzerName) {
+        return this;
     }
 
     @Override
-    public Matcher<E> analyzer(String analyzerName) {
-        return null;
+    public DefaultMatcher<E> analyzer(List<String> analyzerNames) {
+        return this;
     }
 
     @Override
-    public Matcher<E> analyzer(List<String> analyzerNames) {
-        return null;
+    public DefaultMatcher<E> analyzer(String... analyzerNames) {
+        return analyzer(Arrays.asList(analyzerNames));
     }
 
     @Override
-    public Matcher<E> is(ElementAnalyzer<E> elementAnalyzer) {
-        return add(new AnalyzerMatcher<E>(this, elementAnalyzer));
+    public DefaultMatcher<E> is(ElementAnalyzer<E> elementAnalyzer) {
+        matchers.add(new AnalyzerMatcher<>(this, elementAnalyzer));
+        return this;
     }
 
     @Override
-    public Matcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers) {
-        return add(new AnalyzerMatcher<E>(this, elementAnalyzers));
+    public DefaultMatcher<E> is(ElementAnalyzer<E>... elementAnalyzers) {
+        return is(Arrays.asList(elementAnalyzers));
     }
 
     @Override
-    public LoopMatcher<E> loop(int time) {
-        return add(new LoopMatcher<>(this, time));
-    }
-
-    @Override
-    public LoopMatcher<E> loop(int minTime, int maxTime) {
-        return add(new LoopMatcher<>(this, minTime, maxTime));
-    }
-
-    private <T extends Matcher<E>> T add(T matcher) {
-        this.matchers.add(matcher);
-        return matcher;
+    public DefaultMatcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers) {
+        matchers.add(new AnalyzerMatcher<>(this, elementAnalyzers));
+        return this;
     }
 }
