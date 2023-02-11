@@ -33,6 +33,14 @@ public abstract class MatchFunctions<E> {
 
     public abstract Matcher<E> match(Function<String, Boolean> checker);
 
+    public abstract Matcher<E> analyzer(String analyzerName);
+
+    public final Matcher<E> analyzer(String... analyzerNames) {
+        return analyzer(Arrays.asList(analyzerNames));
+    }
+
+    public abstract Matcher<E> analyzer(List<String> analyzerNames);
+
     public abstract Matcher<E> is(ElementAnalyzer<E> elementAnalyzer);
 
     public final Matcher<E> is(ElementAnalyzer<E>... elementAnalyzers) {

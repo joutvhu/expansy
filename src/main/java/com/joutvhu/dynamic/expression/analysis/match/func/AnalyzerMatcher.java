@@ -1,4 +1,4 @@
-package com.joutvhu.dynamic.expression.analysis.match.function;
+package com.joutvhu.dynamic.expression.analysis.match.func;
 
 import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
 import com.joutvhu.dynamic.expression.analysis.match.DefaultMatcher;

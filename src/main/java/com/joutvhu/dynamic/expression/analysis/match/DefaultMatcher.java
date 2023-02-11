@@ -1,11 +1,11 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
 import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
-import com.joutvhu.dynamic.expression.analysis.match.function.AnalyzerMatcher;
-import com.joutvhu.dynamic.expression.analysis.match.function.EqualsMatcher;
-import com.joutvhu.dynamic.expression.analysis.match.function.FunctionMatcher;
-import com.joutvhu.dynamic.expression.analysis.match.function.RegexMatcher;
-import com.joutvhu.dynamic.expression.analysis.match.function.RepeatMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.AnalyzerMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.EqualsMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.FunctionMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.RegexMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.RepeatMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.function.Function;
 
 public class DefaultMatcher<E> extends Matcher<E> {
     private String name;
-    private List<Matcher<E>> matchers = new ArrayList<>();
+    List<Matcher<E>> matchers = new ArrayList<>();
 
     @Override
     public MatchFunctions<E> name(String name) {
@@ -29,7 +29,7 @@ public class DefaultMatcher<E> extends Matcher<E> {
 
     @Override
     public Matcher<E> space() {
-        return add(new RepeatMatcher<>(this, " ", 1, 1));
+        return add(new EqualsMatcher<>(this, " "));
     }
 
     @Override
@@ -83,6 +83,16 @@ public class DefaultMatcher<E> extends Matcher<E> {
     }
 
     @Override
+    public Matcher<E> analyzer(String analyzerName) {
+        return null;
+    }
+
+    @Override
+    public Matcher<E> analyzer(List<String> analyzerNames) {
+        return null;
+    }
+
+    @Override
     public Matcher<E> is(ElementAnalyzer<E> elementAnalyzer) {
         return add(new AnalyzerMatcher<E>(this, elementAnalyzer));
     }
@@ -92,7 +102,17 @@ public class DefaultMatcher<E> extends Matcher<E> {
         return add(new AnalyzerMatcher<E>(this, elementAnalyzers));
     }
 
-    private Matcher<E> add(Matcher<E> matcher) {
+    @Override
+    public LoopMatcher<E> loop(int time) {
+        return add(new LoopMatcher<>(this, time));
+    }
+
+    @Override
+    public LoopMatcher<E> loop(int minTime, int maxTime) {
+        return add(new LoopMatcher<>(this, minTime, maxTime));
+    }
+
+    private <T extends Matcher<E>> T add(T matcher) {
         this.matchers.add(matcher);
         return matcher;
     }

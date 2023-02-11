@@ -75,6 +75,16 @@ public abstract class ProxyMatcher<E> extends Matcher<E> {
     }
 
     @Override
+    public Matcher<E> analyzer(String analyzerName) {
+        return parent.analyzer(analyzerName);
+    }
+
+    @Override
+    public Matcher<E> analyzer(List<String> analyzerNames) {
+        return parent.analyzer(analyzerNames);
+    }
+
+    @Override
     public Matcher<E> is(ElementAnalyzer<E> elementAnalyzer) {
         return parent.is(elementAnalyzer);
     }
@@ -82,5 +92,15 @@ public abstract class ProxyMatcher<E> extends Matcher<E> {
     @Override
     public Matcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers) {
         return parent.is(elementAnalyzers);
+    }
+
+    @Override
+    public LoopMatcher<E> loop(int time) {
+        return  parent.loop(time);
+    }
+
+    @Override
+    public LoopMatcher<E> loop(int minTime, int maxTime) {
+        return  parent.loop(minTime, maxTime);
     }
 }
