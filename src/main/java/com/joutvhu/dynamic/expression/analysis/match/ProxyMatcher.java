@@ -40,13 +40,13 @@ public abstract class ProxyMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public Matcher<E> maybe(String value) {
-        return parent.maybe(value);
+    public Matcher<E> equals(List<String> values) {
+        return parent.equals(values);
     }
 
     @Override
-    public Matcher<E> oneOf(List<String> values) {
-        return parent.oneOf(values);
+    public Matcher<E> maybe(String value) {
+        return parent.maybe(value);
     }
 
     @Override

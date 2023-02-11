@@ -15,13 +15,13 @@ public abstract class MatchFunctions<E> {
 
     public abstract Matcher<E> equals(String value);
 
-    public abstract Matcher<E> maybe(String value);
-
-    public final Matcher<E> oneOf(String... values) {
-        return oneOf(Arrays.asList(values));
+    public final Matcher<E> equals(String... values) {
+        return equals(Arrays.asList(values));
     }
 
-    public abstract Matcher<E> oneOf(List<String> values);
+    public abstract Matcher<E> equals(List<String> values);
+
+    public abstract Matcher<E> maybe(String value);
 
     public abstract Matcher<E> repeat(String value, int time);
 

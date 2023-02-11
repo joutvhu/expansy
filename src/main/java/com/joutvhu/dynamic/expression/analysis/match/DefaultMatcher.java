@@ -48,13 +48,13 @@ public class DefaultMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public Matcher<E> maybe(String value) {
-        return add(new RepeatMatcher<>(this, value, 0, 1));
+    public Matcher<E> equals(List<String> values) {
+        return add(new EqualsMatcher<>(this, values));
     }
 
     @Override
-    public Matcher<E> oneOf(List<String> values) {
-        return add(new EqualsMatcher<>(this, values));
+    public Matcher<E> maybe(String value) {
+        return add(new RepeatMatcher<>(this, value, 0, 1));
     }
 
     @Override
