@@ -6,6 +6,12 @@ import java.util.List;
 import java.util.function.Function;
 
 public interface MatchFunctions<E, T extends Matcher<E>> {
+    MaybeMatcher<E, ?> maybe();
+
+    LoopMatcher<E, ?> loop(int time);
+
+    LoopMatcher<E, ?> loop(int minTime, Integer maxTime);
+
     T space();
 
     T spaces();
@@ -35,8 +41,4 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
     T analyzerIs(ElementAnalyzer<E>... elementAnalyzers);
 
     T analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers);
-
-    LoopMatcher<E, ?> loop(int time);
-
-    LoopMatcher<E, ?> loop(int minTime, Integer maxTime);
 }

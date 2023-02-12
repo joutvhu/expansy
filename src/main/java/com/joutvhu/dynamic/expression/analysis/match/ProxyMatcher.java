@@ -15,6 +15,11 @@ public final class ProxyMatcher<E, T extends Matcher<E>> implements MatchFunctio
     }
 
     @Override
+    public MaybeMatcher<E, T> maybe() {
+        return new MaybeMatcher<>(parent);
+    }
+
+    @Override
     public LoopMatcher<E, T> loop(int time) {
         return new LoopMatcher<>(parent, time);
     }

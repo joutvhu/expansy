@@ -23,6 +23,11 @@ public class DefaultMatcher<E> implements Matcher<E> {
     }
 
     @Override
+    public MaybeMatcher<E, DefaultMatcher<E>> maybe() {
+        return new MaybeMatcher<>(this);
+    }
+
+    @Override
     public LoopMatcher<E, DefaultMatcher<E>> loop(int time) {
         LoopMatcher<E, DefaultMatcher<E>> matcher = new LoopMatcher<>(this, time);
         matchers.add(matcher);
