@@ -18,29 +18,23 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     T equals(List<String> values);
 
-    T maybe(String value);
-
-    T repeat(String value, int time);
-
-    T repeat(String value, int minTime, int maxTime);
-
     T match(String regex);
 
     T match(String regex, int length);
 
     T match(Function<String, Boolean> checker);
 
-    T analyzer(String analyzerName);
+    T analyzerName(String analyzerName);
 
-    T analyzer(String... analyzerNames);
+    T analyzerName(String... analyzerNames);
 
-    T analyzer(List<String> analyzerNames);
+    T analyzerName(List<String> analyzerNames);
 
-    T is(ElementAnalyzer<E> elementAnalyzer);
+    T analyzerIs(ElementAnalyzer<E> elementAnalyzer);
 
-    T is(ElementAnalyzer<E>... elementAnalyzers);
+    T analyzerIs(ElementAnalyzer<E>... elementAnalyzers);
 
-    T is(List<ElementAnalyzer<E>> elementAnalyzers);
+    T analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers);
 
     LoopMatcher<E, ?> loop(int time);
 

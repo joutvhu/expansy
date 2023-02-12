@@ -77,24 +77,6 @@ public final class LoopMatcher<E, T extends Matcher<E>> extends MatchFunction<E>
     }
 
     @Override
-    public LoopMatcher<E, T> maybe(String value) {
-        children.maybe(value);
-        return this;
-    }
-
-    @Override
-    public LoopMatcher<E, T> repeat(String value, int time) {
-        children.repeat(value, time);
-        return this;
-    }
-
-    @Override
-    public LoopMatcher<E, T> repeat(String value, int minTime, int maxTime) {
-        children.repeat(value, minTime, maxTime);
-        return this;
-    }
-
-    @Override
     public LoopMatcher<E, T> match(String regex) {
         children.match(regex);
         return this;
@@ -113,38 +95,38 @@ public final class LoopMatcher<E, T extends Matcher<E>> extends MatchFunction<E>
     }
 
     @Override
-    public LoopMatcher<E, T> analyzer(String analyzerName) {
-        children.analyzer(analyzerName);
+    public LoopMatcher<E, T> analyzerName(String analyzerName) {
+        children.analyzerName(analyzerName);
         return this;
     }
 
     @Override
-    public LoopMatcher<E, T> analyzer(String... analyzerNames) {
-        children.analyzer(analyzerNames);
+    public LoopMatcher<E, T> analyzerName(String... analyzerNames) {
+        children.analyzerName(analyzerNames);
         return this;
     }
 
     @Override
-    public LoopMatcher<E, T> analyzer(List<String> analyzerNames) {
-        children.analyzer(analyzerNames);
+    public LoopMatcher<E, T> analyzerName(List<String> analyzerNames) {
+        children.analyzerName(analyzerNames);
         return this;
     }
 
     @Override
-    public LoopMatcher<E, T> is(ElementAnalyzer<E> elementAnalyzer) {
-        children.is(elementAnalyzer);
+    public LoopMatcher<E, T> analyzerIs(ElementAnalyzer<E> elementAnalyzer) {
+        children.analyzerIs(elementAnalyzer);
         return this;
     }
 
     @Override
-    public LoopMatcher<E, T> is(ElementAnalyzer<E>... elementAnalyzers) {
-        children.is(elementAnalyzers);
+    public LoopMatcher<E, T> analyzerIs(ElementAnalyzer<E>... elementAnalyzers) {
+        children.analyzerIs(elementAnalyzers);
         return this;
     }
 
     @Override
-    public LoopMatcher<E, T> is(List<ElementAnalyzer<E>> elementAnalyzers) {
-        children.is(elementAnalyzers);
+    public LoopMatcher<E, T> analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers) {
+        children.analyzerIs(elementAnalyzers);
         return this;
     }
 }

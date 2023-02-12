@@ -8,9 +8,9 @@ public class SumAnalyzer<E> extends ElementAnalyzer<E> {
     public void analysis(DefaultMatcher<E> matcher) {
         matcher
                 .name("first")
-                .is(new NumberAnalyzer<>())
+                .analyzerIs(new NumberAnalyzer<>())
                 .equals("+")
                 .name("second")
-                .is(new NumberAnalyzer<>());
+                .analyzerIs(new NumberAnalyzer<>());
     }
 }

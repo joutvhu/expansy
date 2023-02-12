@@ -61,24 +61,6 @@ public final class ProxyMatcher<E, T extends Matcher<E>> implements MatchFunctio
     }
 
     @Override
-    public T maybe(String value) {
-        parent.maybe(value);
-        return parent;
-    }
-
-    @Override
-    public T repeat(String value, int time) {
-        parent.repeat(value, time);
-        return parent;
-    }
-
-    @Override
-    public T repeat(String value, int minTime, int maxTime) {
-        parent.repeat(value, minTime, maxTime);
-        return parent;
-    }
-
-    @Override
     public T match(String regex) {
         parent.match(regex);
         return parent;
@@ -97,38 +79,38 @@ public final class ProxyMatcher<E, T extends Matcher<E>> implements MatchFunctio
     }
 
     @Override
-    public T analyzer(String analyzerName) {
-        parent.analyzer(analyzerName);
+    public T analyzerName(String analyzerName) {
+        parent.analyzerName(analyzerName);
         return parent;
     }
 
     @Override
-    public T analyzer(String... analyzerNames) {
-        parent.analyzer(analyzerNames);
+    public T analyzerName(String... analyzerNames) {
+        parent.analyzerName(analyzerNames);
         return parent;
     }
 
     @Override
-    public T analyzer(List<String> analyzerNames) {
-        parent.analyzer(analyzerNames);
+    public T analyzerName(List<String> analyzerNames) {
+        parent.analyzerName(analyzerNames);
         return parent;
     }
 
     @Override
-    public T is(ElementAnalyzer<E> elementAnalyzer) {
-        parent.is(elementAnalyzer);
+    public T analyzerIs(ElementAnalyzer<E> elementAnalyzer) {
+        parent.analyzerIs(elementAnalyzer);
         return parent;
     }
 
     @Override
-    public T is(ElementAnalyzer<E>... elementAnalyzers) {
-        parent.is(elementAnalyzers);
+    public T analyzerIs(ElementAnalyzer<E>... elementAnalyzers) {
+        parent.analyzerIs(elementAnalyzers);
         return parent;
     }
 
     @Override
-    public T is(List<ElementAnalyzer<E>> elementAnalyzers) {
-        parent.is(elementAnalyzers);
+    public T analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers) {
+        parent.analyzerIs(elementAnalyzers);
         return parent;
     }
 }

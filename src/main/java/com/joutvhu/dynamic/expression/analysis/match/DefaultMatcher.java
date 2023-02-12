@@ -72,24 +72,6 @@ public class DefaultMatcher<E> implements Matcher<E> {
     }
 
     @Override
-    public DefaultMatcher<E> maybe(String value) {
-        matchers.add(new RepeatMatcher<>(this, value, 0, 1));
-        return this;
-    }
-
-    @Override
-    public DefaultMatcher<E> repeat(String value, int time) {
-        matchers.add(new RepeatMatcher<>(this, value, 0, time));
-        return this;
-    }
-
-    @Override
-    public DefaultMatcher<E> repeat(String value, int minTime, int maxTime) {
-        matchers.add(new RepeatMatcher<>(this, value, minTime, maxTime));
-        return this;
-    }
-
-    @Override
     public DefaultMatcher<E> match(String regex) {
         matchers.add(new RegexMatcher<>(this, regex, null));
         return this;
@@ -108,33 +90,33 @@ public class DefaultMatcher<E> implements Matcher<E> {
     }
 
     @Override
-    public DefaultMatcher<E> analyzer(String analyzerName) {
+    public DefaultMatcher<E> analyzerName(String analyzerName) {
         return this;
     }
 
     @Override
-    public DefaultMatcher<E> analyzer(List<String> analyzerNames) {
+    public DefaultMatcher<E> analyzerName(List<String> analyzerNames) {
         return this;
     }
 
     @Override
-    public DefaultMatcher<E> analyzer(String... analyzerNames) {
-        return analyzer(Arrays.asList(analyzerNames));
+    public DefaultMatcher<E> analyzerName(String... analyzerNames) {
+        return analyzerName(Arrays.asList(analyzerNames));
     }
 
     @Override
-    public DefaultMatcher<E> is(ElementAnalyzer<E> elementAnalyzer) {
+    public DefaultMatcher<E> analyzerIs(ElementAnalyzer<E> elementAnalyzer) {
         matchers.add(new AnalyzerMatcher<>(this, elementAnalyzer));
         return this;
     }
 
     @Override
-    public DefaultMatcher<E> is(ElementAnalyzer<E>... elementAnalyzers) {
-        return is(Arrays.asList(elementAnalyzers));
+    public DefaultMatcher<E> analyzerIs(ElementAnalyzer<E>... elementAnalyzers) {
+        return analyzerIs(Arrays.asList(elementAnalyzers));
     }
 
     @Override
-    public DefaultMatcher<E> is(List<ElementAnalyzer<E>> elementAnalyzers) {
+    public DefaultMatcher<E> analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers) {
         matchers.add(new AnalyzerMatcher<>(this, elementAnalyzers));
         return this;
     }

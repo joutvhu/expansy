@@ -1,9 +1,7 @@
 package com.joutvhu.dynamic.expression.analysis.match.func;
 
-import com.joutvhu.dynamic.expression.analysis.match.DefaultMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
-import com.joutvhu.dynamic.expression.analysis.match.ProxyMatcher;
 
 import java.util.Arrays;
 import java.util.List;

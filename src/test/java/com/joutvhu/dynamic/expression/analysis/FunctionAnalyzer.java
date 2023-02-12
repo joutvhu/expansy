@@ -13,7 +13,7 @@ public class FunctionAnalyzer<E> extends ElementAnalyzer<E> {
                 .equals("(")
                 .loop(0, null)
                 .name("param")
-                .is(new VariableAnalyzer<>())
+                .analyzerIs(new VariableAnalyzer<>())
                 .end()
                 .equals(")");
     }
