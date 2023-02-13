@@ -5,11 +5,11 @@ import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
 import java.util.List;
 import java.util.function.Function;
 
-public final class ProxyMatcher<E, T extends Matcher<E>> implements MatchFunctions<E, T> {
+public final class NamedMatcher<E, T extends Matcher<E>> implements MatchFunctions<E, T> {
     protected String name;
     protected T parent;
 
-    public ProxyMatcher(T parent, String name) {
+    public NamedMatcher(T parent, String name) {
         this.parent = parent;
         this.name = name;
     }

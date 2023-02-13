@@ -26,8 +26,8 @@ public final class LoopMatcher<E, T extends Matcher<E>> extends MatchFunction<E>
     }
 
     @Override
-    public ProxyMatcher<E, LoopMatcher<E, T>> name(String name) {
-        return new ProxyMatcher<>(this, name);
+    public NamedMatcher<E, LoopMatcher<E, T>> name(String name) {
+        return new NamedMatcher<>(this, name);
     }
 
     @Override
@@ -61,6 +61,60 @@ public final class LoopMatcher<E, T extends Matcher<E>> extends MatchFunction<E>
     public LoopMatcher<E, T> spaces(int time) {
         children.spaces(time);
         return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> whitespace() {
+        children.whitespace();
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> whitespaces() {
+        children.whitespaces();
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> whitespaces(int time) {
+        children.whitespaces(time);
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> digit() {
+        children.digit();
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> digits() {
+        children.digits();
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> digits(int time) {
+        children.digits(time);
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> alphabet() {
+        children.alphabet();
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> alphabets() {
+        children.alphabets();
+        return null;
+    }
+
+    @Override
+    public LoopMatcher<E, T> alphabets(int time) {
+        children.alphabets(time);
+        return null;
     }
 
     @Override

@@ -19,7 +19,7 @@ public final class MaybeMatcher<E, T extends Matcher<E>> extends MatchFunction<E
 
     @Override
     public MatchFunctions<E, MaybeMatcher<E, T>> name(String name) {
-        return new ProxyMatcher<>(this, name);
+        return new NamedMatcher<>(this, name);
     }
 
     @Override
@@ -53,6 +53,60 @@ public final class MaybeMatcher<E, T extends Matcher<E>> extends MatchFunction<E
     public MaybeMatcher<E, T> spaces(int time) {
         children.spaces(time);
         return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> whitespace() {
+        children.whitespace();
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> whitespaces() {
+        children.whitespaces();
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> whitespaces(int time) {
+        children.whitespaces(time);
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> digit() {
+        children.digit();
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> digits() {
+        children.digits();
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> digits(int time) {
+        children.digits(time);
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> alphabet() {
+        children.alphabet();
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> alphabets() {
+        children.alphabets();
+        return null;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> alphabets(int time) {
+        children.alphabets(time);
+        return null;
     }
 
     @Override

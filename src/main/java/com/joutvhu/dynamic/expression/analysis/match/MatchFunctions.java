@@ -18,6 +18,30 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     T spaces(int time);
 
+    /**
+     * Matches any whitespace character (spaces, tabs, line breaks)
+     */
+    T whitespace();
+
+    T whitespaces();
+
+    T whitespaces(int time);
+
+    /**
+     * Matches any digit character (0-9). Equivalent to [0-9].
+     */
+    T digit();
+
+    T digits();
+
+    T digits(int time);
+
+    T alphabet();
+
+    T alphabets();
+
+    T alphabets(int time);
+
     T equals(String value);
 
     T equals(String... values);

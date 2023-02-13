@@ -13,13 +13,11 @@ import java.util.List;
 import java.util.function.Function;
 
 public class DefaultMatcher<E> implements Matcher<E> {
-    private String name;
     List<MatchFunction<E>> matchers = new ArrayList<>();
 
     @Override
     public MatchFunctions<E, DefaultMatcher<E>> name(String name) {
-        this.name = name;
-        return new ProxyMatcher<>(this, name);
+        return new NamedMatcher<>(this, name);
     }
 
     @Override
@@ -57,6 +55,51 @@ public class DefaultMatcher<E> implements Matcher<E> {
     public DefaultMatcher<E> spaces(int time) {
         matchers.add(new RepeatMatcher<>(this, " ", 0, time));
         return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> whitespace() {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> whitespaces() {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> whitespaces(int time) {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> digit() {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> digits() {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> digits(int time) {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> alphabet() {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> alphabets() {
+        return null;
+    }
+
+    @Override
+    public DefaultMatcher<E> alphabets(int time) {
+        return null;
     }
 
     @Override
