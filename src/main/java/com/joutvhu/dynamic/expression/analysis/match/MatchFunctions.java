@@ -18,6 +18,12 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     T spaces(int time);
 
+    T character(char... values);
+
+    T characters(char... values);
+
+    T characters(char[] values, int time);
+
     /**
      * Matches any whitespace character (spaces, tabs, line breaks)
      */
@@ -35,6 +41,18 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
     T digits();
 
     T digits(int time);
+
+    T lowercase();
+
+    T lowercases();
+
+    T lowercases(int time);
+
+    T uppercase();
+
+    T uppercases();
+
+    T uppercases(int time);
 
     T alphabet();
 

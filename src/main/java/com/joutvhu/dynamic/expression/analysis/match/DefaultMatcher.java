@@ -2,6 +2,7 @@ package com.joutvhu.dynamic.expression.analysis.match;
 
 import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
 import com.joutvhu.dynamic.expression.analysis.match.func.AnalyzerMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.CharacterMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.EqualsMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.FunctionMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.RegexMatcher;
@@ -41,65 +42,128 @@ public class DefaultMatcher<E> implements Matcher<E> {
 
     @Override
     public DefaultMatcher<E> space() {
-        matchers.add(new EqualsMatcher<>(this, " "));
+        matchers.add(new CharacterMatcher<>(this, ' ', 1));
         return this;
     }
 
     @Override
     public DefaultMatcher<E> spaces() {
-        matchers.add(new RepeatMatcher<>(this, " ", 0, null));
+        matchers.add(new CharacterMatcher<>(this, ' ', null));
         return this;
     }
 
     @Override
     public DefaultMatcher<E> spaces(int time) {
-        matchers.add(new RepeatMatcher<>(this, " ", 0, time));
+        matchers.add(new CharacterMatcher<>(this, ' ', time));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> character(char... values) {
+        matchers.add(new CharacterMatcher<>(this, values, 1));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> characters(char... values) {
+        matchers.add(new CharacterMatcher<>(this, values, null));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> characters(char[] values, int time) {
+        matchers.add(new CharacterMatcher<>(this, values, time));
         return this;
     }
 
     @Override
     public DefaultMatcher<E> whitespace() {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, 1));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> whitespaces() {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, null));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> whitespaces(int time) {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, time));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> digit() {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, 1));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> digits() {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, null));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> digits(int time) {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, time));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> lowercase() {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, 1));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> lowercases() {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, null));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> lowercases(int time) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, time));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> uppercase() {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, 1));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> uppercases() {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, null));
+        return this;
+    }
+
+    @Override
+    public DefaultMatcher<E> uppercases(int time) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, time));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> alphabet() {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, 1));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> alphabets() {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, null));
+        return this;
     }
 
     @Override
     public DefaultMatcher<E> alphabets(int time) {
-        return null;
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, time));
+        return this;
     }
 
     @Override

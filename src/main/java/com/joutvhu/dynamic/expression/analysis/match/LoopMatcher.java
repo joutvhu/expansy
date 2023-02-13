@@ -64,57 +64,111 @@ public final class LoopMatcher<E, T extends Matcher<E>> extends MatchFunction<E>
     }
 
     @Override
+    public LoopMatcher<E, T> character(char... values) {
+        children.character(values);
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> characters(char... values) {
+        children.characters(values);
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> characters(char[] values, int time) {
+        children.characters(values, time);
+        return this;
+    }
+
+    @Override
     public LoopMatcher<E, T> whitespace() {
         children.whitespace();
-        return null;
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> whitespaces() {
         children.whitespaces();
-        return null;
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> whitespaces(int time) {
         children.whitespaces(time);
-        return null;
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> digit() {
         children.digit();
-        return null;
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> digits() {
         children.digits();
-        return null;
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> digits(int time) {
         children.digits(time);
-        return null;
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> lowercase() {
+        children.lowercase();
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> lowercases() {
+        children.lowercases();
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> lowercases(int time) {
+        children.lowercases(time);
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> uppercase() {
+        children.uppercase();
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> uppercases() {
+        children.uppercases();
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> uppercases(int time) {
+        children.uppercases(time);
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> alphabet() {
         children.alphabet();
-        return null;
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> alphabets() {
         children.alphabets();
-        return null;
+        return this;
     }
 
     @Override
     public LoopMatcher<E, T> alphabets(int time) {
         children.alphabets(time);
-        return null;
+        return this;
     }
 
     @Override

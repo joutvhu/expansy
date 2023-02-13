@@ -56,57 +56,111 @@ public final class MaybeMatcher<E, T extends Matcher<E>> extends MatchFunction<E
     }
 
     @Override
+    public MaybeMatcher<E, T> character(char... values) {
+        children.character(values);
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> characters(char... values) {
+        children.characters(values);
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> characters(char[] values, int time) {
+        children.characters(values, time);
+        return this;
+    }
+
+    @Override
     public MaybeMatcher<E, T> whitespace() {
         children.whitespace();
-        return null;
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> whitespaces() {
         children.whitespaces();
-        return null;
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> whitespaces(int time) {
         children.whitespaces(time);
-        return null;
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> digit() {
         children.digit();
-        return null;
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> digits() {
         children.digits();
-        return null;
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> digits(int time) {
         children.digits(time);
-        return null;
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> lowercase() {
+        children.lowercase();
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> lowercases() {
+        children.lowercases();
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> lowercases(int time) {
+        children.lowercases(time);
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> uppercase() {
+        children.uppercase();
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> uppercases() {
+        children.uppercases();
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> uppercases(int time) {
+        children.uppercases(time);
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> alphabet() {
         children.alphabet();
-        return null;
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> alphabets() {
         children.alphabets();
-        return null;
+        return this;
     }
 
     @Override
     public MaybeMatcher<E, T> alphabets(int time) {
         children.alphabets(time);
-        return null;
+        return this;
     }
 
     @Override
