@@ -12,6 +12,9 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     LoopMatcher<E, ?> loop(int minTime, Integer maxTime);
 
+    /**
+     * Matches any space character
+     */
     T space();
 
     T spaces();
@@ -42,23 +45,36 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     T digits(int time);
 
+    /**
+     * Matches any lowercase character
+     */
     T lowercase();
 
     T lowercases();
 
     T lowercases(int time);
 
+    /**
+     * Matches any uppercase character
+     */
     T uppercase();
 
     T uppercases();
 
     T uppercases(int time);
 
+    /**
+     * Matches any alphabet character
+     */
     T alphabet();
 
     T alphabets();
 
     T alphabets(int time);
+
+    T numeric();
+
+    T word();
 
     T equals(String value);
 

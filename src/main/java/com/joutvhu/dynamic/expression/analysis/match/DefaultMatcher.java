@@ -6,7 +6,6 @@ import com.joutvhu.dynamic.expression.analysis.match.func.CharacterMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.EqualsMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.FunctionMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.RegexMatcher;
-import com.joutvhu.dynamic.expression.analysis.match.func.RepeatMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -164,6 +163,16 @@ public class DefaultMatcher<E> implements Matcher<E> {
     public DefaultMatcher<E> alphabets(int time) {
         matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, time));
         return this;
+    }
+
+    @Override
+    public Matcher<E> numeric() {
+        return null;
+    }
+
+    @Override
+    public Matcher<E> word() {
+        return null;
     }
 
     @Override

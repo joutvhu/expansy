@@ -172,6 +172,18 @@ public final class LoopMatcher<E, T extends Matcher<E>> extends MatchFunction<E>
     }
 
     @Override
+    public LoopMatcher<E, T> numeric() {
+        children.numeric();
+        return this;
+    }
+
+    @Override
+    public LoopMatcher<E, T> word() {
+        children.word();
+        return this;
+    }
+
+    @Override
     public LoopMatcher<E, T> equals(String value) {
         children.equals(value);
         return this;

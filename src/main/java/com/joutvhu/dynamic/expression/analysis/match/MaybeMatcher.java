@@ -164,6 +164,18 @@ public final class MaybeMatcher<E, T extends Matcher<E>> extends MatchFunction<E
     }
 
     @Override
+    public MaybeMatcher<E, T> numeric() {
+        children.numeric();
+        return this;
+    }
+
+    @Override
+    public MaybeMatcher<E, T> word() {
+        children.word();
+        return this;
+    }
+
+    @Override
     public MaybeMatcher<E, T> equals(String value) {
         children.equals(value);
         return this;
