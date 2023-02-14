@@ -24,20 +24,29 @@ public class DefaultMatcher<E> implements Matcher<E> {
 
     @Override
     public MaybeMatcher<E, DefaultMatcher<E>> maybe() {
-        return new MaybeMatcher<>(this);
+        MaybeMatcher<E, DefaultMatcher<E>> matcher = new MaybeMatcher<>(this);
+        matchers.add(matcher.getFunction());
+        return matcher;
     }
 
     @Override
     public LoopMatcher<E, DefaultMatcher<E>> loop(int time) {
         LoopMatcher<E, DefaultMatcher<E>> matcher = new LoopMatcher<>(this, time);
-        matchers.add(matcher);
+        matchers.add(matcher.getFunction());
         return matcher;
     }
 
     @Override
     public LoopMatcher<E, DefaultMatcher<E>> loop(int minTime, Integer maxTime) {
         LoopMatcher<E, DefaultMatcher<E>> matcher = new LoopMatcher<>(this, minTime, maxTime);
-        matchers.add(matcher);
+        matchers.add(matcher.getFunction());
+        return matcher;
+    }
+
+    @Override
+    public BetweenMatcher<E, DefaultMatcher<E>> between() {
+        BetweenMatcher<E, DefaultMatcher<E>> matcher = new BetweenMatcher<>(this);
+        matchers.add(matcher.getFunction());
         return matcher;
     }
 

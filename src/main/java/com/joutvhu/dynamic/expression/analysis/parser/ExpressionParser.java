@@ -1,4 +1,4 @@
-package com.joutvhu.dynamic.expression.analysis;
+package com.joutvhu.dynamic.expression.analysis.parser;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 

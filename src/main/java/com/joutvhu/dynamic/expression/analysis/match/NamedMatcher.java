@@ -30,6 +30,11 @@ public final class NamedMatcher<E, T extends Matcher<E>> implements MatchFunctio
     }
 
     @Override
+    public BetweenMatcher<E, T> between() {
+        return new BetweenMatcher<>(parent);
+    }
+
+    @Override
     public T space() {
         parent.space();
         return parent;
@@ -45,6 +50,106 @@ public final class NamedMatcher<E, T extends Matcher<E>> implements MatchFunctio
     public T spaces(int time) {
         parent.spaces(time);
         return parent;
+    }
+
+    @Override
+    public T character(char... values) {
+        return null;
+    }
+
+    @Override
+    public T characters(char... values) {
+        return null;
+    }
+
+    @Override
+    public T characters(char[] values, int time) {
+        return null;
+    }
+
+    @Override
+    public T whitespace() {
+        return null;
+    }
+
+    @Override
+    public T whitespaces() {
+        return null;
+    }
+
+    @Override
+    public T whitespaces(int time) {
+        return null;
+    }
+
+    @Override
+    public T digit() {
+        return null;
+    }
+
+    @Override
+    public T digits() {
+        return null;
+    }
+
+    @Override
+    public T digits(int time) {
+        return null;
+    }
+
+    @Override
+    public T lowercase() {
+        return null;
+    }
+
+    @Override
+    public T lowercases() {
+        return null;
+    }
+
+    @Override
+    public T lowercases(int time) {
+        return null;
+    }
+
+    @Override
+    public T uppercase() {
+        return null;
+    }
+
+    @Override
+    public T uppercases() {
+        return null;
+    }
+
+    @Override
+    public T uppercases(int time) {
+        return null;
+    }
+
+    @Override
+    public T alphabet() {
+        return null;
+    }
+
+    @Override
+    public T alphabets() {
+        return null;
+    }
+
+    @Override
+    public T alphabets(int time) {
+        return null;
+    }
+
+    @Override
+    public T numeric() {
+        return null;
+    }
+
+    @Override
+    public T word() {
+        return null;
     }
 
     @Override

@@ -12,6 +12,8 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     LoopMatcher<E, ?> loop(int minTime, Integer maxTime);
 
+    BetweenMatcher<E, ?> between();
+
     /**
      * Matches any space character
      */
