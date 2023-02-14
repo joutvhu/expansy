@@ -1,6 +1,7 @@
 package com.joutvhu.dynamic.expression.analysis.match.func;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
+import com.joutvhu.dynamic.expression.analysis.match.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 
@@ -18,5 +19,10 @@ public class AnalyzerMatcher<E> extends MatchFunction<E> {
     public AnalyzerMatcher(Matcher<E> parent, List<Element<E>> elements) {
         super(parent);
         this.elements = elements;
+    }
+
+    @Override
+    public void match(LinearFilter filter) {
+
     }
 }

@@ -1,5 +1,6 @@
 package com.joutvhu.dynamic.expression.analysis.match.func;
 
+import com.joutvhu.dynamic.expression.analysis.match.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 
@@ -11,5 +12,10 @@ public class RegexMatcher<E> extends MatchFunction<E> {
         super(parent);
         this.regex = regex;
         this.length = length;
+    }
+
+    @Override
+    public void match(LinearFilter filter) {
+
     }
 }

@@ -20,4 +20,6 @@ public abstract class MatchFunction<E> {
     public void setName(String name) {
         this.name = name;
     }
+
+    public abstract void match(LinearFilter filter);
 }

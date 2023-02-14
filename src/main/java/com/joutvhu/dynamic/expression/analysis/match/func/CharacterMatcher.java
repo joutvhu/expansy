@@ -1,7 +1,9 @@
 package com.joutvhu.dynamic.expression.analysis.match.func;
 
+import com.joutvhu.dynamic.expression.analysis.match.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.StopPoint;
 
 public class CharacterMatcher<E> extends MatchFunction<E> {
     public static char[] WHITESPACE = new char[]{
@@ -34,5 +36,37 @@ public class CharacterMatcher<E> extends MatchFunction<E> {
         super(parent);
         this.characters = characters;
         this.time = time;
+    }
+
+    @Override
+    public void match(LinearFilter filter) {
+        if (time != null) {
+            StopPoint point = filter.next(time);
+            for (char c : point.getValue().toCharArray()) {
+                if (!contains(c)) {
+                    filter.error("");
+                    return;
+                }
+            }
+            filter.complete();
+        } else {
+            while (true) {
+                StopPoint point = filter.next();
+                if (point == null) break;
+                if (!contains(point.getCharacter())) {
+                    filter.error("");
+                    return;
+                }
+                filter.push();
+            }
+        }
+    }
+
+    private boolean contains(char character) {
+        for (char c : characters) {
+            if (c == character)
+                return true;
+        }
+        return false;
     }
 }

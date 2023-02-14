@@ -1,5 +1,6 @@
 package com.joutvhu.dynamic.expression.analysis.match.func;
 
+import com.joutvhu.dynamic.expression.analysis.match.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 
@@ -17,5 +18,10 @@ public class EqualsMatcher<E> extends MatchFunction<E> {
     public EqualsMatcher(Matcher<E> parent, List<String> values) {
         super(parent);
         this.values = values;
+    }
+
+    @Override
+    public void match(LinearFilter filter) {
+
     }
 }

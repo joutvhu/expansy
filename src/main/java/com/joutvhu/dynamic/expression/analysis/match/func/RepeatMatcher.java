@@ -1,5 +1,6 @@
 package com.joutvhu.dynamic.expression.analysis.match.func;
 
+import com.joutvhu.dynamic.expression.analysis.match.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 
@@ -13,5 +14,10 @@ public class RepeatMatcher<E> extends MatchFunction<E> {
         this.value = value;
         this.minTime = minTime;
         this.maxTime = maxTime;
+    }
+
+    @Override
+    public void match(LinearFilter filter) {
+
     }
 }
