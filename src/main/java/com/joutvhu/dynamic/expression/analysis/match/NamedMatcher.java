@@ -1,6 +1,6 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
-import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
+import com.joutvhu.dynamic.expression.analysis.element.Element;
 
 import java.util.List;
 import java.util.function.Function;
@@ -102,20 +102,20 @@ public final class NamedMatcher<E, T extends Matcher<E>> implements MatchFunctio
     }
 
     @Override
-    public T analyzerIs(ElementAnalyzer<E> elementAnalyzer) {
-        parent.analyzerIs(elementAnalyzer);
+    public T analyzerIs(Element<E> element) {
+        parent.analyzerIs(element);
         return parent;
     }
 
     @Override
-    public T analyzerIs(ElementAnalyzer<E>... elementAnalyzers) {
-        parent.analyzerIs(elementAnalyzers);
+    public T analyzerIs(Element<E>... elements) {
+        parent.analyzerIs(elements);
         return parent;
     }
 
     @Override
-    public T analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers) {
-        parent.analyzerIs(elementAnalyzers);
+    public T analyzerIs(List<Element<E>> elements) {
+        parent.analyzerIs(elements);
         return parent;
     }
 }

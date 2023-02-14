@@ -1,6 +1,6 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
-import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
+import com.joutvhu.dynamic.expression.analysis.element.Element;
 
 import java.util.List;
 import java.util.function.Function;
@@ -94,9 +94,9 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     T analyzerName(List<String> analyzerNames);
 
-    T analyzerIs(ElementAnalyzer<E> elementAnalyzer);
+    T analyzerIs(Element<E> element);
 
-    T analyzerIs(ElementAnalyzer<E>... elementAnalyzers);
+    T analyzerIs(Element<E>... elements);
 
-    T analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers);
+    T analyzerIs(List<Element<E>> elements);
 }

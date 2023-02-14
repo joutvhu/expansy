@@ -1,11 +1,13 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
-import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
+import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.func.AnalyzerMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.CharacterMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.EqualsMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.FunctionMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.NumericMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.func.RegexMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.func.WordMatcher;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -167,12 +169,14 @@ public class DefaultMatcher<E> implements Matcher<E> {
 
     @Override
     public Matcher<E> numeric() {
-        return null;
+        matchers.add(new NumericMatcher<>(this));
+        return this;
     }
 
     @Override
     public Matcher<E> word() {
-        return null;
+        matchers.add(new WordMatcher<>(this));
+        return this;
     }
 
     @Override
@@ -226,19 +230,19 @@ public class DefaultMatcher<E> implements Matcher<E> {
     }
 
     @Override
-    public DefaultMatcher<E> analyzerIs(ElementAnalyzer<E> elementAnalyzer) {
-        matchers.add(new AnalyzerMatcher<>(this, elementAnalyzer));
+    public DefaultMatcher<E> analyzerIs(Element<E> element) {
+        matchers.add(new AnalyzerMatcher<>(this, element));
         return this;
     }
 
     @Override
-    public DefaultMatcher<E> analyzerIs(ElementAnalyzer<E>... elementAnalyzers) {
-        return analyzerIs(Arrays.asList(elementAnalyzers));
+    public DefaultMatcher<E> analyzerIs(Element<E>... elements) {
+        return analyzerIs(Arrays.asList(elements));
     }
 
     @Override
-    public DefaultMatcher<E> analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers) {
-        matchers.add(new AnalyzerMatcher<>(this, elementAnalyzers));
+    public DefaultMatcher<E> analyzerIs(List<Element<E>> elements) {
+        matchers.add(new AnalyzerMatcher<>(this, elements));
         return this;
     }
 }

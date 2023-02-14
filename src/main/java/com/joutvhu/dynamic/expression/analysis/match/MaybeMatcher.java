@@ -1,6 +1,6 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
-import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
+import com.joutvhu.dynamic.expression.analysis.element.Element;
 
 import java.util.List;
 import java.util.function.Function;
@@ -230,20 +230,20 @@ public final class MaybeMatcher<E, T extends Matcher<E>> extends MatchFunction<E
     }
 
     @Override
-    public MaybeMatcher<E, T> analyzerIs(ElementAnalyzer<E> elementAnalyzer) {
-        children.analyzerIs(elementAnalyzer);
+    public MaybeMatcher<E, T> analyzerIs(Element<E> element) {
+        children.analyzerIs(element);
         return this;
     }
 
     @Override
-    public MaybeMatcher<E, T> analyzerIs(ElementAnalyzer<E>... elementAnalyzers) {
-        children.analyzerIs(elementAnalyzers);
+    public MaybeMatcher<E, T> analyzerIs(Element<E>... elements) {
+        children.analyzerIs(elements);
         return this;
     }
 
     @Override
-    public MaybeMatcher<E, T> analyzerIs(List<ElementAnalyzer<E>> elementAnalyzers) {
-        children.analyzerIs(elementAnalyzers);
+    public MaybeMatcher<E, T> analyzerIs(List<Element<E>> elements) {
+        children.analyzerIs(elements);
         return this;
     }
 }

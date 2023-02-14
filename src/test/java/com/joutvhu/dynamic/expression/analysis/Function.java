@@ -1,9 +1,9 @@
 package com.joutvhu.dynamic.expression.analysis;
 
-import com.joutvhu.dynamic.expression.analysis.element.ElementAnalyzer;
+import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.DefaultMatcher;
 
-public class FunctionAnalyzer<E> extends ElementAnalyzer<E> {
+public class Function<E> extends Element<E> {
     @Override
     public void analysis(DefaultMatcher<E> matcher) {
         matcher
@@ -13,7 +13,7 @@ public class FunctionAnalyzer<E> extends ElementAnalyzer<E> {
                 .equals("(")
                 .loop(0, null)
                 .name("param")
-                .analyzerIs(new VariableAnalyzer<>())
+                .analyzerIs(new Variable<>())
                 .end()
                 .equals(")");
     }
