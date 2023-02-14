@@ -1,5 +1,7 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
+import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
+
 public abstract class MatchFunction<E> {
     protected String name;
     protected Matcher<E> parent;

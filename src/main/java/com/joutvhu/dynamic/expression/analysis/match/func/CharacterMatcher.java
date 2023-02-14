@@ -1,9 +1,9 @@
 package com.joutvhu.dynamic.expression.analysis.match.func;
 
-import com.joutvhu.dynamic.expression.analysis.match.LinearFilter;
+import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
-import com.joutvhu.dynamic.expression.analysis.match.StopPoint;
+import com.joutvhu.dynamic.expression.analysis.match.filter.StopPoint;
 
 public class CharacterMatcher<E> extends MatchFunction<E> {
     public static char[] WHITESPACE = new char[]{

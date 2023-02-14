@@ -1,4 +1,4 @@
-package com.joutvhu.dynamic.expression.analysis.match;
+package com.joutvhu.dynamic.expression.analysis.match.filter;
 
 public abstract class LinearFilter {
     private StopPoint point;

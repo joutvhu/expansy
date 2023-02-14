@@ -1,4 +1,4 @@
-package com.joutvhu.dynamic.expression.analysis.match;
+package com.joutvhu.dynamic.expression.analysis.match.filter;
 
 public class StopPoint {
     private String value;
