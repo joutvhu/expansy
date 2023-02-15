@@ -7,12 +7,12 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class LinearFilter {
-    private final StringSource stringSource;
+    private final StringSource source;
     private final Deque<Integer> trackPoints;
     private StopPoint point;
 
-    public LinearFilter(StringSource stringSource) {
-        this.stringSource = stringSource;
+    public LinearFilter(StringSource source) {
+        this.source = source;
         this.trackPoints = new ArrayDeque<>();
     }
 
@@ -21,7 +21,7 @@ public class LinearFilter {
     }
 
     public StopPoint next(int length) {
-        String value = stringSource.read(length);
+        String value = source.read(length);
         if (StringUtils.isNotEmpty(value) && value.length() == length) {
             point = point != null ? point.next(value) : new StopPoint(value);
             return point;

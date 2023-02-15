@@ -26,7 +26,8 @@ public class DefaultDefiner<E> implements Definer<E> {
 
     @Override
     public Matcher<E> matcher() {
-        return matchers.size() > 0 ? matchers.get(matchers.size() - 1) : null;
+        int size = matchers.size();
+        return size > 0 ? matchers.get(size - 1) : null;
     }
 
     @Override
