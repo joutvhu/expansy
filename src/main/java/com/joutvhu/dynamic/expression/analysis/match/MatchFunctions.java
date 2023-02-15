@@ -11,6 +11,8 @@ import java.util.function.Function;
 public interface MatchFunctions<E, T extends Definer<E>> {
     MaybeDefiner<E, ?> maybe();
 
+    LoopDefiner<E, ?> loop();
+
     LoopDefiner<E, ?> loop(int repetitions);
 
     LoopDefiner<E, ?> loop(int minRepetitions, Integer maxRepetitions);

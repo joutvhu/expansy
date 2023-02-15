@@ -31,6 +31,11 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
+    public LoopDefiner<E, BreakDefiner<E, T>> loop() {
+        return new LoopDefiner<>(this);
+    }
+
+    @Override
     public LoopDefiner<E, BreakDefiner<E, T>> loop(int repetitions) {
         return new LoopDefiner<>(this, repetitions);
     }

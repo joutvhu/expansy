@@ -4,6 +4,7 @@ import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.MatchFunctions;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 
 import java.util.List;
 import java.util.function.Function;
@@ -30,7 +31,12 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     Matcher<E> getMatcher() {
-        return null;
+        return new Matcher<E>(this) {
+            @Override
+            public void match(LinearFilter filter) {
+
+            }
+        };
     }
 
     public IsDefiner<E, T> is() {
@@ -45,6 +51,11 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     @Override
     public MaybeDefiner<E, BetweenDefiner<E, T>> maybe() {
         return new MaybeDefiner<>(this);
+    }
+
+    @Override
+    public LoopDefiner<E, BetweenDefiner<E, T>> loop() {
+        return new LoopDefiner<>(this);
     }
 
     @Override

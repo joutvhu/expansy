@@ -33,6 +33,13 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
+    public LoopDefiner<E, DefaultDefiner<E>> loop() {
+        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this);
+        matchers.add(matcher.getMatcher());
+        return matcher;
+    }
+
+    @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop(int repetitions) {
         LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, repetitions);
         matchers.add(matcher.getMatcher());

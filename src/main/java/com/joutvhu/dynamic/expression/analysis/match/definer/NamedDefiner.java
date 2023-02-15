@@ -22,6 +22,11 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
+    public LoopDefiner<E, T> loop() {
+        return new LoopDefiner<>(parent);
+    }
+
+    @Override
     public LoopDefiner<E, T> loop(int repetitions) {
         return new LoopDefiner<>(parent, repetitions);
     }
