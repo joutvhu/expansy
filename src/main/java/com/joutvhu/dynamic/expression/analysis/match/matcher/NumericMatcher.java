@@ -1,16 +1,16 @@
-package com.joutvhu.dynamic.expression.analysis.match.func;
+package com.joutvhu.dynamic.expression.analysis.match.matcher;
 
 import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.filter.StopPoint;
 
-public class NumericMatcher<E> extends MatchFunction<E> {
-    public NumericMatcher(Matcher<E> parent) {
+public class NumericMatcher<E> extends Matcher<E> {
+    public NumericMatcher(Definer<E> parent) {
         super(parent);
     }
 
-    public NumericMatcher(String name, Matcher<E> parent) {
+    public NumericMatcher(String name, Definer<E> parent) {
         super(name, parent);
     }
 

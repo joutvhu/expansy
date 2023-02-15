@@ -1,7 +1,7 @@
-package com.joutvhu.dynamic.expression.analysis.match.func;
+package com.joutvhu.dynamic.expression.analysis.match.matcher;
 
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.filter.StopPoint;
 import org.apache.commons.lang3.StringUtils;
@@ -10,17 +10,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EqualsMatcher<E> extends MatchFunction<E> {
+public class EqualsMatcher<E> extends Matcher<E> {
     private List<String> values;
 
-    public EqualsMatcher(Matcher<E> parent, String value) {
+    public EqualsMatcher(Definer<E> parent, String value) {
         super(parent);
         if (value == null || value.length() == 0)
             throw new IllegalArgumentException("");
         this.values = List.of(value);
     }
 
-    public EqualsMatcher(Matcher<E> parent, List<String> values) {
+    public EqualsMatcher(Definer<E> parent, List<String> values) {
         super(parent);
         if (values == null || values.isEmpty())
             throw new IllegalArgumentException("");

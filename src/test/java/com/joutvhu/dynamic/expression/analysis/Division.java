@@ -1,16 +1,16 @@
 package com.joutvhu.dynamic.expression.analysis;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
-import com.joutvhu.dynamic.expression.analysis.match.DefaultMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.definer.DefaultDefiner;
 
 public class Division<E> extends Element<E> {
     @Override
-    public void analysis(DefaultMatcher<E> matcher) {
+    public void define(DefaultDefiner<E> matcher) {
         matcher
                 .name("first")
-                .analyzerIs(new Number<>())
+                .element(new Number<>())
                 .equals("/")
                 .name("second")
-                .analyzerIs(new Number<>());
+                .element(new Number<>());
     }
 }

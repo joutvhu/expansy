@@ -1,37 +1,39 @@
-package com.joutvhu.dynamic.expression.analysis.match;
+package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
+import com.joutvhu.dynamic.expression.analysis.match.Definer;
+import com.joutvhu.dynamic.expression.analysis.match.MatchFunctions;
 
 import java.util.List;
 import java.util.function.Function;
 
-public final class NamedMatcher<E, T extends Matcher<E>> implements MatchFunctions<E, T> {
+public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctions<E, T> {
     protected String name;
     protected T parent;
 
-    public NamedMatcher(T parent, String name) {
+    public NamedDefiner(T parent, String name) {
         this.parent = parent;
         this.name = name;
     }
 
     @Override
-    public MaybeMatcher<E, T> maybe() {
-        return new MaybeMatcher<>(parent);
+    public MaybeDefiner<E, T> maybe() {
+        return new MaybeDefiner<>(parent);
     }
 
     @Override
-    public LoopMatcher<E, T> loop(int time) {
-        return new LoopMatcher<>(parent, time);
+    public LoopDefiner<E, T> loop(int time) {
+        return new LoopDefiner<>(parent, time);
     }
 
     @Override
-    public LoopMatcher<E, T> loop(int minTime, Integer maxTime) {
-        return new LoopMatcher<>(parent, minTime, maxTime);
+    public LoopDefiner<E, T> loop(int minTime, Integer maxTime) {
+        return new LoopDefiner<>(parent, minTime, maxTime);
     }
 
     @Override
-    public BetweenMatcher<E, T> between() {
-        return new BetweenMatcher<>(parent);
+    public BetweenDefiner<E, T> between() {
+        return new BetweenDefiner<>(parent);
     }
 
     @Override
@@ -189,38 +191,38 @@ public final class NamedMatcher<E, T extends Matcher<E>> implements MatchFunctio
     }
 
     @Override
-    public T analyzerName(String analyzerName) {
-        parent.analyzerName(analyzerName);
+    public T elementName(String elementName) {
+        parent.elementName(elementName);
         return parent;
     }
 
     @Override
-    public T analyzerName(String... analyzerNames) {
-        parent.analyzerName(analyzerNames);
+    public T elementName(String... elementNames) {
+        parent.elementName(elementNames);
         return parent;
     }
 
     @Override
-    public T analyzerName(List<String> analyzerNames) {
-        parent.analyzerName(analyzerNames);
+    public T elementName(List<String> elementNames) {
+        parent.elementName(elementNames);
         return parent;
     }
 
     @Override
-    public T analyzerIs(Element<E> element) {
-        parent.analyzerIs(element);
+    public T element(Element<E> element) {
+        parent.element(element);
         return parent;
     }
 
     @Override
-    public T analyzerIs(Element<E>... elements) {
-        parent.analyzerIs(elements);
+    public T element(Element<E>... elements) {
+        parent.element(elements);
         return parent;
     }
 
     @Override
-    public T analyzerIs(List<Element<E>> elements) {
-        parent.analyzerIs(elements);
+    public T element(List<Element<E>> elements) {
+        parent.element(elements);
         return parent;
     }
 }

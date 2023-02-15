@@ -1,11 +1,11 @@
-package com.joutvhu.dynamic.expression.analysis.match.func;
+package com.joutvhu.dynamic.expression.analysis.match.matcher;
 
 import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.filter.StopPoint;
 
-public class CharacterMatcher<E> extends MatchFunction<E> {
+public class CharacterMatcher<E> extends Matcher<E> {
     public static char[] WHITESPACE = new char[]{
             ' ', '\t', '\n'
     };
@@ -26,13 +26,13 @@ public class CharacterMatcher<E> extends MatchFunction<E> {
     private char[] characters;
     private Integer time;
 
-    public CharacterMatcher(Matcher<E> parent, char character, Integer time) {
+    public CharacterMatcher(Definer<E> parent, char character, Integer time) {
         super(parent);
         this.characters = new char[]{character};
         this.time = time;
     }
 
-    public CharacterMatcher(Matcher<E> parent, char[] characters, Integer time) {
+    public CharacterMatcher(Definer<E> parent, char[] characters, Integer time) {
         super(parent);
         this.characters = characters;
         this.time = time;

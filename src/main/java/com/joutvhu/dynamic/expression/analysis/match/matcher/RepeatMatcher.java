@@ -1,15 +1,15 @@
-package com.joutvhu.dynamic.expression.analysis.match.func;
+package com.joutvhu.dynamic.expression.analysis.match.matcher;
 
 import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunction;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.Definer;
 
-public class RepeatMatcher<E> extends MatchFunction<E> {
+public class RepeatMatcher<E> extends Matcher<E> {
     private String value;
     private Integer minTime;
     private Integer maxTime;
 
-    public RepeatMatcher(Matcher<E> parent, String value, Integer minTime, Integer maxTime) {
+    public RepeatMatcher(Definer<E> parent, String value, Integer minTime, Integer maxTime) {
         super(parent);
         this.value = value;
         this.minTime = minTime;

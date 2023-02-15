@@ -1,18 +1,21 @@
 package com.joutvhu.dynamic.expression.analysis.match;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
+import com.joutvhu.dynamic.expression.analysis.match.definer.BetweenDefiner;
+import com.joutvhu.dynamic.expression.analysis.match.definer.LoopDefiner;
+import com.joutvhu.dynamic.expression.analysis.match.definer.MaybeDefiner;
 
 import java.util.List;
 import java.util.function.Function;
 
-public interface MatchFunctions<E, T extends Matcher<E>> {
-    MaybeMatcher<E, ?> maybe();
+public interface MatchFunctions<E, T extends Definer<E>> {
+    MaybeDefiner<E, ?> maybe();
 
-    LoopMatcher<E, ?> loop(int time);
+    LoopDefiner<E, ?> loop(int time);
 
-    LoopMatcher<E, ?> loop(int minTime, Integer maxTime);
+    LoopDefiner<E, ?> loop(int minTime, Integer maxTime);
 
-    BetweenMatcher<E, ?> between();
+    BetweenDefiner<E, ?> between();
 
     /**
      * Matches any space character
@@ -90,15 +93,15 @@ public interface MatchFunctions<E, T extends Matcher<E>> {
 
     T match(Function<String, Boolean> checker);
 
-    T analyzerName(String analyzerName);
+    T elementName(String elementName);
 
-    T analyzerName(String... analyzerNames);
+    T elementName(String... elementNames);
 
-    T analyzerName(List<String> analyzerNames);
+    T elementName(List<String> elementNames);
 
-    T analyzerIs(Element<E> element);
+    T element(Element<E> element);
 
-    T analyzerIs(Element<E>... elements);
+    T element(Element<E>... elements);
 
-    T analyzerIs(List<Element<E>> elements);
+    T element(List<Element<E>> elements);
 }
