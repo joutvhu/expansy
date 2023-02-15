@@ -9,7 +9,9 @@ public class Sum<E> extends Element<E> {
         matcher
                 .name("first")
                 .element(new Number<>())
+                .spaces()
                 .equals("+")
+                .spaces()
                 .name("second")
                 .element(new Number<>());
     }

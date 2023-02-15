@@ -52,10 +52,8 @@ public class EqualsMatcher<E> extends Matcher<E> {
                 point = filter.next(value.length() - len);
             if (point == null) break;
             len = point.getLength();
-            if (len != value.length()) {
+            if (len != value.length())
                 filter.error("");
-                break;
-            }
             if (value.equals(point.getValue()))
                 filter.push();
         }

@@ -2,8 +2,14 @@ package com.joutvhu.dynamic.expression.analysis.match.filter;
 
 public class StopPoint {
     private String value;
-    private char character;
+    private Character character;
     private int index;
+
+    public StopPoint() {
+        this.value = "";
+        this.character = null;
+        this.index = 0;
+    }
 
     public StopPoint(String value, char character) {
         this.character = character;
@@ -41,7 +47,14 @@ public class StopPoint {
         return value.charAt(index);
     }
 
-    public StopPoint buildNext(char character) {
-        return new StopPoint(value + character, character, index + 1);
+    StopPoint next(String s) {
+        value = value + s;
+        character = s.charAt(s.length() - 1);
+        index += s.length();
+        return this;
+    }
+
+    StopPoint buildNext(String s) {
+        return new StopPoint(value + s, s.charAt(s.length() - 1), index + s.length());
     }
 }

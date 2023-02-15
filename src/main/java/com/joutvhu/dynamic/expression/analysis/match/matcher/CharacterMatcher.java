@@ -43,20 +43,16 @@ public class CharacterMatcher<E> extends Matcher<E> {
         if (repetitions != null) {
             StopPoint point = filter.next(repetitions);
             for (char c : point.getValue().toCharArray()) {
-                if (!contains(c)) {
+                if (!contains(c))
                     filter.error("");
-                    return;
-                }
             }
             filter.complete();
         } else {
             while (true) {
                 StopPoint point = filter.next();
                 if (point == null) break;
-                if (!contains(point.getCharacter())) {
+                if (!contains(point.getCharacter()))
                     filter.error("");
-                    return;
-                }
                 filter.push();
             }
         }

@@ -1,10 +1,8 @@
-package com.joutvhu.dynamic.expression.analysis.parser;
-
-import com.joutvhu.dynamic.expression.analysis.element.Element;
+package com.joutvhu.dynamic.expression.analysis.element;
 
 import java.util.Map;
 
-public class ExpressionRegister<E> {
+public class ElementRegister<E> {
     private Map<String, Element<E>> elementMap;
 
     public void register(String name, Element<E> element) {

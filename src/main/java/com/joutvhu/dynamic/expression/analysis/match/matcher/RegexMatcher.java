@@ -43,10 +43,8 @@ public class RegexMatcher<E> extends Matcher<E> {
         do {
             if (pattern.matcher(point.getValue()).matches())
                 filter.push();
-            if (maxLength != null && point.getLength() >= maxLength) {
+            if (maxLength != null && point.getLength() >= maxLength)
                 filter.enough();
-                return;
-            }
             point = filter.next();
         } while (point != null);
     }

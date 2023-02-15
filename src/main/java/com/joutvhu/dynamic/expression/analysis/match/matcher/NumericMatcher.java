@@ -23,10 +23,8 @@ public class NumericMatcher<E> extends Matcher<E> {
             StopPoint point = filter.next();
             if (point == null) return;
             if (point.getCharacter() == '-') {
-                if (negative || started) {
+                if (negative || started)
                     filter.error("");
-                    return;
-                }
                 negative = true;
                 continue;
             }
@@ -36,14 +34,10 @@ public class NumericMatcher<E> extends Matcher<E> {
                 continue;
             }
             if (point.getCharacter() == '.') {
-                if (!started) {
+                if (!started)
                     filter.error("");
-                    return;
-                }
-                if (decimal) {
+                if (decimal)
                     filter.error("");
-                    return;
-                }
                 decimal = true;
                 continue;
             }
