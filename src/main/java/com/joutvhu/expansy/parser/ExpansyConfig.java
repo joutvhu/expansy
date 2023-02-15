@@ -1,9 +1,10 @@
 package com.joutvhu.expansy.parser;
 
 import com.joutvhu.expansy.element.ElementRegister;
+import com.joutvhu.expansy.io.Source;
 
 public class ExpansyConfig<E> {
-    private StringSource source;
+    private Source source;
     private ElementRegister<E> register;
     private ExpansyParser<E> parser;
 }

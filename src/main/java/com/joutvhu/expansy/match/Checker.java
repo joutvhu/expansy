@@ -1,11 +1,13 @@
 package com.joutvhu.expansy.match;
 
+import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.exception.MathException;
+import com.joutvhu.expansy.match.definer.DefinerUtil;
 import com.joutvhu.expansy.match.filter.LinearFilter;
 import com.joutvhu.expansy.match.filter.StopReason;
 import com.joutvhu.expansy.match.filter.TrackPoint;
-import com.joutvhu.expansy.parser.StringSource;
+import com.joutvhu.expansy.io.Source;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
@@ -14,7 +16,12 @@ import java.util.List;
 import java.util.Stack;
 
 public class Checker<E> {
-    public Params check(List<Matcher<E>> matchers, StringSource source) throws IOException {
+    public Params check(Element<E> element, Source source) throws IOException {
+        List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
+        return check(matchers, source);
+    }
+
+    public Params check(List<Matcher<E>> matchers, Source source) throws IOException {
         Params params = new Params();
         LinearFilter filter = new LinearFilter(source);
         Stack<CheckNode> nodes = new Stack<>();

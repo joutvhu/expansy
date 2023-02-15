@@ -1,22 +1,22 @@
 package com.joutvhu.expansy.match.filter;
 
-import com.joutvhu.expansy.parser.StringSource;
+import com.joutvhu.expansy.io.Source;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class LinearFilter {
-    protected final StringSource source;
+    protected final Source source;
     protected final Deque<TrackPoint> trackPoints;
     protected long offset;
     protected StopPoint point;
 
-    public LinearFilter(StringSource source) {
+    public LinearFilter(Source source) {
         this(source, 0);
     }
 
-    public LinearFilter(StringSource source, long offset) {
+    public LinearFilter(Source source, long offset) {
         this.source = source;
         this.offset = offset;
         this.trackPoints = new ArrayDeque<>();
