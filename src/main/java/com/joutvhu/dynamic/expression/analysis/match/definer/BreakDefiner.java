@@ -31,18 +31,28 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public LoopDefiner<E, BreakDefiner<E, T>> loop(int time) {
-        return new LoopDefiner<>(this, time);
+    public LoopDefiner<E, BreakDefiner<E, T>> loop(int repetitions) {
+        return new LoopDefiner<>(this, repetitions);
     }
 
     @Override
-    public LoopDefiner<E, BreakDefiner<E, T>> loop(int minTime, Integer maxTime) {
-        return new LoopDefiner<>(this, minTime, maxTime);
+    public LoopDefiner<E, BreakDefiner<E, T>> loop(int minRepetitions, Integer maxRepetitions) {
+        return new LoopDefiner<>(this, minRepetitions, maxRepetitions);
     }
 
     @Override
     public BetweenDefiner<E, BreakDefiner<E, T>> between() {
         return new BetweenDefiner<>(this);
+    }
+
+    @Override
+    public BetweenDefiner<E, BreakDefiner<E, T>> between(int repetitions) {
+        return new BetweenDefiner<>(this, repetitions);
+    }
+
+    @Override
+    public BetweenDefiner<E, BreakDefiner<E, T>> between(int minRepetitions, Integer maxRepetitions) {
+        return new BetweenDefiner<>(this, minRepetitions, maxRepetitions);
     }
 
     @Override
@@ -76,8 +86,8 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public BreakDefiner<E, T> characters(char[] values, int time) {
-        children.characters(values, time);
+    public BreakDefiner<E, T> characters(char[] values, int repetitions) {
+        children.characters(values, repetitions);
         return this;
     }
 
@@ -94,8 +104,8 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public BreakDefiner<E, T> whitespaces(int time) {
-        children.whitespaces(time);
+    public BreakDefiner<E, T> whitespaces(int repetitions) {
+        children.whitespaces(repetitions);
         return this;
     }
 
@@ -112,8 +122,8 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public BreakDefiner<E, T> digits(int time) {
-        children.digits(time);
+    public BreakDefiner<E, T> digits(int repetitions) {
+        children.digits(repetitions);
         return this;
     }
 
@@ -130,8 +140,8 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public BreakDefiner<E, T> lowercases(int time) {
-        children.lowercases(time);
+    public BreakDefiner<E, T> lowercases(int repetitions) {
+        children.lowercases(repetitions);
         return this;
     }
 
@@ -148,8 +158,8 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public BreakDefiner<E, T> uppercases(int time) {
-        children.uppercases(time);
+    public BreakDefiner<E, T> uppercases(int repetitions) {
+        children.uppercases(repetitions);
         return this;
     }
 
@@ -166,8 +176,8 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public BreakDefiner<E, T> alphabets(int time) {
-        children.alphabets(time);
+    public BreakDefiner<E, T> alphabets(int repetitions) {
+        children.alphabets(repetitions);
         return this;
     }
 

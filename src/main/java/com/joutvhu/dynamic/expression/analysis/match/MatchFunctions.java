@@ -11,11 +11,15 @@ import java.util.function.Function;
 public interface MatchFunctions<E, T extends Definer<E>> {
     MaybeDefiner<E, ?> maybe();
 
-    LoopDefiner<E, ?> loop(int time);
+    LoopDefiner<E, ?> loop(int repetitions);
 
-    LoopDefiner<E, ?> loop(int minTime, Integer maxTime);
+    LoopDefiner<E, ?> loop(int minRepetitions, Integer maxRepetitions);
 
     BetweenDefiner<E, ?> between();
+
+    BetweenDefiner<E, ?> between(int repetitions);
+
+    BetweenDefiner<E, ?> between(int minRepetitions, Integer maxRepetitions);
 
     /**
      * Matches any space character
@@ -30,7 +34,7 @@ public interface MatchFunctions<E, T extends Definer<E>> {
 
     T characters(char... values);
 
-    T characters(char[] values, int time);
+    T characters(char[] values, int repetitions);
 
     /**
      * Matches any whitespace character (spaces, tabs, line breaks)
@@ -39,7 +43,7 @@ public interface MatchFunctions<E, T extends Definer<E>> {
 
     T whitespaces();
 
-    T whitespaces(int time);
+    T whitespaces(int repetitions);
 
     /**
      * Matches any digit character (0-9). Equivalent to [0-9].
@@ -48,7 +52,7 @@ public interface MatchFunctions<E, T extends Definer<E>> {
 
     T digits();
 
-    T digits(int time);
+    T digits(int repetitions);
 
     /**
      * Matches any lowercase character
@@ -57,7 +61,7 @@ public interface MatchFunctions<E, T extends Definer<E>> {
 
     T lowercases();
 
-    T lowercases(int time);
+    T lowercases(int repetitions);
 
     /**
      * Matches any uppercase character
@@ -66,7 +70,7 @@ public interface MatchFunctions<E, T extends Definer<E>> {
 
     T uppercases();
 
-    T uppercases(int time);
+    T uppercases(int repetitions);
 
     /**
      * Matches any alphabet character
@@ -75,7 +79,7 @@ public interface MatchFunctions<E, T extends Definer<E>> {
 
     T alphabets();
 
-    T alphabets(int time);
+    T alphabets(int repetitions);
 
     T numeric();
 

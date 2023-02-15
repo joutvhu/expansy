@@ -9,11 +9,23 @@ import java.util.List;
 import java.util.function.Function;
 
 public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
-    protected Definer<E> parent;
-    protected DefaultDefiner<E> children;
+    private Definer<E> parent;
+    private Integer minRepetitions;
+    private Integer maxRepetitions;
+    private DefaultDefiner<E> children;
 
     public BetweenDefiner(Definer<E> parent) {
+        this(parent, 0, null);
+    }
+
+    public BetweenDefiner(Definer<E> parent, Integer repetitions) {
+        this(parent, repetitions, repetitions);
+    }
+
+    public BetweenDefiner(Definer<E> parent, Integer minRepetitions, Integer maxRepetitions) {
         this.parent = parent;
+        this.minRepetitions = minRepetitions == null || minRepetitions < 0 ? 0 : minRepetitions;
+        this.maxRepetitions = maxRepetitions;
         this.children = new DefaultDefiner<>();
     }
 
@@ -36,18 +48,28 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public LoopDefiner<E, BetweenDefiner<E, T>> loop(int time) {
-        return new LoopDefiner<>(this, time);
+    public LoopDefiner<E, BetweenDefiner<E, T>> loop(int repetitions) {
+        return new LoopDefiner<>(this, repetitions);
     }
 
     @Override
-    public LoopDefiner<E, BetweenDefiner<E, T>> loop(int minTime, Integer maxTime) {
-        return new LoopDefiner<>(this, minTime, maxTime);
+    public LoopDefiner<E, BetweenDefiner<E, T>> loop(int minRepetitions, Integer maxRepetitions) {
+        return new LoopDefiner<>(this, minRepetitions, maxRepetitions);
     }
 
     @Override
     public BetweenDefiner<E, BetweenDefiner<E, T>> between() {
         return new BetweenDefiner<>(this);
+    }
+
+    @Override
+    public BetweenDefiner<E, BetweenDefiner<E, T>> between(int repetitions) {
+        return new BetweenDefiner<>(this, repetitions);
+    }
+
+    @Override
+    public BetweenDefiner<E, BetweenDefiner<E, T>> between(int minRepetitions, Integer maxRepetitions) {
+        return new BetweenDefiner<>(this, minRepetitions, maxRepetitions);
     }
 
     @Override
@@ -81,8 +103,8 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public BetweenDefiner<E, T> characters(char[] values, int time) {
-        children.characters(values, time);
+    public BetweenDefiner<E, T> characters(char[] values, int repetitions) {
+        children.characters(values, repetitions);
         return this;
     }
 
@@ -99,8 +121,8 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public BetweenDefiner<E, T> whitespaces(int time) {
-        children.whitespaces(time);
+    public BetweenDefiner<E, T> whitespaces(int repetitions) {
+        children.whitespaces(repetitions);
         return this;
     }
 
@@ -117,8 +139,8 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public BetweenDefiner<E, T> digits(int time) {
-        children.digits(time);
+    public BetweenDefiner<E, T> digits(int repetitions) {
+        children.digits(repetitions);
         return this;
     }
 
@@ -135,8 +157,8 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public BetweenDefiner<E, T> lowercases(int time) {
-        children.lowercases(time);
+    public BetweenDefiner<E, T> lowercases(int repetitions) {
+        children.lowercases(repetitions);
         return this;
     }
 
@@ -153,8 +175,8 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public BetweenDefiner<E, T> uppercases(int time) {
-        children.uppercases(time);
+    public BetweenDefiner<E, T> uppercases(int repetitions) {
+        children.uppercases(repetitions);
         return this;
     }
 
@@ -171,8 +193,8 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public BetweenDefiner<E, T> alphabets(int time) {
-        children.alphabets(time);
+    public BetweenDefiner<E, T> alphabets(int repetitions) {
+        children.alphabets(repetitions);
         return this;
     }
 

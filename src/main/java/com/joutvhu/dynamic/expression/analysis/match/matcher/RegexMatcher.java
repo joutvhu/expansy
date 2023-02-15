@@ -1,7 +1,7 @@
 package com.joutvhu.dynamic.expression.analysis.match.matcher;
 
-import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
 
 public class RegexMatcher<E> extends Matcher<E> {

@@ -22,18 +22,28 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public LoopDefiner<E, T> loop(int time) {
-        return new LoopDefiner<>(parent, time);
+    public LoopDefiner<E, T> loop(int repetitions) {
+        return new LoopDefiner<>(parent, repetitions);
     }
 
     @Override
-    public LoopDefiner<E, T> loop(int minTime, Integer maxTime) {
-        return new LoopDefiner<>(parent, minTime, maxTime);
+    public LoopDefiner<E, T> loop(int minRepetitions, Integer maxRepetitions) {
+        return new LoopDefiner<>(parent, minRepetitions, maxRepetitions);
     }
 
     @Override
     public BetweenDefiner<E, T> between() {
         return new BetweenDefiner<>(parent);
+    }
+
+    @Override
+    public BetweenDefiner<E, T> between(int repetitions) {
+        return new BetweenDefiner<>(parent, repetitions);
+    }
+
+    @Override
+    public BetweenDefiner<E, T> between(int minRepetitions, Integer maxRepetitions) {
+        return new BetweenDefiner<>(parent, minRepetitions, maxRepetitions);
     }
 
     @Override
@@ -65,7 +75,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public T characters(char[] values, int time) {
+    public T characters(char[] values, int repetitions) {
         return null;
     }
 
@@ -80,7 +90,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public T whitespaces(int time) {
+    public T whitespaces(int repetitions) {
         return null;
     }
 
@@ -95,7 +105,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public T digits(int time) {
+    public T digits(int repetitions) {
         return null;
     }
 
@@ -110,7 +120,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public T lowercases(int time) {
+    public T lowercases(int repetitions) {
         return null;
     }
 
@@ -125,7 +135,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public T uppercases(int time) {
+    public T uppercases(int repetitions) {
         return null;
     }
 
@@ -140,7 +150,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public T alphabets(int time) {
+    public T alphabets(int repetitions) {
         return null;
     }
 

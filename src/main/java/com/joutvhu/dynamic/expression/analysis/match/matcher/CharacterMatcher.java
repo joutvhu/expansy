@@ -1,7 +1,7 @@
 package com.joutvhu.dynamic.expression.analysis.match.matcher;
 
-import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
+import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.filter.StopPoint;
 
@@ -24,24 +24,24 @@ public class CharacterMatcher<E> extends Matcher<E> {
     };
 
     private char[] characters;
-    private Integer time;
+    private Integer repetitions;
 
-    public CharacterMatcher(Definer<E> parent, char character, Integer time) {
+    public CharacterMatcher(Definer<E> parent, char character, Integer repetitions) {
         super(parent);
         this.characters = new char[]{character};
-        this.time = time;
+        this.repetitions = repetitions;
     }
 
-    public CharacterMatcher(Definer<E> parent, char[] characters, Integer time) {
+    public CharacterMatcher(Definer<E> parent, char[] characters, Integer repetitions) {
         super(parent);
         this.characters = characters;
-        this.time = time;
+        this.repetitions = repetitions;
     }
 
     @Override
     public void match(LinearFilter filter) {
-        if (time != null) {
-            StopPoint point = filter.next(time);
+        if (repetitions != null) {
+            StopPoint point = filter.next(repetitions);
             for (char c : point.getValue().toCharArray()) {
                 if (!contains(c)) {
                     filter.error("");

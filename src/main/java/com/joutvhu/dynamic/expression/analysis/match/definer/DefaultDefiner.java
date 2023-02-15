@@ -33,15 +33,15 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public LoopDefiner<E, DefaultDefiner<E>> loop(int time) {
-        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, time);
+    public LoopDefiner<E, DefaultDefiner<E>> loop(int repetitions) {
+        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, repetitions);
         matchers.add(matcher.getMatcher());
         return matcher;
     }
 
     @Override
-    public LoopDefiner<E, DefaultDefiner<E>> loop(int minTime, Integer maxTime) {
-        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, minTime, maxTime);
+    public LoopDefiner<E, DefaultDefiner<E>> loop(int minRepetitions, Integer maxRepetitions) {
+        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, minRepetitions, maxRepetitions);
         matchers.add(matcher.getMatcher());
         return matcher;
     }
@@ -49,6 +49,20 @@ public class DefaultDefiner<E> implements Definer<E> {
     @Override
     public BetweenDefiner<E, DefaultDefiner<E>> between() {
         BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this);
+        matchers.add(matcher.getMatcher());
+        return matcher;
+    }
+
+    @Override
+    public BetweenDefiner<E, DefaultDefiner<E>> between(int repetitions) {
+        BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this, repetitions);
+        matchers.add(matcher.getMatcher());
+        return matcher;
+    }
+
+    @Override
+    public BetweenDefiner<E, DefaultDefiner<E>> between(int minRepetitions, Integer maxRepetitions) {
+        BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this, minRepetitions, maxRepetitions);
         matchers.add(matcher.getMatcher());
         return matcher;
     }
@@ -84,8 +98,8 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> characters(char[] values, int time) {
-        matchers.add(new CharacterMatcher<>(this, values, time));
+    public DefaultDefiner<E> characters(char[] values, int repetitions) {
+        matchers.add(new CharacterMatcher<>(this, values, repetitions));
         return this;
     }
 
@@ -102,8 +116,8 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> whitespaces(int time) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, time));
+    public DefaultDefiner<E> whitespaces(int repetitions) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, repetitions));
         return this;
     }
 
@@ -120,8 +134,8 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> digits(int time) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, time));
+    public DefaultDefiner<E> digits(int repetitions) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, repetitions));
         return this;
     }
 
@@ -138,8 +152,8 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> lowercases(int time) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, time));
+    public DefaultDefiner<E> lowercases(int repetitions) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, repetitions));
         return this;
     }
 
@@ -156,8 +170,8 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> uppercases(int time) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, time));
+    public DefaultDefiner<E> uppercases(int repetitions) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, repetitions));
         return this;
     }
 
@@ -174,8 +188,8 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> alphabets(int time) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, time));
+    public DefaultDefiner<E> alphabets(int repetitions) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, repetitions));
         return this;
     }
 
