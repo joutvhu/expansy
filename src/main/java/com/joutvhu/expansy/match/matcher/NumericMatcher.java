@@ -15,7 +15,7 @@ public class NumericMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter filter) {
+    public void match(LinearFilter<E> filter) {
         boolean started = false;
         boolean decimal = false;
         boolean negative = false;

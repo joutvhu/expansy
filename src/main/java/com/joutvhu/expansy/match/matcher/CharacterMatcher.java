@@ -39,7 +39,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter filter) {
+    public void match(LinearFilter<E> filter) {
         if (repetitions != null) {
             StopPoint point = filter.next(repetitions);
             for (char c : point.getValue().toCharArray()) {

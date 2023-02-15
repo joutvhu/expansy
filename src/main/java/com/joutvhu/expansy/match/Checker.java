@@ -7,7 +7,7 @@ import com.joutvhu.expansy.match.definer.DefinerUtil;
 import com.joutvhu.expansy.match.filter.LinearFilter;
 import com.joutvhu.expansy.match.filter.StopReason;
 import com.joutvhu.expansy.match.filter.TrackPoint;
-import com.joutvhu.expansy.io.Source;
+import com.joutvhu.expansy.parser.ExpansyConfig;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
@@ -16,14 +16,16 @@ import java.util.List;
 import java.util.Stack;
 
 public class Checker<E> {
-    public Params check(Element<E> element, Source source) throws IOException {
+    private ExpansyConfig<E> config;
+
+    public Params check(Element<E> element) throws IOException {
         List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        return check(matchers, source);
+        return check(matchers);
     }
 
-    public Params check(List<Matcher<E>> matchers, Source source) throws IOException {
+    public Params check(List<Matcher<E>> matchers) throws IOException {
         Params params = new Params();
-        LinearFilter filter = new LinearFilter(source);
+        LinearFilter<E> filter = new LinearFilter<E>(config);
         Stack<CheckNode> nodes = new Stack<>();
         for (int i = 0, len = matchers.size(); i < len; i++) {
             Matcher<E> matcher = matchers.get(i);
@@ -42,8 +44,8 @@ public class Checker<E> {
                 }
 
                 if (trackPoint != null) {
-                    source.back(trackPoint.getIndex());
-                    filter = new LinearFilter(source, trackPoint.getIndex());
+                    config.getSource().back(trackPoint.getIndex());
+                    filter = new LinearFilter<E>(config, trackPoint.getIndex());
                     CheckNode node = new CheckNode(matcher, trackPoint, trackPoints);
                     nodes.push(node);
                 } else if (i == 0) {

@@ -22,6 +22,6 @@ public class ElementMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter filter) {
+    public void match(LinearFilter<E> filter) {
     }
 }

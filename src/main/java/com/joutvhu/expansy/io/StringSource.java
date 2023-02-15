@@ -11,13 +11,14 @@ public class StringSource implements Source {
 
     @Override
     public long back(long offset) {
-        next = offset;
+        next = Math.min(value.length(), offset);
         return next;
     }
 
     @Override
     public String read(int length) {
-        return value.substring((int) next, (int) next + length);
+        int end = (int) Math.min(value.length(), next + length);
+        return value.substring((int) next, end);
     }
 
     @Override

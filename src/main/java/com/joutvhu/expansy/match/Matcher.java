@@ -23,5 +23,5 @@ public abstract class Matcher<E> {
         this.name = name;
     }
 
-    public abstract void match(LinearFilter filter);
+    public abstract void match(LinearFilter<E> filter);
 }

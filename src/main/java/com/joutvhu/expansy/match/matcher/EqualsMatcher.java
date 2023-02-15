@@ -44,7 +44,7 @@ public class EqualsMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter filter) {
+    public void match(LinearFilter<E> filter) {
         int len = 0;
         StopPoint point = null;
         for (String value : values) {
