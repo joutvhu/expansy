@@ -1,5 +1,6 @@
 package com.joutvhu.dynamic.expression.analysis.element;
 
+import java.util.Collection;
 import java.util.Map;
 
 public class ElementRegister<E> {
@@ -11,5 +12,9 @@ public class ElementRegister<E> {
 
     public Element<E> get(String key) {
         return this.elementMap.get(key);
+    }
+
+    public Collection<Element<E>> elements() {
+        return elementMap.values();
     }
 }

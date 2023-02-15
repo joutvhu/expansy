@@ -46,7 +46,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
                 if (!contains(c))
                     filter.error("");
             }
-            filter.complete();
+            filter.pushAndComplete();
         } else {
             while (true) {
                 StopPoint point = filter.next();

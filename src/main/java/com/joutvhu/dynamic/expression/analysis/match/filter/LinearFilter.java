@@ -14,7 +14,6 @@ public class LinearFilter {
     public LinearFilter(StringSource stringSource) {
         this.stringSource = stringSource;
         this.trackPoints = new ArrayDeque<>();
-        this.point = new StopPoint();
     }
 
     public StopPoint next() {
@@ -24,7 +23,7 @@ public class LinearFilter {
     public StopPoint next(int length) {
         String value = stringSource.read(length);
         if (StringUtils.isNotEmpty(value) && value.length() == length) {
-            point = point.next(value);
+            point = point != null ? point.next(value) : new StopPoint(value);
             return point;
         }
         return null;
@@ -34,13 +33,13 @@ public class LinearFilter {
         trackPoints.push(point.getIndex());
     }
 
-    public void enough() {
+    public void complete() {
         throw new StopReason(0, trackPoints);
     }
 
-    public void complete() {
+    public void pushAndComplete() {
         this.push();
-        this.enough();
+        this.complete();
     }
 
     public void error(String message) {

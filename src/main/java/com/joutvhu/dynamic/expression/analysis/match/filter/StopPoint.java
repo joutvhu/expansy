@@ -3,18 +3,25 @@ package com.joutvhu.dynamic.expression.analysis.match.filter;
 public class StopPoint {
     private String value;
     private Character character;
+    private int start;
     private int index;
 
-    public StopPoint() {
-        this.value = "";
-        this.character = null;
-        this.index = 0;
+    public StopPoint(String value) {
+        this.start = 0;
+        this.value = value != null ? value : "";
+        this.index = this.value.length() - 1;
+        this.character = this.value.charAt(this.index);
+        if (this.value.charAt(this.index) != character) {
+            this.value += character;
+            this.index++;
+        }
     }
 
     public StopPoint(String value, char character) {
-        this.character = character;
+        this.start = 0;
         this.value = value != null ? value : "";
         this.index = this.value.length() - 1;
+        this.character = character;
         if (this.value.charAt(this.index) != character) {
             this.value += character;
             this.index++;
@@ -22,6 +29,7 @@ public class StopPoint {
     }
 
     StopPoint(String value, char character, int index) {
+        this.start = index;
         this.value = value;
         this.character = character;
         this.index = index;
@@ -37,6 +45,10 @@ public class StopPoint {
 
     public char getCharacter() {
         return character;
+    }
+
+    public int getStart() {
+        return start;
     }
 
     public int getIndex() {

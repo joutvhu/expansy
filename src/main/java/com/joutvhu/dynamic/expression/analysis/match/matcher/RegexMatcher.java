@@ -44,7 +44,7 @@ public class RegexMatcher<E> extends Matcher<E> {
             if (pattern.matcher(point.getValue()).matches())
                 filter.push();
             if (maxLength != null && point.getLength() >= maxLength)
-                filter.enough();
+                filter.complete();
             point = filter.next();
         } while (point != null);
     }
