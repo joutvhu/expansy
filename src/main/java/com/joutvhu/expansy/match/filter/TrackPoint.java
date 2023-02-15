@@ -6,6 +6,6 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class TrackPoint {
-    private int index;
+    private long index;
     private String value;
 }

@@ -8,12 +8,13 @@ import com.joutvhu.expansy.match.filter.TrackPoint;
 import com.joutvhu.expansy.parser.StringSource;
 import lombok.AllArgsConstructor;
 
+import java.io.IOException;
 import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
 
 public class Checker<E> {
-    public Params check(List<Matcher<E>> matchers, StringSource source) {
+    public Params check(List<Matcher<E>> matchers, StringSource source) throws IOException {
         Params params = new Params();
         LinearFilter filter = new LinearFilter(source);
         Stack<CheckNode> nodes = new Stack<>();
@@ -30,11 +31,12 @@ public class Checker<E> {
                     CheckNode node = nodes.pop();
                     trackPoints = node.trackPoints;
                     trackPoint = trackPoints.pop();
-                    i--;
+                    i = nodes.size();
                 }
 
                 if (trackPoint != null) {
-                    filter.back(trackPoint.getIndex());
+                    source.back(trackPoint.getIndex());
+                    filter = new LinearFilter(source, trackPoint.getIndex());
                     CheckNode node = new CheckNode(matcher, trackPoint, trackPoints);
                     nodes.push(node);
                 } else if (i == 0) {

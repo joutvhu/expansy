@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.Filter;
+import com.joutvhu.expansy.match.filter.LinearFilter;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.filter.StopPoint;
 
@@ -15,7 +15,7 @@ public class NumericMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(Filter filter) {
+    public void match(LinearFilter filter) {
         boolean started = false;
         boolean decimal = false;
         boolean negative = false;

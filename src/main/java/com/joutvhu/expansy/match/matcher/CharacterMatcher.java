@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.Filter;
+import com.joutvhu.expansy.match.filter.LinearFilter;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.filter.StopPoint;
 
@@ -39,7 +39,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(Filter filter) {
+    public void match(LinearFilter filter) {
         if (repetitions != null) {
             StopPoint point = filter.next(repetitions);
             for (char c : point.getValue().toCharArray()) {
