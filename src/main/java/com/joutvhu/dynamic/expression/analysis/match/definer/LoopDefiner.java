@@ -4,7 +4,8 @@ import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 
-public final class LoopDefiner<E, T extends Definer<E>> extends BreakDefiner<E, T> {
+public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, MaybeDefiner<E, T>> {
+    private T parent;
     private Integer minRepetitions;
     private Integer maxRepetitions;
 
@@ -17,7 +18,7 @@ public final class LoopDefiner<E, T extends Definer<E>> extends BreakDefiner<E, 
     }
 
     public LoopDefiner(T parent, Integer minRepetitions, Integer maxRepetitions) {
-        super(parent);
+        this.parent = parent;
         this.minRepetitions = minRepetitions;
         this.maxRepetitions = maxRepetitions;
     }
@@ -29,5 +30,9 @@ public final class LoopDefiner<E, T extends Definer<E>> extends BreakDefiner<E, 
 
             }
         };
+    }
+
+    public T end() {
+        return parent;
     }
 }

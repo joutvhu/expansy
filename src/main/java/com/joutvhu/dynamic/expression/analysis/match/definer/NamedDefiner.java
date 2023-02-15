@@ -2,7 +2,6 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
-import com.joutvhu.dynamic.expression.analysis.match.Matches;
 
 import java.util.List;
 import java.util.function.Function;
@@ -71,102 +70,122 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
 
     @Override
     public T character(char... values) {
-        return null;
+        parent.character(values);
+        return parent;
     }
 
     @Override
     public T characters(char... values) {
-        return null;
+        parent.characters(values);
+        return parent;
     }
 
     @Override
     public T characters(char[] values, int repetitions) {
-        return null;
+        parent.characters(values, repetitions);
+        return parent;
     }
 
     @Override
     public T whitespace() {
-        return null;
+        parent.whitespace();
+        return parent;
     }
 
     @Override
     public T whitespaces() {
-        return null;
+        parent.whitespaces();
+        return parent;
     }
 
     @Override
     public T whitespaces(int repetitions) {
-        return null;
+        parent.whitespaces(repetitions);
+        return parent;
     }
 
     @Override
     public T digit() {
-        return null;
+        parent.digit();
+        return parent;
     }
 
     @Override
     public T digits() {
-        return null;
+        parent.digits();
+        return parent;
     }
 
     @Override
     public T digits(int repetitions) {
-        return null;
+        parent.digits(repetitions);
+        return parent;
     }
 
     @Override
     public T lowercase() {
-        return null;
+        parent.lowercase();
+        return parent;
     }
 
     @Override
     public T lowercases() {
-        return null;
+        parent.lowercases();
+        return parent;
     }
 
     @Override
     public T lowercases(int repetitions) {
-        return null;
+        parent.lowercases(repetitions);
+        return parent;
     }
 
     @Override
     public T uppercase() {
-        return null;
+        parent.uppercase();
+        return parent;
     }
 
     @Override
     public T uppercases() {
-        return null;
+        parent.uppercases();
+        return parent;
     }
 
     @Override
     public T uppercases(int repetitions) {
-        return null;
+        parent.uppercases(repetitions);
+        return parent;
     }
 
     @Override
     public T alphabet() {
-        return null;
+        parent.alphabet();
+        return parent;
     }
 
     @Override
     public T alphabets() {
-        return null;
+        parent.alphabets();
+        return parent;
     }
 
     @Override
     public T alphabets(int repetitions) {
-        return null;
+        parent.alphabets(repetitions);
+        return parent;
     }
 
     @Override
     public T numeric() {
-        return null;
+        parent.numeric();
+        return parent;
     }
 
     @Override
     public T word() {
-        return null;
+        parent.word();
+        return parent;
     }
 
     @Override

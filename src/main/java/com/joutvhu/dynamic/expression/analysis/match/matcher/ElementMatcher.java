@@ -8,21 +8,20 @@ import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import java.util.Arrays;
 import java.util.List;
 
-public class AnalyzerMatcher<E> extends Matcher<E> {
+public class ElementMatcher<E> extends Matcher<E> {
     private List<Element<E>> elements;
 
-    public AnalyzerMatcher(Definer<E> parent, Element<E> element) {
+    public ElementMatcher(Definer<E> parent, Element<E> element) {
         super(parent);
         this.elements = Arrays.asList(element);
     }
 
-    public AnalyzerMatcher(Definer<E> parent, List<Element<E>> elements) {
+    public ElementMatcher(Definer<E> parent, List<Element<E>> elements) {
         super(parent);
         this.elements = elements;
     }
 
     @Override
     public void match(LinearFilter filter) {
-
     }
 }

@@ -1,6 +1,7 @@
-package com.joutvhu.dynamic.expression.analysis.match;
+package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
+import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.definer.BetweenDefiner;
 import com.joutvhu.dynamic.expression.analysis.match.definer.LoopDefiner;
 import com.joutvhu.dynamic.expression.analysis.match.definer.MaybeDefiner;

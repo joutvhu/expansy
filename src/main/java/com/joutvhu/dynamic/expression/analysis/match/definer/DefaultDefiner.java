@@ -2,9 +2,8 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
-import com.joutvhu.dynamic.expression.analysis.match.Matches;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
-import com.joutvhu.dynamic.expression.analysis.match.matcher.AnalyzerMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.matcher.ElementMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.CharacterMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.EqualsMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.FunctionMatcher;
@@ -201,13 +200,13 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public Definer<E> numeric() {
+    public DefaultDefiner<E> numeric() {
         matchers.add(new NumericMatcher<>(this));
         return this;
     }
 
     @Override
-    public Definer<E> word() {
+    public DefaultDefiner<E> word() {
         matchers.add(new WordMatcher<>(this));
         return this;
     }
@@ -287,7 +286,7 @@ public class DefaultDefiner<E> implements Definer<E> {
 
     @Override
     public DefaultDefiner<E> element(Element<E> element) {
-        matchers.add(new AnalyzerMatcher<>(this, element));
+        matchers.add(new ElementMatcher<>(this, element));
         return this;
     }
 
@@ -298,7 +297,7 @@ public class DefaultDefiner<E> implements Definer<E> {
 
     @Override
     public DefaultDefiner<E> element(List<Element<E>> elements) {
-        matchers.add(new AnalyzerMatcher<>(this, elements));
+        matchers.add(new ElementMatcher<>(this, elements));
         return this;
     }
 }
