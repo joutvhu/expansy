@@ -21,11 +21,11 @@ public class NumericMatcher<E> extends Matcher<E> {
         boolean negative = false;
         while (true) {
             StopPoint point = filter.next();
-            if (point == null) break;
+            if (point == null) return;
             if (point.getCharacter() == '-') {
                 if (negative || started) {
                     filter.error("");
-                    break;
+                    return;
                 }
                 negative = true;
                 continue;
@@ -38,11 +38,11 @@ public class NumericMatcher<E> extends Matcher<E> {
             if (point.getCharacter() == '.') {
                 if (!started) {
                     filter.error("");
-                    break;
+                    return;
                 }
                 if (decimal) {
                     filter.error("");
-                    break;
+                    return;
                 }
                 decimal = true;
                 continue;

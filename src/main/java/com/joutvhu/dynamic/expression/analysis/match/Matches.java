@@ -8,7 +8,7 @@ import com.joutvhu.dynamic.expression.analysis.match.definer.MaybeDefiner;
 import java.util.List;
 import java.util.function.Function;
 
-public interface MatchFunctions<E, T extends Definer<E>> {
+public interface Matches<E, T extends Definer<E>> {
     MaybeDefiner<E, ?> maybe();
 
     LoopDefiner<E, ?> loop();
@@ -93,11 +93,19 @@ public interface MatchFunctions<E, T extends Definer<E>> {
 
     T equals(List<String> values);
 
-    T match(String regex);
+    T equalsIgnoreCase(String value);
 
-    T match(String regex, int length);
+    T equalsIgnoreCase(String... values);
 
-    T match(Function<String, Boolean> checker);
+    T equalsIgnoreCase(List<String> values);
+
+    T pattern(String regex);
+
+    T pattern(String regex, int length);
+
+    T pattern(String regex, int minLength, int maxLength);
+
+    T check(Function<String, Boolean> checker);
 
     T elementName(String elementName);
 

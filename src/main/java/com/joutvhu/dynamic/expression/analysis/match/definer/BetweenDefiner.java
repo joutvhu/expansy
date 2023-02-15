@@ -2,7 +2,7 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunctions;
+import com.joutvhu.dynamic.expression.analysis.match.Matches;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 import com.joutvhu.dynamic.expression.analysis.match.filter.LinearFilter;
 
@@ -44,7 +44,7 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public MatchFunctions<E, BetweenDefiner<E, T>> name(String name) {
+    public Matches<E, BetweenDefiner<E, T>> name(String name) {
         return new NamedDefiner<>(this, name);
     }
 
@@ -240,20 +240,44 @@ public class BetweenDefiner<E, T extends Definer<E>> implements Definer<E> {
     }
 
     @Override
-    public BetweenDefiner<E, T> match(String regex) {
-        children.match(regex);
+    public BetweenDefiner<E, T> equalsIgnoreCase(String value) {
+        children.equalsIgnoreCase(value);
         return this;
     }
 
     @Override
-    public BetweenDefiner<E, T> match(String regex, int length) {
-        children.match(regex, length);
+    public BetweenDefiner<E, T> equalsIgnoreCase(String... values) {
+        children.equalsIgnoreCase(values);
         return this;
     }
 
     @Override
-    public BetweenDefiner<E, T> match(Function<String, Boolean> checker) {
-        children.match(checker);
+    public BetweenDefiner<E, T> equalsIgnoreCase(List<String> values) {
+        children.equalsIgnoreCase(values);
+        return this;
+    }
+
+    @Override
+    public BetweenDefiner<E, T> pattern(String regex) {
+        children.pattern(regex);
+        return this;
+    }
+
+    @Override
+    public BetweenDefiner<E, T> pattern(String regex, int length) {
+        children.pattern(regex, length);
+        return this;
+    }
+
+    @Override
+    public BetweenDefiner<E, T> pattern(String regex, int minLength, int maxLength) {
+        children.pattern(regex, minLength, maxLength);
+        return this;
+    }
+
+    @Override
+    public BetweenDefiner<E, T> check(Function<String, Boolean> checker) {
+        children.check(checker);
         return this;
     }
 

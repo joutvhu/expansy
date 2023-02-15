@@ -11,17 +11,28 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EqualsMatcher<E> extends Matcher<E> {
+    private boolean ignoreCase;
     private List<String> values;
 
     public EqualsMatcher(Definer<E> parent, String value) {
+        this(parent, value, false);
+    }
+
+    public EqualsMatcher(Definer<E> parent, String value, boolean ignoreCase) {
         super(parent);
+        this.ignoreCase = ignoreCase;
         if (value == null || value.length() == 0)
             throw new IllegalArgumentException("");
         this.values = List.of(value);
     }
 
     public EqualsMatcher(Definer<E> parent, List<String> values) {
+        this(parent, values, false);
+    }
+
+    public EqualsMatcher(Definer<E> parent, List<String> values, boolean ignoreCase) {
         super(parent);
+        this.ignoreCase = ignoreCase;
         if (values == null || values.isEmpty())
             throw new IllegalArgumentException("");
         this.values = values.stream()
@@ -40,7 +51,7 @@ public class EqualsMatcher<E> extends Matcher<E> {
             if (len != value.length())
                 point = filter.next(value.length() - len);
             if (point == null) break;
-            len = point.getValue().length();
+            len = point.getLength();
             if (len != value.length()) {
                 filter.error("");
                 break;

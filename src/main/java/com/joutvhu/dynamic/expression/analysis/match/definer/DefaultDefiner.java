@@ -2,7 +2,7 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunctions;
+import com.joutvhu.dynamic.expression.analysis.match.Matches;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.AnalyzerMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.CharacterMatcher;
@@ -21,7 +21,7 @@ public class DefaultDefiner<E> implements Definer<E> {
     List<Matcher<E>> matchers = new ArrayList<>();
 
     @Override
-    public MatchFunctions<E, DefaultDefiner<E>> name(String name) {
+    public Matches<E, DefaultDefiner<E>> name(String name) {
         return new NamedDefiner<>(this, name);
     }
 
@@ -230,19 +230,42 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> match(String regex) {
-        matchers.add(new RegexMatcher<>(this, regex, null));
+    public DefaultDefiner<E> equalsIgnoreCase(String value) {
+        matchers.add(new EqualsMatcher<>(this, value, true));
         return this;
     }
 
     @Override
-    public DefaultDefiner<E> match(String regex, int length) {
-        matchers.add(new RegexMatcher<>(this, regex, length));
+    public DefaultDefiner<E> equalsIgnoreCase(String... values) {
+        return equalsIgnoreCase(Arrays.asList(values));
+    }
+
+    @Override
+    public DefaultDefiner<E> equalsIgnoreCase(List<String> values) {
+        matchers.add(new EqualsMatcher<>(this, values, true));
         return this;
     }
 
     @Override
-    public DefaultDefiner<E> match(Function<String, Boolean> checker) {
+    public DefaultDefiner<E> pattern(String regex) {
+        matchers.add(new RegexMatcher<>(this, regex));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> pattern(String regex, int length) {
+        matchers.add(new RegexMatcher<>(this, regex, 0, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> pattern(String regex, int minLength, int maxLength) {
+        matchers.add(new RegexMatcher<>(this, regex, 0, minLength, maxLength));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> check(Function<String, Boolean> checker) {
         matchers.add(new FunctionMatcher<>(this, checker));
         return this;
     }

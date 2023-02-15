@@ -2,12 +2,12 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunctions;
+import com.joutvhu.dynamic.expression.analysis.match.Matches;
 
 import java.util.List;
 import java.util.function.Function;
 
-public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctions<E, T> {
+public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T> {
     protected String name;
     protected T parent;
 
@@ -188,20 +188,44 @@ public final class NamedDefiner<E, T extends Definer<E>> implements MatchFunctio
     }
 
     @Override
-    public T match(String regex) {
-        parent.match(regex);
+    public T equalsIgnoreCase(String value) {
+        parent.equalsIgnoreCase(value);
         return parent;
     }
 
     @Override
-    public T match(String regex, int length) {
-        parent.match(regex, length);
+    public T equalsIgnoreCase(String... values) {
+        parent.equalsIgnoreCase(values);
         return parent;
     }
 
     @Override
-    public T match(Function<String, Boolean> checker) {
-        parent.match(checker);
+    public T equalsIgnoreCase(List<String> values) {
+        parent.equalsIgnoreCase(values);
+        return parent;
+    }
+
+    @Override
+    public T pattern(String regex) {
+        parent.pattern(regex);
+        return parent;
+    }
+
+    @Override
+    public T pattern(String regex, int length) {
+        parent.pattern(regex, length);
+        return parent;
+    }
+
+    @Override
+    public T pattern(String regex, int minLength, int maxLength) {
+        parent.pattern(regex, minLength, maxLength);
+        return parent;
+    }
+
+    @Override
+    public T check(Function<String, Boolean> checker) {
+        parent.check(checker);
         return parent;
     }
 

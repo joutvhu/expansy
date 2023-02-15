@@ -2,7 +2,7 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
-import com.joutvhu.dynamic.expression.analysis.match.MatchFunctions;
+import com.joutvhu.dynamic.expression.analysis.match.Matches;
 
 import java.util.List;
 import java.util.function.Function;
@@ -21,7 +21,7 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public MatchFunctions<E, BreakDefiner<E, T>> name(String name) {
+    public Matches<E, BreakDefiner<E, T>> name(String name) {
         return new NamedDefiner<>(this, name);
     }
 
@@ -217,20 +217,44 @@ public abstract class BreakDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public BreakDefiner<E, T> match(String regex) {
-        children.match(regex);
+    public BreakDefiner<E, T> equalsIgnoreCase(String value) {
+        children.equalsIgnoreCase(value);
         return this;
     }
 
     @Override
-    public BreakDefiner<E, T> match(String regex, int length) {
-        children.match(regex, length);
+    public BreakDefiner<E, T> equalsIgnoreCase(String... values) {
+        children.equalsIgnoreCase(values);
         return this;
     }
 
     @Override
-    public BreakDefiner<E, T> match(Function<String, Boolean> checker) {
-        children.match(checker);
+    public BreakDefiner<E, T> equalsIgnoreCase(List<String> values) {
+        children.equalsIgnoreCase(values);
+        return this;
+    }
+
+    @Override
+    public BreakDefiner<E, T> pattern(String regex) {
+        children.pattern(regex);
+        return this;
+    }
+
+    @Override
+    public BreakDefiner<E, T> pattern(String regex, int length) {
+        children.pattern(regex, length);
+        return this;
+    }
+
+    @Override
+    public BreakDefiner<E, T> pattern(String regex, int minLength, int maxLength) {
+        children.pattern(regex, minLength, maxLength);
+        return this;
+    }
+
+    @Override
+    public BreakDefiner<E, T> check(Function<String, Boolean> checker) {
+        children.check(checker);
         return this;
     }
 

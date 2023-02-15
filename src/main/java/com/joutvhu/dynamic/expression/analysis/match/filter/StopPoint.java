@@ -25,6 +25,10 @@ public class StopPoint {
         return value;
     }
 
+    public int getLength() {
+        return value.length();
+    }
+
     public char getCharacter() {
         return character;
     }
