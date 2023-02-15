@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.LinearFilter;
+import com.joutvhu.expansy.match.filter.Filter;
 import com.joutvhu.expansy.match.Definer;
 
 import java.util.function.Function;
@@ -27,6 +27,6 @@ public class FunctionMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter filter) {
+    public void match(Filter filter) {
     }
 }

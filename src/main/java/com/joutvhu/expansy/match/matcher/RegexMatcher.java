@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.LinearFilter;
+import com.joutvhu.expansy.match.filter.Filter;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.filter.StopPoint;
 
@@ -36,7 +36,7 @@ public class RegexMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter filter) {
+    public void match(Filter filter) {
         StopPoint point = minLength != null ? filter.next(minLength) : filter.next();
         if (point == null)
             return;

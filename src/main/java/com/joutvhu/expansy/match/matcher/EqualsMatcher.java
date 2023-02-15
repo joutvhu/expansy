@@ -2,7 +2,7 @@ package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.Definer;
-import com.joutvhu.expansy.match.filter.LinearFilter;
+import com.joutvhu.expansy.match.filter.Filter;
 import com.joutvhu.expansy.match.filter.StopPoint;
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,7 +44,7 @@ public class EqualsMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter filter) {
+    public void match(Filter filter) {
         int len = 0;
         StopPoint point = null;
         for (String value : values) {

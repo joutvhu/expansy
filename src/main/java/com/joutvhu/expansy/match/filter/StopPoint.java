@@ -1,5 +1,8 @@
 package com.joutvhu.expansy.match.filter;
 
+import lombok.Getter;
+
+@Getter
 public class StopPoint {
     private String value;
     private Character character;
@@ -35,38 +38,31 @@ public class StopPoint {
         this.index = index;
     }
 
-    public String getValue() {
-        return value;
-    }
-
     public int getLength() {
         return value.length();
-    }
-
-    public char getCharacter() {
-        return character;
-    }
-
-    public int getStart() {
-        return start;
-    }
-
-    public int getIndex() {
-        return index;
     }
 
     public char charAt(int index) {
         return value.charAt(index);
     }
 
+    StopPoint back(int i) {
+        value = value.substring(0, i + 1);
+        index = i;
+        character = value.charAt(i);
+        return this;
+    }
+
     StopPoint next(String s) {
-        value = value + s;
-        character = s.charAt(s.length() - 1);
-        index += s.length();
+        value = value.concat(s);
+        index = value.length() - 1;
+        character = value.charAt(index);
         return this;
     }
 
     StopPoint buildNext(String s) {
-        return new StopPoint(value + s, s.charAt(s.length() - 1), index + s.length());
+        String newValue = value.concat(s);
+        int index = newValue.length() - 1;
+        return new StopPoint(newValue, newValue.charAt(index), index);
     }
 }

@@ -2,17 +2,17 @@ package com.joutvhu.expansy.match.filter;
 
 import java.util.Deque;
 
-final class StopReason extends RuntimeException {
+public final class StopReason extends RuntimeException {
     private int status;
     private String message;
-    private Deque<Integer> trackPoints;
+    private Deque<TrackPoint> trackPoints;
 
-    StopReason(int status, Deque<Integer> trackPoints) {
+    StopReason(int status, Deque<TrackPoint> trackPoints) {
         this.status = status;
         this.trackPoints = trackPoints;
     }
 
-    StopReason(int status, Deque<Integer> trackPoints, String message) {
+    StopReason(int status, Deque<TrackPoint> trackPoints, String message) {
         this.status = status;
         this.message = message;
         this.trackPoints = trackPoints;
@@ -27,7 +27,7 @@ final class StopReason extends RuntimeException {
         return message;
     }
 
-    public Deque<Integer> getTrackPoints() {
+    public Deque<TrackPoint> getTrackPoints() {
         return trackPoints;
     }
 }
