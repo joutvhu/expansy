@@ -11,7 +11,8 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
         this.parent = parent;
     }
 
-    Matcher<E> getMatcher() {
+    @Override
+    public Matcher<E> matcher() {
         return new Matcher<E>(this) {
             @Override
             public void match(LinearFilter filter) {

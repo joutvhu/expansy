@@ -23,7 +23,8 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
         this.maxRepetitions = maxRepetitions;
     }
 
-    Matcher<E> getMatcher() {
+    @Override
+    public Matcher<E> matcher() {
         return new Matcher<E>(this) {
             @Override
             public void match(LinearFilter filter) {
@@ -45,6 +46,11 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
 
         public T end() {
             return parent;
+        }
+
+        @Override
+        public Matcher<E> matcher() {
+            return null;
         }
     }
 }

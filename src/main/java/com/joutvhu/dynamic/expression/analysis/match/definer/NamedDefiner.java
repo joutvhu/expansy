@@ -2,6 +2,7 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
+import com.joutvhu.dynamic.expression.analysis.match.Matcher;
 
 import java.util.List;
 import java.util.function.Function;
@@ -49,238 +50,244 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     public BetweenDefiner<E, T> between(int minRepetitions, Integer maxRepetitions) {
         return new BetweenDefiner<>(parent, minRepetitions, maxRepetitions);
     }
+    
+    private T result() {
+        Matcher<E> matcher = parent.matcher();
+        matcher.setName(name);
+        return result();
+    }
 
     @Override
     public T space() {
         parent.space();
-        return parent;
+        return result();
     }
 
     @Override
     public T spaces() {
         parent.spaces();
-        return parent;
+        return result();
     }
 
     @Override
     public T spaces(int time) {
         parent.spaces(time);
-        return parent;
+        return result();
     }
 
     @Override
     public T character(char... values) {
         parent.character(values);
-        return parent;
+        return result();
     }
 
     @Override
     public T characters(char... values) {
         parent.characters(values);
-        return parent;
+        return result();
     }
 
     @Override
     public T characters(char[] values, int repetitions) {
         parent.characters(values, repetitions);
-        return parent;
+        return result();
     }
 
     @Override
     public T whitespace() {
         parent.whitespace();
-        return parent;
+        return result();
     }
 
     @Override
     public T whitespaces() {
         parent.whitespaces();
-        return parent;
+        return result();
     }
 
     @Override
     public T whitespaces(int repetitions) {
         parent.whitespaces(repetitions);
-        return parent;
+        return result();
     }
 
     @Override
     public T digit() {
         parent.digit();
-        return parent;
+        return result();
     }
 
     @Override
     public T digits() {
         parent.digits();
-        return parent;
+        return result();
     }
 
     @Override
     public T digits(int repetitions) {
         parent.digits(repetitions);
-        return parent;
+        return result();
     }
 
     @Override
     public T lowercase() {
         parent.lowercase();
-        return parent;
+        return result();
     }
 
     @Override
     public T lowercases() {
         parent.lowercases();
-        return parent;
+        return result();
     }
 
     @Override
     public T lowercases(int repetitions) {
         parent.lowercases(repetitions);
-        return parent;
+        return result();
     }
 
     @Override
     public T uppercase() {
         parent.uppercase();
-        return parent;
+        return result();
     }
 
     @Override
     public T uppercases() {
         parent.uppercases();
-        return parent;
+        return result();
     }
 
     @Override
     public T uppercases(int repetitions) {
         parent.uppercases(repetitions);
-        return parent;
+        return result();
     }
 
     @Override
     public T alphabet() {
         parent.alphabet();
-        return parent;
+        return result();
     }
 
     @Override
     public T alphabets() {
         parent.alphabets();
-        return parent;
+        return result();
     }
 
     @Override
     public T alphabets(int repetitions) {
         parent.alphabets(repetitions);
-        return parent;
+        return result();
     }
 
     @Override
     public T numeric() {
         parent.numeric();
-        return parent;
+        return result();
     }
 
     @Override
     public T word() {
         parent.word();
-        return parent;
+        return result();
     }
 
     @Override
     public T equals(String value) {
         parent.equals(value);
-        return parent;
+        return result();
     }
 
     @Override
     public T equals(String... values) {
         parent.equals(values);
-        return parent;
+        return result();
     }
 
     @Override
     public T equals(List<String> values) {
         parent.equals(values);
-        return parent;
+        return result();
     }
 
     @Override
     public T equalsIgnoreCase(String value) {
         parent.equalsIgnoreCase(value);
-        return parent;
+        return result();
     }
 
     @Override
     public T equalsIgnoreCase(String... values) {
         parent.equalsIgnoreCase(values);
-        return parent;
+        return result();
     }
 
     @Override
     public T equalsIgnoreCase(List<String> values) {
         parent.equalsIgnoreCase(values);
-        return parent;
+        return result();
     }
 
     @Override
     public T pattern(String regex) {
         parent.pattern(regex);
-        return parent;
+        return result();
     }
 
     @Override
     public T pattern(String regex, int length) {
         parent.pattern(regex, length);
-        return parent;
+        return result();
     }
 
     @Override
     public T pattern(String regex, int minLength, int maxLength) {
         parent.pattern(regex, minLength, maxLength);
-        return parent;
+        return result();
     }
 
     @Override
     public T check(Function<String, Boolean> checker) {
         parent.check(checker);
-        return parent;
+        return result();
     }
 
     @Override
     public T elementName(String elementName) {
         parent.elementName(elementName);
-        return parent;
+        return result();
     }
 
     @Override
     public T elementName(String... elementNames) {
         parent.elementName(elementNames);
-        return parent;
+        return result();
     }
 
     @Override
     public T elementName(List<String> elementNames) {
         parent.elementName(elementNames);
-        return parent;
+        return result();
     }
 
     @Override
     public T element(Element<E> element) {
         parent.element(element);
-        return parent;
+        return result();
     }
 
     @Override
     public T element(Element<E>... elements) {
         parent.element(elements);
-        return parent;
+        return result();
     }
 
     @Override
     public T element(List<Element<E>> elements) {
         parent.element(elements);
-        return parent;
+        return result();
     }
 }

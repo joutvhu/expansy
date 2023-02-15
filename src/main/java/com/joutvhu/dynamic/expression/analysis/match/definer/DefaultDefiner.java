@@ -3,8 +3,8 @@ package com.joutvhu.dynamic.expression.analysis.match.definer;
 import com.joutvhu.dynamic.expression.analysis.element.Element;
 import com.joutvhu.dynamic.expression.analysis.match.Definer;
 import com.joutvhu.dynamic.expression.analysis.match.Matcher;
-import com.joutvhu.dynamic.expression.analysis.match.matcher.ElementMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.CharacterMatcher;
+import com.joutvhu.dynamic.expression.analysis.match.matcher.ElementMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.EqualsMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.FunctionMatcher;
 import com.joutvhu.dynamic.expression.analysis.match.matcher.NumericMatcher;
@@ -25,51 +25,56 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
+    public Matcher<E> matcher() {
+        return matchers.size() > 0 ? matchers.get(matchers.size() - 1) : null;
+    }
+
+    @Override
     public MaybeDefiner<E, DefaultDefiner<E>> maybe() {
         MaybeDefiner<E, DefaultDefiner<E>> matcher = new MaybeDefiner<>(this);
-        matchers.add(matcher.getMatcher());
+        matchers.add(matcher.matcher());
         return matcher;
     }
 
     @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop() {
         LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this);
-        matchers.add(matcher.getMatcher());
+        matchers.add(matcher.matcher());
         return matcher;
     }
 
     @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop(int repetitions) {
         LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, repetitions);
-        matchers.add(matcher.getMatcher());
+        matchers.add(matcher.matcher());
         return matcher;
     }
 
     @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop(int minRepetitions, Integer maxRepetitions) {
         LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, minRepetitions, maxRepetitions);
-        matchers.add(matcher.getMatcher());
+        matchers.add(matcher.matcher());
         return matcher;
     }
 
     @Override
     public BetweenDefiner<E, DefaultDefiner<E>> between() {
         BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this);
-        matchers.add(matcher.getMatcher());
+        matchers.add(matcher.matcher());
         return matcher;
     }
 
     @Override
     public BetweenDefiner<E, DefaultDefiner<E>> between(int repetitions) {
         BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this, repetitions);
-        matchers.add(matcher.getMatcher());
+        matchers.add(matcher.matcher());
         return matcher;
     }
 
     @Override
     public BetweenDefiner<E, DefaultDefiner<E>> between(int minRepetitions, Integer maxRepetitions) {
         BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this, minRepetitions, maxRepetitions);
-        matchers.add(matcher.getMatcher());
+        matchers.add(matcher.matcher());
         return matcher;
     }
 
