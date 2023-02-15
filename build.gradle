@@ -100,7 +100,7 @@ artifacts {
 test {
     useJUnitPlatform()
     filter {
-        includeTestsMatching 'com.joutvhu.dynamic.expression.analysis.*'
+        includeTestsMatching 'com.joutvhu.expansy.*'
     }
 }
 
@@ -115,11 +115,11 @@ publishing {
             pom {
                 name = project.name
                 description = ''
-                url = 'https://github.com/joutvhu/expression-analysis'
+                url = 'https://github.com/joutvhu/expansy'
                 licenses {
                     license {
                         name = 'MIT License'
-                        url = 'https://github.com/joutvhu/expression-analysis/blob/main/LICENSE'
+                        url = 'https://github.com/joutvhu/expansy/blob/main/LICENSE'
                     }
                 }
                 developers {
@@ -130,13 +130,13 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git@github.com:joutvhu/expression-analysis.git'
-                    developerConnection = 'scm:git:git@github.com:joutvhu/expression-analysis.git'
-                    url = 'https://github.com/joutvhu/expression-analysis'
+                    connection = 'scm:git:git@github.com:joutvhu/expansy.git'
+                    developerConnection = 'scm:git:git@github.com:joutvhu/expansy.git'
+                    url = 'https://github.com/joutvhu/expansy'
                 }
                 issueManagement {
                     system = 'Github Issue'
-                    url = 'https://github.com/joutvhu/expression-analysis/issues'
+                    url = 'https://github.com/joutvhu/expansy/issues'
                 }
                 organization {
                     name = 'Giao Ho'
@@ -184,7 +184,7 @@ publishing {
         }
         maven {
             name = 'github'
-            url = "https://maven.pkg.github.com/joutvhu/expression-analysis"
+            url = "https://maven.pkg.github.com/joutvhu/expansy"
             credentials {
                 username = project.githubUsername
                 password = project.githubPassword
