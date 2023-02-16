@@ -1,16 +1,15 @@
-package com.joutvhu.expansy;
+package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 
-public class Group<E> extends Element<E> {
+public class Number<E> extends Element<E> {
     @Override
     public void define(Definer<E> definer) {
         definer
-                .equals("(")
-                // todo: match child elements
-                .equals(")");
+                .name("value")
+                .pattern("^-?[0-9]+(.[0-9]+)?$");
     }
 
     @Override

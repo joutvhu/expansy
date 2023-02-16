@@ -1,17 +1,15 @@
-package com.joutvhu.expansy;
+package com.joutvhu.expansy.element;
 
-import com.joutvhu.expansy.element.Element;
-import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 
-public class Division<E> extends Element<E> {
+public class Sum<E> extends Element<E> {
     @Override
     public void define(Definer<E> definer) {
         definer
                 .name("first")
                 .element(new Number<>())
                 .spaces()
-                .equals("/")
+                .equals("+")
                 .spaces()
                 .name("second")
                 .element(new Number<>());

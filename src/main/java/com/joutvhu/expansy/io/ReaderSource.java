@@ -1,5 +1,6 @@
 package com.joutvhu.expansy.io;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -9,7 +10,7 @@ public class ReaderSource implements Source {
 
     public ReaderSource(Reader reader) {
         this.next = 0;
-        this.reader = reader;
+        this.reader = new BufferedReader(reader);
     }
 
     @Override

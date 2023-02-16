@@ -1,7 +1,5 @@
-package com.joutvhu.expansy;
+package com.joutvhu.expansy.element;
 
-import com.joutvhu.expansy.element.Element;
-import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 
 public class Subtract<E> extends Element<E> {

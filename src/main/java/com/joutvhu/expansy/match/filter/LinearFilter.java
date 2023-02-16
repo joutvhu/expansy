@@ -1,31 +1,31 @@
 package com.joutvhu.expansy.match.filter;
 
 import com.joutvhu.expansy.io.Source;
-import com.joutvhu.expansy.parser.ExpansyConfig;
+import com.joutvhu.expansy.parser.ExpansyState;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class LinearFilter<E> {
-    protected final ExpansyConfig<E> config;
+    protected final ExpansyState<E> config;
     protected final Source source;
     protected final Deque<TrackPoint> trackPoints;
     protected long offset;
     protected StopPoint point;
 
-    public LinearFilter(ExpansyConfig<E> config) {
+    public LinearFilter(ExpansyState<E> config) {
         this(config, 0);
     }
 
-    public LinearFilter(ExpansyConfig<E> config, long offset) {
+    public LinearFilter(ExpansyState<E> config, long offset) {
         this.config = config;
         this.source = config.getSource();
         this.offset = offset;
         this.trackPoints = new ArrayDeque<>();
     }
 
-    public ExpansyConfig<E> configuration() {
+    public ExpansyState<E> configuration() {
         return config;
     }
 

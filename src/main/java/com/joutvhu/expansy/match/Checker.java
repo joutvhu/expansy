@@ -7,7 +7,7 @@ import com.joutvhu.expansy.match.definer.DefinerUtil;
 import com.joutvhu.expansy.match.filter.LinearFilter;
 import com.joutvhu.expansy.match.filter.StopReason;
 import com.joutvhu.expansy.match.filter.TrackPoint;
-import com.joutvhu.expansy.parser.ExpansyConfig;
+import com.joutvhu.expansy.parser.ExpansyState;
 import lombok.AllArgsConstructor;
 
 import java.io.IOException;
@@ -16,7 +16,11 @@ import java.util.List;
 import java.util.Stack;
 
 public class Checker<E> {
-    private ExpansyConfig<E> config;
+    private ExpansyState<E> config;
+
+    public Checker(ExpansyState<E> config) {
+        this.config = config;
+    }
 
     public Params check(Element<E> element) throws IOException {
         List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);

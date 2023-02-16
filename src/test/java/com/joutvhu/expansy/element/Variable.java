@@ -1,15 +1,16 @@
-package com.joutvhu.expansy;
+package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 
-public class Number<E> extends Element<E> {
+public class Variable<E> extends Element<E> {
     @Override
     public void define(Definer<E> definer) {
         definer
-                .name("value")
-                .pattern("^-?[0-9]+(.[0-9]+)?$");
+                .equals("$")
+                .name("name")
+                .pattern("^[a-zA-Z_$][a-zA-Z_0-9]*$");
     }
 
     @Override

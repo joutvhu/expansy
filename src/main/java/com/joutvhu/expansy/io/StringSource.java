@@ -2,23 +2,23 @@ package com.joutvhu.expansy.io;
 
 public class StringSource implements Source {
     private long next;
-    private String value;
+    private final StringBuffer buffer;
 
     public StringSource(String value) {
         this.next = 0;
-        this.value = value;
+        this.buffer = new StringBuffer(value);
     }
 
     @Override
     public long back(long offset) {
-        next = Math.min(value.length(), offset);
+        next = Math.min(buffer.length(), offset);
         return next;
     }
 
     @Override
     public String read(int length) {
-        int end = (int) Math.min(value.length(), next + length);
-        return value.substring((int) next, end);
+        int end = (int) Math.min(buffer.length(), next + length);
+        return buffer.substring((int) next, end);
     }
 
     @Override
