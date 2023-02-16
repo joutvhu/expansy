@@ -7,32 +7,34 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class LinearFilter<E> {
-    protected final ExpansyState<E> config;
+public class LinearFilter<E> implements Filter {
+    protected final ExpansyState<E> state;
     protected final Source source;
     protected final Deque<TrackPoint> trackPoints;
     protected long offset;
     protected StopPoint point;
 
-    public LinearFilter(ExpansyState<E> config) {
-        this(config, 0);
+    public LinearFilter(ExpansyState<E> state) {
+        this(state, 0);
     }
 
-    public LinearFilter(ExpansyState<E> config, long offset) {
-        this.config = config;
-        this.source = config.getSource();
+    public LinearFilter(ExpansyState<E> state, long offset) {
+        this.state = state;
+        this.source = state.getSource();
         this.offset = offset;
         this.trackPoints = new ArrayDeque<>();
     }
 
-    public ExpansyState<E> configuration() {
-        return config;
+    public ExpansyState<E> state() {
+        return state;
     }
 
+    @Override
     public StopPoint next() {
         return next(1);
     }
 
+    @Override
     public StopPoint next(int length) {
         if (length == 0)
             return point;
@@ -45,20 +47,36 @@ public class LinearFilter<E> {
         return null;
     }
 
+    @Override
     public void push() {
         TrackPoint trackPoint = new TrackPoint(point.getIndex(), point.getValue());
         trackPoints.push(trackPoint);
     }
 
-    public void complete() {
+    @Override
+    public void push(int index) {
+        StopPoint point = this.point;
+        int next = index + 1 - point.getLength();
+        if (next > 0) {
+            String value = source.read( next);
+            next(next);
+        }
+        TrackPoint trackPoint = new TrackPoint(point.getIndex(), point.getValue().substring(0, index + 1));
+        trackPoints.push(trackPoint);
+    }
+
+    @Override
+    public void close() {
         throw new StopReason(0, trackPoints);
     }
 
-    public void pushAndComplete() {
+    @Override
+    public void complete() {
         this.push();
-        this.complete();
+        this.close();
     }
 
+    @Override
     public void error(String message) {
         throw new StopReason(1, trackPoints, message);
     }

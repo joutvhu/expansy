@@ -5,6 +5,16 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Params extends HashMap<String, List<String>> {
+    private String value;
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
     public void add(String key, String value) {
         List<String> values = get(key);
         if (values == null) {

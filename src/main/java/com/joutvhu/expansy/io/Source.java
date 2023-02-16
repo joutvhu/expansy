@@ -6,6 +6,4 @@ public interface Source {
     String read(int length);
 
     String read(long offset, int length);
-
-    void close();
 }

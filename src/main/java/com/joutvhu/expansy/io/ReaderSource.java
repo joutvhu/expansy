@@ -5,30 +5,30 @@ import java.io.IOException;
 import java.io.Reader;
 
 public class ReaderSource implements Source {
-    private long next;
+    private long current;
     private final Reader reader;
 
     public ReaderSource(Reader reader) {
-        this.next = 0;
+        this.current = 0;
         this.reader = new BufferedReader(reader);
     }
 
     @Override
     public long back(long offset) {
         try {
-            if (next != offset) {
-                if (offset > next) {
-                    long skipped = reader.skip(offset - next);
-                    next += skipped;
+            if (current != offset) {
+                if (offset > current) {
+                    long skipped = reader.skip(offset - current);
+                    current += skipped;
                 } else {
                     reader.reset();
-                    next = reader.skip(offset);
+                    current = reader.skip(offset);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return next;
+        return current;
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ReaderSource implements Source {
         try {
             char[] characters = new char[length];
             int len = reader.read(characters);
-            next += len;
+            current += len;
             return String.valueOf(characters, 0, len);
         } catch (IOException e) {
             return null;
@@ -45,16 +45,10 @@ public class ReaderSource implements Source {
 
     @Override
     public String read(long offset, int length) {
+        long backup = this.current;
         back(offset);
-        return read(length);
-    }
-
-    @Override
-    public void close() {
-        try {
-            reader.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String result = read(length);
+        back(backup);
+        return result;
     }
 }

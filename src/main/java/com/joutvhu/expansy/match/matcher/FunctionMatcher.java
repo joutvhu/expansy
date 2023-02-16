@@ -36,7 +36,7 @@ public class FunctionMatcher<E> extends Matcher<E> {
             if (Boolean.TRUE.equals(checker.apply(point.getValue())))
                 filter.push();
             if (maxLength != null && point.getLength() >= maxLength)
-                filter.complete();
+                filter.close();
             point = filter.next();
         } while (point != null);
     }
