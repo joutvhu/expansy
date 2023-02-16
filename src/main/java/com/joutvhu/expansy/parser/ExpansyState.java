@@ -16,7 +16,13 @@ public class ExpansyState<E> {
     private ExpansyParser<E> parser;
     private Map<String, Object> shared;
 
-    public ExpansyState(Source source, ElementRegister<E> register, ExpansyParser<E> parser) {
+    public ExpansyState(Source source, ElementRegister<E> register) {
+        this.source = source;
+        this.register = register;
+        this.shared = new HashMap<>();
+    }
+
+    private ExpansyState(Source source, ElementRegister<E> register, ExpansyParser<E> parser) {
         this.source = source;
         this.register = register;
         this.parser = parser;

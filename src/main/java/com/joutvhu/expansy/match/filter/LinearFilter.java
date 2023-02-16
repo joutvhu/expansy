@@ -29,6 +29,10 @@ public class LinearFilter<E> implements Filter {
         return state;
     }
 
+    public Deque<TrackPoint> trackPoints() {
+        return trackPoints;
+    }
+
     @Override
     public StopPoint next() {
         return next(1);

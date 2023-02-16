@@ -12,6 +12,7 @@ import com.joutvhu.expansy.match.filter.LinearFilter;
 import com.joutvhu.expansy.match.filter.StopReason;
 import com.joutvhu.expansy.match.filter.TrackPoint;
 import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -55,7 +56,7 @@ public class ExpansyParser<E> {
             Matcher<E> matcher = matchers.get(i);
             try {
                 matcher.match(filter);
-                throw new MathException("No track point found.");
+                filter.close();
             } catch (StopReason reason) {
                 Deque<TrackPoint> trackPoints = reason.getTrackPoints();
                 TrackPoint trackPoint = trackPoints.pop();
@@ -73,6 +74,10 @@ public class ExpansyParser<E> {
                     CheckNode node = new CheckNode(matcher, trackPoint, trackPoints);
                     nodes.push(node);
                 } else if (i == 0) {
+                    if (StringUtils.isBlank(reason.getMessage())) {
+                        if (trackPoints.isEmpty())
+                            throw new MathException("No track point found.");
+                    }
                     throw new MathException(reason.getMessage());
                 }
             }
