@@ -37,7 +37,7 @@ public class RegexMatcher<E> extends Matcher<E> {
 
     @Override
     public void match(LinearFilter<E> filter) {
-        StopPoint point = minLength != null ? filter.next(minLength) : filter.next();
+        StopPoint point = minLength != null && minLength > 0 ? filter.next(minLength) : filter.next();
         if (point == null)
             return;
         do {

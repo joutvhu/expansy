@@ -34,16 +34,19 @@ public class LinearFilter<E> {
     }
 
     public StopPoint next(int length) {
+        if (length == 0)
+            return point;
+        assert (length > 0);
         String value = source.read(length);
         if (StringUtils.isNotEmpty(value) && value.length() == length) {
-            point = point != null ? point.next(value) : new StopPoint(value);
+            point = point != null ? point.next(value) : new StopPoint(value, offset);
             return point;
         }
         return null;
     }
 
     public void push() {
-        TrackPoint trackPoint = new TrackPoint(offset + point.getIndex(), point.getValue());
+        TrackPoint trackPoint = new TrackPoint(point.getIndex(), point.getValue());
         trackPoints.push(trackPoint);
     }
 

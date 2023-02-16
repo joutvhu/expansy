@@ -54,8 +54,13 @@ public class EqualsMatcher<E> extends Matcher<E> {
             len = point.getLength();
             if (len != value.length())
                 filter.error("");
-            if (value.equals(point.getValue()))
-                filter.push();
+            if (ignoreCase) {
+                if (value.equalsIgnoreCase(point.getValue()))
+                    filter.push();
+            } else {
+                if (value.equals(point.getValue()))
+                    filter.push();
+            }
         }
     }
 }

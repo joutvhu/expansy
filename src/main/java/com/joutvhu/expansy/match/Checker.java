@@ -2,6 +2,7 @@ package com.joutvhu.expansy.match;
 
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.element.Result;
 import com.joutvhu.expansy.exception.MathException;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
 import com.joutvhu.expansy.match.filter.LinearFilter;
@@ -10,7 +11,7 @@ import com.joutvhu.expansy.match.filter.TrackPoint;
 import com.joutvhu.expansy.parser.ExpansyState;
 import lombok.AllArgsConstructor;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 import java.util.Stack;
@@ -22,12 +23,21 @@ public class Checker<E> {
         this.config = config;
     }
 
-    public Params check(Element<E> element) throws IOException {
-        List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        return check(matchers);
+    public List<Result<E>> checkElements(List<Element<E>> elements) {
+        List<Result<E>> results = new ArrayList<>();
+        for (Element<E> element : elements) {
+            Params params = checkElement(element);
+            results.add(new Result<>(element, params));
+        }
+        return results;
     }
 
-    public Params check(List<Matcher<E>> matchers) throws IOException {
+    public Params checkElement(Element<E> element) {
+        List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
+        return checkMatchers(matchers);
+    }
+
+    public Params checkMatchers(List<Matcher<E>> matchers) {
         Params params = new Params();
         LinearFilter<E> filter = new LinearFilter<E>(config);
         Stack<CheckNode> nodes = new Stack<>();
@@ -48,8 +58,8 @@ public class Checker<E> {
                 }
 
                 if (trackPoint != null) {
-                    config.getSource().back(trackPoint.getIndex());
-                    filter = new LinearFilter<E>(config, trackPoint.getIndex());
+                    config.getSource().back(trackPoint.getIndex() + 1);
+                    filter = new LinearFilter<E>(config, trackPoint.getIndex() + 1);
                     CheckNode node = new CheckNode(matcher, trackPoint, trackPoints);
                     nodes.push(node);
                 } else if (i == 0) {
