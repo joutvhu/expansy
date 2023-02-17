@@ -10,6 +10,11 @@ public class StringSource implements Source {
     }
 
     @Override
+    public void reset() {
+        current = 0;
+    }
+
+    @Override
     public long back(long offset) {
         current = Math.min(buffer.length(), offset);
         return current;

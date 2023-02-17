@@ -2,9 +2,9 @@ package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Result;
+import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.filter.LinearFilter;
-import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.parser.ExpansyParser;
 
 import java.util.Arrays;

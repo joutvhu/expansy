@@ -14,6 +14,15 @@ public class ReaderSource implements Source {
     }
 
     @Override
+    public void reset() {
+        try {
+            reader.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public long back(long offset) {
         try {
             if (current != offset) {

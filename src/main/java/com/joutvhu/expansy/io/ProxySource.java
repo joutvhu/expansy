@@ -16,6 +16,11 @@ public class ProxySource implements Source {
     }
 
     @Override
+    public void reset() {
+        current = 0;
+    }
+
+    @Override
     public long back(long offset) {
         current = offset;
         return current;

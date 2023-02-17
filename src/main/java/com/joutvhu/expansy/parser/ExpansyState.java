@@ -3,7 +3,6 @@ package com.joutvhu.expansy.parser;
 import com.joutvhu.expansy.element.ElementRegister;
 import com.joutvhu.expansy.io.Source;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +11,6 @@ import java.util.Map;
 public class ExpansyState<E> {
     private Source source;
     private ElementRegister<E> register;
-    @Setter
     private ExpansyParser<E> parser;
     private Map<String, Object> shared;
 
@@ -27,6 +25,10 @@ public class ExpansyState<E> {
         this.register = register;
         this.parser = parser;
         this.shared = new HashMap<>();
+    }
+
+    public void setParser(ExpansyParser<E> parser) {
+        this.parser = parser;
     }
 
     public ExpansyState<E> copyWith(Source source) {

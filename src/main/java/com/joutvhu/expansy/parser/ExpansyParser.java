@@ -1,6 +1,7 @@
 package com.joutvhu.expansy.parser;
 
 import com.joutvhu.expansy.element.Element;
+import com.joutvhu.expansy.element.ElementRegister;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.element.Result;
 import com.joutvhu.expansy.exception.MathException;
@@ -23,9 +24,13 @@ import java.util.Stack;
 public class ExpansyParser<E> {
     private ExpansyState<E> state;
 
-    public ExpansyParser(ExpansyState<E> state) {
-        this.state = state;
-        this.state.setParser(this);
+    public List<Result<E>> checkElements(List<Element<E>> elements) {
+        List<Result<E>> results = new ArrayList<>();
+        for (Element<E> element : elements) {
+            Params params = checkElement(element, state);
+            results.add(new Result<>(element, params));
+        }
+        return results;
     }
 
     public List<Result<E>> checkElements(List<Element<E>> elements, LinearFilter<E> filter) {
@@ -33,25 +38,23 @@ public class ExpansyParser<E> {
         Source source = new ProxySource(filter);
         for (Element<E> element : elements) {
             source.back(0);
-            ExpansyState<E> state = this.state.copyWith(source);
-            Params params = checkElement(element, state);
+            ExpansyState<E> childState = state.copyWith(source);
+            Params params = checkElement(element, childState);
             results.add(new Result<>(element, params));
         }
         results.sort(Comparator.comparingInt(Result::getLength));
         return results;
     }
 
-    public Params checkElement(Element<E> element, ExpansyState<E> config) {
+    public Params checkElement(Element<E> element, ExpansyState<E> state) {
         List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        return checkMatchers(matchers, config);
+        return checkMatchers(matchers, state);
     }
 
     public Params checkMatchers(List<Matcher<E>> matchers, ExpansyState<E> state) {
         Params params = new Params();
-        if (state == null)
-            state = this.state;
-        LinearFilter<E> filter = new LinearFilter<E>(state);
-        Stack<CheckNode> nodes = new Stack<>();
+        LinearFilter<E> filter = new LinearFilter<>(state);
+        Stack<CheckNode<E>> nodes = new Stack<>();
         for (int i = 0, len = matchers.size(); i < len; i++) {
             Matcher<E> matcher = matchers.get(i);
             try {
@@ -62,7 +65,7 @@ public class ExpansyParser<E> {
                 TrackPoint trackPoint = trackPoints.pop();
                 while (trackPoint == null && !nodes.empty()) {
                     // Back to other track point.
-                    CheckNode node = nodes.pop();
+                    CheckNode<E> node = nodes.pop();
                     trackPoints = node.trackPoints;
                     trackPoint = trackPoints.pop();
                     i = nodes.size();
@@ -71,7 +74,7 @@ public class ExpansyParser<E> {
                 if (trackPoint != null) {
                     state.getSource().back(trackPoint.getIndex() + 1);
                     filter = new LinearFilter<E>(state, trackPoint.getIndex() + 1);
-                    CheckNode node = new CheckNode(matcher, trackPoint, trackPoints);
+                    CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
                     nodes.push(node);
                 } else if (i == 0) {
                     if (StringUtils.isBlank(reason.getMessage())) {
@@ -84,7 +87,7 @@ public class ExpansyParser<E> {
         }
 
         StringBuilder builder = new StringBuilder();
-        for (CheckNode node : nodes) {
+        for (CheckNode<E> node : nodes) {
             Matcher<E> matcher = node.matcher;
             if (matcher.getName() != null)
                 params.add(matcher.getName(), node.point.getValue());
@@ -97,7 +100,7 @@ public class ExpansyParser<E> {
     }
 
     @AllArgsConstructor
-    private class CheckNode {
+    private class CheckNode<E> {
         private Matcher<E> matcher;
         private TrackPoint point;
         private Deque<TrackPoint> trackPoints;

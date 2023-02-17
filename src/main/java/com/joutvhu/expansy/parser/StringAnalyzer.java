@@ -25,6 +25,6 @@ public class StringAnalyzer<E> extends Analyzer<E, String> {
     private ExpansyParser<E> parser(String value) {
         StringSource source = new StringSource(value);
         ExpansyState<E> state = new ExpansyState<>(source, register);
-        return new ExpansyParser<>(state);
+        return new ExpansyParser<>();
     }
 }
