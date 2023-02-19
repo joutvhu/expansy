@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.filter;
 
-public interface Filter {
+public interface Consumer {
     StopPoint next();
 
     StopPoint next(int length);

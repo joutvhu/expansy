@@ -7,18 +7,18 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
-public class LinearFilter<E> implements Filter {
+public class LinearConsumer<E> implements Consumer {
     protected final ExpansyState<E> state;
     protected final Source source;
     protected final Deque<TrackPoint> trackPoints;
     protected long offset;
     protected StopPoint point;
 
-    public LinearFilter(ExpansyState<E> state) {
+    public LinearConsumer(ExpansyState<E> state) {
         this(state, 0);
     }
 
-    public LinearFilter(ExpansyState<E> state, long offset) {
+    public LinearConsumer(ExpansyState<E> state, long offset) {
         this.state = state;
         this.source = state.getSource();
         this.offset = offset;

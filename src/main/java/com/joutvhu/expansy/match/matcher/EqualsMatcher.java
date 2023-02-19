@@ -2,7 +2,7 @@ package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.Definer;
-import com.joutvhu.expansy.match.filter.LinearFilter;
+import com.joutvhu.expansy.match.filter.LinearConsumer;
 import com.joutvhu.expansy.match.filter.StopPoint;
 import org.apache.commons.lang3.StringUtils;
 
@@ -44,22 +44,22 @@ public class EqualsMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter<E> filter) {
+    public void match(LinearConsumer<E> consumer) {
         int len = 0;
         StopPoint point = null;
         for (String value : values) {
             if (len != value.length())
-                point = filter.next(value.length() - len);
+                point = consumer.next(value.length() - len);
             if (point == null) break;
             len = point.getLength();
             if (len != value.length())
-                filter.error("");
+                consumer.error("");
             if (ignoreCase) {
                 if (value.equalsIgnoreCase(point.getValue()))
-                    filter.push();
+                    consumer.push();
             } else {
                 if (value.equals(point.getValue()))
-                    filter.push();
+                    consumer.push();
             }
         }
     }

@@ -2,7 +2,7 @@ package com.joutvhu.expansy.match.definer;
 
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.LinearFilter;
+import com.joutvhu.expansy.match.filter.LinearConsumer;
 
 public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, MaybeDefiner<E, T>> {
     private T parent;
@@ -27,7 +27,7 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
     public Matcher<E> matcher() {
         return new Matcher<E>(this) {
             @Override
-            public void match(LinearFilter<E> filter) {
+            public void match(LinearConsumer<E> consumer) {
 
             }
         };

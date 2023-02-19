@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.LinearFilter;
+import com.joutvhu.expansy.match.filter.LinearConsumer;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.filter.StopPoint;
 
@@ -28,16 +28,16 @@ public class FunctionMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearFilter<E> filter) {
-        StopPoint point = minLength != null && minLength > 0 ? filter.next(minLength) : filter.next();
+    public void match(LinearConsumer<E> consumer) {
+        StopPoint point = minLength != null && minLength > 0 ? consumer.next(minLength) : consumer.next();
         if (point == null)
             return;
         do {
             if (Boolean.TRUE.equals(checker.apply(point.getValue())))
-                filter.push();
+                consumer.push();
             if (maxLength != null && point.getLength() >= maxLength)
-                filter.close();
-            point = filter.next();
+                consumer.close();
+            point = consumer.next();
         } while (point != null);
     }
 }

@@ -1,17 +1,17 @@
 package com.joutvhu.expansy.io;
 
-import com.joutvhu.expansy.match.filter.Filter;
+import com.joutvhu.expansy.match.filter.Consumer;
 import com.joutvhu.expansy.match.filter.StopPoint;
 import org.apache.commons.lang3.StringUtils;
 
 public class ProxySource implements Source {
     private long current;
-    private Filter filter;
+    private Consumer consumer;
     private String buffer;
 
-    public ProxySource(Filter filter) {
+    public ProxySource(Consumer consumer) {
         this.current = 0;
-        this.filter = filter;
+        this.consumer = consumer;
         this.buffer = StringUtils.EMPTY;
     }
 
@@ -37,7 +37,7 @@ public class ProxySource implements Source {
     public String read(long offset, int length) {
         int len = (int) (offset + length - buffer.length());
         if (len > 0) {
-            StopPoint point = filter.next(len);
+            StopPoint point = consumer.next(len);
             buffer = point.getValue();
         }
         return buffer.substring((int) offset, length);

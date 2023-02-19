@@ -1,7 +1,6 @@
 package com.joutvhu.expansy.parser;
 
 import com.joutvhu.expansy.element.Element;
-import com.joutvhu.expansy.element.ElementRegister;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.element.Result;
 import com.joutvhu.expansy.exception.MathException;
@@ -9,7 +8,7 @@ import com.joutvhu.expansy.io.ProxySource;
 import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
-import com.joutvhu.expansy.match.filter.LinearFilter;
+import com.joutvhu.expansy.match.filter.LinearConsumer;
 import com.joutvhu.expansy.match.filter.StopReason;
 import com.joutvhu.expansy.match.filter.TrackPoint;
 import lombok.AllArgsConstructor;
@@ -33,7 +32,7 @@ public class ExpansyParser<E> {
         return results;
     }
 
-    public List<Result<E>> checkElements(List<Element<E>> elements, LinearFilter<E> filter) {
+    public List<Result<E>> checkElements(List<Element<E>> elements, LinearConsumer<E> filter) {
         List<Result<E>> results = new ArrayList<>();
         Source source = new ProxySource(filter);
         for (Element<E> element : elements) {
@@ -53,7 +52,7 @@ public class ExpansyParser<E> {
 
     public Params checkMatchers(List<Matcher<E>> matchers, ExpansyState<E> state) {
         Params params = new Params();
-        LinearFilter<E> filter = new LinearFilter<>(state);
+        LinearConsumer<E> filter = new LinearConsumer<>(state);
         Stack<CheckNode<E>> nodes = new Stack<>();
         for (int i = 0, len = matchers.size(); i < len; i++) {
             Matcher<E> matcher = matchers.get(i);
@@ -73,7 +72,7 @@ public class ExpansyParser<E> {
 
                 if (trackPoint != null) {
                     state.getSource().back(trackPoint.getIndex() + 1);
-                    filter = new LinearFilter<E>(state, trackPoint.getIndex() + 1);
+                    filter = new LinearConsumer<E>(state, trackPoint.getIndex() + 1);
                     CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
                     nodes.push(node);
                 } else if (i == 0) {
