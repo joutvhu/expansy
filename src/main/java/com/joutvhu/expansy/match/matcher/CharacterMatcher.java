@@ -53,7 +53,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
                 if (point == null) break;
                 if (!contains(point.getCharacter()))
                     consumer.error("");
-                consumer.push();
+                consumer.stack();
             }
         }
     }

@@ -42,7 +42,7 @@ public class RegexMatcher<E> extends Matcher<E> {
             return;
         do {
             if (pattern.matcher(point.getValue()).matches())
-                consumer.push();
+                consumer.stack();
             if (maxLength != null && point.getLength() >= maxLength)
                 consumer.close();
             point = consumer.next();

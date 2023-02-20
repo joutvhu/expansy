@@ -34,7 +34,7 @@ public class FunctionMatcher<E> extends Matcher<E> {
             return;
         do {
             if (Boolean.TRUE.equals(checker.apply(point.getValue())))
-                consumer.push();
+                consumer.stack();
             if (maxLength != null && point.getLength() >= maxLength)
                 consumer.close();
             point = consumer.next();

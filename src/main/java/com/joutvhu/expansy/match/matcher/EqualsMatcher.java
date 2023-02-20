@@ -56,10 +56,10 @@ public class EqualsMatcher<E> extends Matcher<E> {
                 consumer.error("");
             if (ignoreCase) {
                 if (value.equalsIgnoreCase(point.getValue()))
-                    consumer.push();
+                    consumer.stack();
             } else {
                 if (value.equals(point.getValue()))
-                    consumer.push();
+                    consumer.stack();
             }
         }
     }

@@ -5,6 +5,10 @@ public interface Consumer {
 
     StopPoint next(int length);
 
+    void stack();
+
+    void stack(int index);
+
     void push();
 
     void push(int index);

@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 public class ElementRegister<E> extends HashMap<String, Element<E>> {
+    public void register(Element<E> element) {
+        register(element.name(), element);
+    }
+
     public void register(String name, Element<E> element) {
         this.put(name, element);
     }

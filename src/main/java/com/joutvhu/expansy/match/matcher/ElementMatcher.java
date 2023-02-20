@@ -28,7 +28,7 @@ public class ElementMatcher<E> extends Matcher<E> {
         ExpansyParser<E> parser = consumer.state().getParser();
         List<Result<E>> results = parser.checkElements(elements, consumer);
         for (Result<E> result : results) {
-            consumer.push(result.getLength());
+            consumer.stack(result.getLength());
         }
         consumer.close();
     }

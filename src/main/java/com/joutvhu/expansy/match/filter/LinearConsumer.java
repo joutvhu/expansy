@@ -52,21 +52,32 @@ public class LinearConsumer<E> implements Consumer {
     }
 
     @Override
-    public void push() {
+    public void stack() {
         TrackPoint trackPoint = new TrackPoint(point.getIndex(), point.getValue());
         trackPoints.push(trackPoint);
     }
 
     @Override
-    public void push(int index) {
-        StopPoint point = this.point;
-        int next = index + 1 - point.getLength();
+    public void stack(int index) {
+        String value = this.point.getValue();
+        int next = index + 1 - value.length();
         if (next > 0) {
-            String value = source.read( next);
-            next(next);
+            String v = source.read(next);
+            if (StringUtils.isNotEmpty(v))
+                value = value.concat(v);
         }
-        TrackPoint trackPoint = new TrackPoint(point.getIndex(), point.getValue().substring(0, index + 1));
+        TrackPoint trackPoint = new TrackPoint(value.length() - 1, value.substring(0, index + 1));
         trackPoints.push(trackPoint);
+    }
+
+    @Override
+    public void push() {
+
+    }
+
+    @Override
+    public void push(int index) {
+
     }
 
     @Override
@@ -76,7 +87,7 @@ public class LinearConsumer<E> implements Consumer {
 
     @Override
     public void complete() {
-        this.push();
+        this.stack();
         this.close();
     }
 
