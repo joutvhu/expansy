@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ExpansyParser<E> {
         this.state = state;
     }
 
-    public List<Result<E>> parse(List<Element<E>> elements) {
+    public List<Result<E>> parse(Collection<Element<E>> elements) {
         List<Result<E>> results = new ArrayList<>();
         for (Element<E> element : elements) {
             Params params = parse(element, 0);
@@ -34,7 +35,7 @@ public class ExpansyParser<E> {
         return results;
     }
 
-    public List<Result<E>> parse(List<Element<E>> elements, Consumer<E> filter) {
+    public List<Result<E>> parse(Collection<Element<E>> elements, Consumer<E> filter) {
         List<Result<E>> results = new ArrayList<>();
         for (Element<E> element : elements) {
             Params params = parse(element, filter.offset());
@@ -49,13 +50,14 @@ public class ExpansyParser<E> {
         return parse(matchers, offset);
     }
 
-    public Params parse(List<Matcher<E>> matchers, Integer offset) {
+    public Params parse(Collection<Matcher<E>> matchers, Integer offset) {
         Params params = new Params();
         params.setStart(offset != null ? offset : 0);
         Consumer<E> filter = new Consumer<>(state, params.getStart());
         Stack<CheckNode<E>> nodes = new Stack<>();
+        Matcher<E>[] array = (Matcher<E>[]) matchers.toArray();
         for (int i = 0, len = matchers.size(); i < len; i++) {
-            Matcher<E> matcher = matchers.get(i);
+            Matcher<E> matcher = array[i];
             try {
                 matcher.match(filter);
                 filter.close();
@@ -73,7 +75,7 @@ public class ExpansyParser<E> {
                 if (trackPoint != null) {
                     CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
                     nodes.push(node);
-                    filter = new Consumer<>(state, trackPoint.getIndex() + 1);
+                    filter = new Consumer<>(state, trackPoint.getIndex());
                 } else if (i == 0) {
                     if (StringUtils.isBlank(reason.getMessage())) {
                         if (trackPoints.isEmpty())

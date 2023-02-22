@@ -272,20 +272,19 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T elementName(String elementName) {
-        container.elementName(elementName);
+    public T element(String element) {
+        container.element(element);
         return master;
     }
 
     @Override
-    public T elementName(String... elementNames) {
-        container.elementName(elementNames);
+    public T element(String... elements) {
+        container.element(elements);
         return master;
     }
 
-    @Override
-    public T elementName(List<String> elementNames) {
-        container.elementName(elementNames);
+    public T element(List<String> elements) {
+        container.element(elements);
         return master;
     }
 
@@ -302,8 +301,8 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T element(List<Element<E>> elements) {
-        container.element(elements);
+    public T elements() {
+        container.elements();
         return master;
     }
 }

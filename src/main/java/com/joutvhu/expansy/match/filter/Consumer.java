@@ -58,7 +58,7 @@ public class Consumer<E> {
         if (index == null)
             return new TrackPoint(point.getIndex(), point.getValue());
         String value = point.getValue();
-        int end = index + 1;
+        int end = index;
         int next = end - value.length();
         if (next > 0) {
             String v = source.read(point.getIndex(), next);

@@ -256,20 +256,19 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T elementName(String elementName) {
-        parent.elementName(elementName);
+    public T element(String element) {
+        parent.element(element);
         return result();
     }
 
     @Override
-    public T elementName(String... elementNames) {
-        parent.elementName(elementNames);
+    public T element(String... elements) {
+        parent.element(elements);
         return result();
     }
 
-    @Override
-    public T elementName(List<String> elementNames) {
-        parent.elementName(elementNames);
+    public T element(List<String> elements) {
+        parent.element(elements);
         return result();
     }
 
@@ -286,8 +285,8 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T element(List<Element<E>> elements) {
-        parent.element(elements);
+    public T elements() {
+        parent.elements();
         return result();
     }
 }

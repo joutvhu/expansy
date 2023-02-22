@@ -7,23 +7,32 @@ import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.filter.Consumer;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
-public class ElementMatcher<E> extends Matcher<E> {
-    private List<Element<E>> elements;
+public class RegisteredMatcher<E> extends Matcher<E> {
+    private List<String> names;
 
-    public ElementMatcher(Definer<E> parent, Element<E> element) {
+    public RegisteredMatcher(Definer<E> parent) {
         super(parent);
-        this.elements = Arrays.asList(element);
+        this.names = null;
     }
 
-    public ElementMatcher(Definer<E> parent, List<Element<E>> elements) {
+    public RegisteredMatcher(Definer<E> parent, String element) {
         super(parent);
-        this.elements = elements;
+        this.names = Arrays.asList(element);
+    }
+
+    public RegisteredMatcher(Definer<E> parent, List<String> elements) {
+        super(parent);
+        this.names = elements;
     }
 
     @Override
     public void match(Consumer<E> consumer) {
+        Collection<Element<E>> elements = names == null || names.isEmpty() ?
+                consumer.state().getRegister().elements() :
+                consumer.state().getRegister().get(names);
         List<Result<E>> results = consumer.state().getParser().parse(elements, consumer);
         for (Result<E> result : results) {
             consumer.stack(result.getLength());

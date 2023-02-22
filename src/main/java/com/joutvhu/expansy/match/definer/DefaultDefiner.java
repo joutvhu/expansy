@@ -9,6 +9,7 @@ import com.joutvhu.expansy.match.matcher.EqualsMatcher;
 import com.joutvhu.expansy.match.matcher.FunctionMatcher;
 import com.joutvhu.expansy.match.matcher.NumericMatcher;
 import com.joutvhu.expansy.match.matcher.RegexMatcher;
+import com.joutvhu.expansy.match.matcher.RegisteredMatcher;
 import com.joutvhu.expansy.match.matcher.WordMatcher;
 
 import java.util.ArrayList;
@@ -276,18 +277,19 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> elementName(String elementName) {
+    public DefaultDefiner<E> element(String element) {
+        matchers.add(new RegisteredMatcher<>(this, element));
+        return this;
+    }
+
+    public DefaultDefiner<E> element(List<String> elements) {
+        matchers.add(new RegisteredMatcher<>(this, elements));
         return this;
     }
 
     @Override
-    public DefaultDefiner<E> elementName(List<String> elementNames) {
-        return this;
-    }
-
-    @Override
-    public DefaultDefiner<E> elementName(String... elementNames) {
-        return elementName(Arrays.asList(elementNames));
+    public DefaultDefiner<E> element(String... elements) {
+        return element(Arrays.asList(elements));
     }
 
     @Override
@@ -298,12 +300,13 @@ public class DefaultDefiner<E> implements Definer<E> {
 
     @Override
     public DefaultDefiner<E> element(Element<E>... elements) {
-        return element(Arrays.asList(elements));
+        matchers.add(new ElementMatcher<>(this, Arrays.asList(elements)));
+        return this;
     }
 
     @Override
-    public DefaultDefiner<E> element(List<Element<E>> elements) {
-        matchers.add(new ElementMatcher<>(this, elements));
+    public DefaultDefiner<E> elements() {
+        matchers.add(new RegisteredMatcher<>(this));
         return this;
     }
 }

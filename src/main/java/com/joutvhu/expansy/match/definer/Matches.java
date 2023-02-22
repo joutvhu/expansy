@@ -105,15 +105,15 @@ public interface Matches<E, T extends Definer<E>> {
 
     T check(Function<String, Boolean> checker);
 
-    T elementName(String elementName);
+    T element(String element);
 
-    T elementName(String... elementNames);
+    T element(String... elements);
 
-    T elementName(List<String> elementNames);
+    T element(List<String> elements);
 
     T element(Element<E> element);
 
     T element(Element<E>... elements);
 
-    T element(List<Element<E>> elements);
+    T elements();
 }
