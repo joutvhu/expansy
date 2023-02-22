@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.exception;
 
-public class MathException extends ExpressionException {
+public class MathException extends ExpansyException {
     public MathException() {
     }
 

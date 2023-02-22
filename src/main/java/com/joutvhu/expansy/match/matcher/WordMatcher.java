@@ -1,9 +1,9 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.Consumer;
+import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.Definer;
-import com.joutvhu.expansy.match.filter.StopPoint;
+import com.joutvhu.expansy.match.consumer.StopPoint;
 
 public class WordMatcher<E> extends Matcher<E> {
     public WordMatcher(Definer<E> parent) {

@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match;
 
-import com.joutvhu.expansy.match.filter.Consumer;
+import com.joutvhu.expansy.match.consumer.Consumer;
 
 public abstract class Matcher<E> {
     protected String name;

@@ -1,19 +1,22 @@
 package com.joutvhu.expansy.element;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
-@AllArgsConstructor
-public class Result<E> {
-    private Element<E> element;
-    private Params params;
+import java.util.List;
 
-    public String getValue() {
-        return params.getValue();
+@Getter
+public class Result<E> {
+    private List<Params<E>> values;
+
+    public void add(Params<E> value) {
+        values.add(value);
     }
 
-    public int getLength() {
-        return params.getValue().length();
+    public void addAll(List<Params<E>> values) {
+        values.addAll(values);
+    }
+
+    public Params<E> get(int index) {
+        return values.get(index);
     }
 }

@@ -1,4 +1,4 @@
-package com.joutvhu.expansy.match.filter;
+package com.joutvhu.expansy.match.consumer;
 
 import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.parser.ExpansyState;

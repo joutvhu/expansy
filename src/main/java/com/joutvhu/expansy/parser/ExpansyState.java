@@ -20,6 +20,10 @@ public class ExpansyState<E> {
         this.shared = new HashMap<>();
     }
 
+    public int getLength() {
+        return source.length();
+    }
+
     void setParser(InternalParser<E> parser) {
         this.parser = parser;
     }

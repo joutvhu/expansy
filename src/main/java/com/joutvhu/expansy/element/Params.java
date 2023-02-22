@@ -3,11 +3,14 @@ package com.joutvhu.expansy.element;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Params extends HashMap<String, List<String>> {
+public class Params<E>  {
+    private Map<String, List<Object>> params = new HashMap<>();
     private String value;
     private int start;
     private int end;
+    private Element<E> element;
 
     public int getStart() {
         return start;
@@ -33,23 +36,50 @@ public class Params extends HashMap<String, List<String>> {
         this.value = value;
     }
 
+    public int getLength() {
+        return value.length();
+    }
+
+    public Element<E> getElement() {
+        return element;
+    }
+
+    public void setElement(Element<E> element) {
+        this.element = element;
+    }
+
     public void add(String key, String value) {
-        List<String> values = get(key);
+        List<Object> values = params.get(key);
         if (values == null) {
             values = new ArrayList<>();
-            put(key, values);
+            params.put(key, values);
         }
         values.add(value);
     }
 
-    public String getOne(String key) {
-        return getOne(key, 0);
+    public void add(String key, Params<E> value) {
+        List<Object> values = params.get(key);
+        if (values == null) {
+            values = new ArrayList<>();
+            params.put(key, values);
+        }
+        values.add(value);
     }
 
-    public String getOne(String key, int index) {
-        List<String> values = get(key);
-        if (values != null)
-            return values.get(index);
+    public String getString(String key) {
+        return getString(key, 0);
+    }
+
+    public String getString(String key, int index) {
+        List<Object> values = params.get(key);
+        if (values != null) {
+            Object value = values.get(index);
+            if (value instanceof String)
+                return (String) value;
+            if (value instanceof Params)
+                return ((Params<E>) value).getValue();
+            return null;
+        }
         return null;
     }
 }

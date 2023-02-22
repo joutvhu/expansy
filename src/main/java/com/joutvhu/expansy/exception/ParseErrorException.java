@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.exception;
 
-public class ParseErrorException extends ExpressionException {
+public class ParseErrorException extends ExpansyException {
     public ParseErrorException() {
     }
 

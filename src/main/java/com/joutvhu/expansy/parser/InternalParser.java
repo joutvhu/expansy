@@ -5,10 +5,10 @@ import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.element.Result;
 import com.joutvhu.expansy.exception.MathException;
 import com.joutvhu.expansy.match.Matcher;
+import com.joutvhu.expansy.match.consumer.Consumer;
+import com.joutvhu.expansy.match.consumer.StopReason;
+import com.joutvhu.expansy.match.consumer.TrackPoint;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
-import com.joutvhu.expansy.match.filter.Consumer;
-import com.joutvhu.expansy.match.filter.StopReason;
-import com.joutvhu.expansy.match.filter.TrackPoint;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
@@ -30,29 +30,49 @@ public class InternalParser<E> {
     public List<Result<E>> parseByElements(Collection<Element<E>> elements, int offset) {
         List<Result<E>> results = new ArrayList<>();
         for (Element<E> element : elements) {
-            Params params = parseByElement(element, 0);
-            results.add(new Result<>(element, params));
+            Params<E> params = parseByElement(element, offset);
+            if (state.getLength() <= params.getEnd()) {
+                Result<E> result = new Result<>();
+                result.add(params);
+                results.add(result);
+            } else {
+                List<Result<E>> values = parseByElements(elements, params.getEnd());
+                results.addAll(merge(params, values));
+            }
         }
         return results;
     }
 
-    public List<Result<E>> parseByElements(Collection<Element<E>> elements, Consumer<E> filter) {
+    private List<Result<E>> merge(Params<E> value, List<Result<E>> values) {
         List<Result<E>> results = new ArrayList<>();
-        for (Element<E> element : elements) {
-            Params params = parseByElement(element, filter.offset());
-            results.add(new Result<>(element, params));
+        for (Result<E> v : values) {
+            Result<E> result = new Result<>();
+            result.add(value);
+            result.addAll(v.getValues());
+            results.add(result);
         }
-        results.sort(Comparator.comparingInt(Result::getLength));
         return results;
     }
 
-    public Params parseByElement(Element<E> element, Integer offset) {
-        List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        return parseByMatchers(matchers, offset);
+    public List<Params<E>> parseByElements(Collection<Element<E>> elements, Consumer<E> filter) {
+        List<Params<E>> results = new ArrayList<>();
+        for (Element<E> element : elements) {
+            Params<E> params = parseByElement(element, filter.offset());
+            results.add(params);
+        }
+        results.sort(Comparator.comparingInt(Params::getLength));
+        return results;
     }
 
-    public Params parseByMatchers(Collection<Matcher<E>> matchers, Integer offset) {
-        Params params = new Params();
+    public Params<E> parseByElement(Element<E> element, Integer offset) {
+        List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
+        Params<E> params = parseByMatchers(matchers, offset);
+        params.setElement(element);
+        return params;
+    }
+
+    public Params<E> parseByMatchers(Collection<Matcher<E>> matchers, Integer offset) {
+        Params<E> params = new Params<>();
         params.setStart(offset != null ? offset : 0);
         Consumer<E> filter = new Consumer<>(state, params.getStart());
         Stack<CheckNode<E>> nodes = new Stack<>();

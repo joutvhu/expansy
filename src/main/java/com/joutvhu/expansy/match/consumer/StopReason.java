@@ -1,4 +1,4 @@
-package com.joutvhu.expansy.match.filter;
+package com.joutvhu.expansy.match.consumer;
 
 import java.util.Deque;
 
