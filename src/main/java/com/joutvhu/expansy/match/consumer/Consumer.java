@@ -124,7 +124,7 @@ public class Consumer<E> {
     }
 
     public void complete() {
-        this.stack();
+        this.push();
         this.close();
     }
 

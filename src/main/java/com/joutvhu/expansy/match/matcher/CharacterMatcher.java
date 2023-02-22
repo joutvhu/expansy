@@ -48,13 +48,13 @@ public class CharacterMatcher<E> extends Matcher<E> {
             }
             consumer.complete();
         } else {
-            consumer.stack();
+            consumer.push();
             while (true) {
                 StopPoint point = consumer.next();
                 if (point == null) break;
                 if (!contains(point.getCharacter()))
                     consumer.error("");
-                consumer.stack();
+                consumer.push();
             }
         }
     }

@@ -19,4 +19,11 @@ public class ExpansyException extends RuntimeException {
     public ExpansyException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
+
+    public static ExpansyException of(Exception e) {
+        if (e instanceof ExpansyException)
+            return (ExpansyException) e;
+        else
+            return new ExpansyException(e);
+    }
 }

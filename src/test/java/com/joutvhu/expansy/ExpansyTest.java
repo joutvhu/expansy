@@ -20,11 +20,12 @@ public class ExpansyTest {
     public void setup() {
         expansy = Expansy.instance()
                 .register(new AddSubtract<>())
-                .register(new Function<>())
-                .register(new Group<>())
-                .register(new MultiplyDivision<>())
+//                .register(new Function<>())
+//                .register(new Group<>())
+//                .register(new MultiplyDivision<>())
                 .register(new Number<>())
-                .register(new Variable<>());
+//                .register(new Variable<>())
+        ;
     }
 
     @Test

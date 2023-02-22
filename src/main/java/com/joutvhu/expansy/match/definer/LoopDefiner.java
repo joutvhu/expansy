@@ -40,7 +40,7 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                         Params results = parser.parseByMatchers(matchers, offset, consumer.branch());
                         offset = results.getEnd();
                         if (minRepetitions == null || minRepetitions <= i)
-                            consumer.stack(offset);
+                            consumer.push(offset);
                         if (maxRepetitions != null && maxRepetitions >= i)
                             consumer.close();
                     } catch (Exception e) {

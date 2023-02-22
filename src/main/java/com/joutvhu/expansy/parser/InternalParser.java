@@ -36,28 +36,31 @@ public class InternalParser<E> {
         List<Branch<E>> branches = new ArrayList<>();
         ExpansyException error = null;
         for (Element<E> element : elements) {
-            try {
-                Params<E> params = parseByElement(element, offset, branch);
-                branch.add(params);
+            if (branch == null || !branch.started(offset, element)) {
                 try {
-                    if (state.getLength() <= params.getEnd()) {
-                        branches.add(branch);
-                    } else {
-                        List<Branch<E>> values = parseByElements(elements, params.getEnd(), branch);
-                        branches.addAll(values);
+                    if (branch != null)
+                        branch.start(offset, element);
+                    Params<E> params = parseByElement(element, offset, branch);
+                    if (params.getLength() > 0) {
+                        Branch<E> newBranch = branch.clone();
+                        newBranch.add(params);
+                        try {
+                            if (state.getLength() <= params.getEnd()) {
+                                branches.add(newBranch);
+                            } else {
+                                List<Branch<E>> values = parseByElements(elements, params.getEnd(), newBranch);
+                                branches.addAll(values);
+                            }
+                        } catch (Exception e) {
+                            error = ExpansyException.of(e);
+                        }
                     }
                 } catch (Exception e) {
-                    if (e instanceof ExpansyException)
-                        error = (ExpansyException) e;
-                    else
-                        error = new ExpansyException(e);
-                }
-            } catch (Exception e) {
-                if (error == null) {
-                    if (e instanceof ExpansyException)
-                        error = (ExpansyException) e;
-                    else
-                        error = new ExpansyException(e);
+                    if (error == null)
+                        error = ExpansyException.of(e);
+                } finally {
+                    if (branch != null)
+                        branch.complete(offset, element);
                 }
             }
         }
@@ -68,11 +71,28 @@ public class InternalParser<E> {
 
     public List<Params<E>> parseByElements(Collection<Element<E>> elements, Consumer<E> consumer) {
         List<Params<E>> results = new ArrayList<>();
-        for (Element<E> element : elements) {
-            Params<E> params = parseByElement(element, consumer.offset(), consumer.branch());
-            results.add(params);
+        ExpansyException error = null;
+        Branch<E> branch = consumer.branch();
+        if (consumer.offset() < state.getLength()) {
+            for (Element<E> element : elements) {
+                if (branch == null || !branch.started(consumer.offset(), element)) {
+                    try {
+                        if (branch != null)
+                            branch.start(consumer.offset(), element);
+                        Params<E> params = parseByElement(element, consumer.offset(), consumer.branch());
+                        if (params.getLength() > 0)
+                            results.add(params);
+                    } catch (Exception e) {
+                        if (error == null)
+                            error = ExpansyException.of(e);
+                    } finally {
+                        if (branch != null)
+                            branch.complete(consumer.offset(), element);
+                    }
+                }
+            }
+            results.sort(Comparator.comparingInt(Params::getLength));
         }
-        results.sort(Comparator.comparingInt(Params::getLength));
         return results;
     }
 
@@ -113,7 +133,7 @@ public class InternalParser<E> {
                 if (trackPoint != null) {
                     CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
                     nodes.push(node);
-                    consumer = new Consumer<>(state, trackPoint.getIndex());
+                    consumer = new Consumer<>(state, trackPoint.getIndex(), branch);
                 } else if (i == 0) {
                     if (StringUtils.isBlank(reason.getMessage())) {
                         if (trackPoints.isEmpty())

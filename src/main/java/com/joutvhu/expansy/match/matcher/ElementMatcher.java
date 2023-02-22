@@ -19,7 +19,7 @@ abstract class ElementMatcher<E> extends Matcher<E> {
         Branch<E> branch = consumer.branch();
         if (branch != null) {
             Params<E> params = branch.last();
-            if (params != null) {
+            if (params != null && consumer.offset() == params.getEnd()) {
                 Element<E> element = params.getElement();
                 if (element != null) {
                     for (Element<E> type : elements) {
@@ -34,7 +34,7 @@ abstract class ElementMatcher<E> extends Matcher<E> {
 
         List<Params<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
         for (Params<E> result : results) {
-            consumer.stack(result.getLength());
+            consumer.push(result);
         }
         consumer.close();
     }

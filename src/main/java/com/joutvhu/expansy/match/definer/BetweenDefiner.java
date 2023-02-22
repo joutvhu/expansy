@@ -46,7 +46,7 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
                         if (p) {
                             r++;
                             if (minRepetitions == null || minRepetitions <= r)
-                                consumer.stack(offset);
+                                consumer.push(offset);
                             if (maxRepetitions != null && maxRepetitions >= r)
                                 consumer.close();
                         }
