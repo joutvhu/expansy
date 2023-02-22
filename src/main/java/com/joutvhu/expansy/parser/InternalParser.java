@@ -3,6 +3,7 @@ package com.joutvhu.expansy.parser;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.element.Result;
+import com.joutvhu.expansy.exception.ExpansyException;
 import com.joutvhu.expansy.exception.MathException;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -29,17 +30,36 @@ public class InternalParser<E> {
 
     public List<Result<E>> parseByElements(Collection<Element<E>> elements, int offset) {
         List<Result<E>> results = new ArrayList<>();
+        ExpansyException error = null;
         for (Element<E> element : elements) {
-            Params<E> params = parseByElement(element, offset);
-            if (state.getLength() <= params.getEnd()) {
-                Result<E> result = new Result<>();
-                result.add(params);
-                results.add(result);
-            } else {
-                List<Result<E>> values = parseByElements(elements, params.getEnd());
-                results.addAll(merge(params, values));
+            try {
+                Params<E> params = parseByElement(element, offset);
+                try {
+                    if (state.getLength() <= params.getEnd()) {
+                        Result<E> result = new Result<>();
+                        result.add(params);
+                        results.add(result);
+                    } else {
+                        List<Result<E>> values = parseByElements(elements, params.getEnd());
+                        results.addAll(merge(params, values));
+                    }
+                } catch (Exception e) {
+                    if (e instanceof ExpansyException)
+                        error = (ExpansyException) e;
+                    else
+                        error = new ExpansyException(e);
+                }
+            } catch (Exception e) {
+                if (error == null) {
+                    if (e instanceof ExpansyException)
+                        error = (ExpansyException) e;
+                    else
+                        error = new ExpansyException(e);
+                }
             }
         }
+        if (results.isEmpty() && error != null)
+            throw error;
         return results;
     }
 
@@ -48,7 +68,7 @@ public class InternalParser<E> {
         for (Result<E> v : values) {
             Result<E> result = new Result<>();
             result.add(value);
-            result.addAll(v.getValues());
+            result.addAll(v);
             results.add(result);
         }
         return results;
