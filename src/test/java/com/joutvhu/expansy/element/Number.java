@@ -7,7 +7,7 @@ public class Number<E> extends Element<E> {
     public void define(Definer<E> definer) {
         definer
                 .name("value")
-                .pattern("^-?[0-9]+(.[0-9]+)?$");
+                .pattern("^-?[0-9]+(\\.[0-9]+)?$");
     }
 
     @Override

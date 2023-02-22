@@ -11,6 +11,7 @@ public class Expansy<E> {
     private ElementRegister<E> register;
 
     private Expansy() {
+        this.register = new ElementRegister<>();
     }
 
     public static <E> Expansy<E> instance() {

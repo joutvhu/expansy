@@ -96,7 +96,7 @@ public class InternalParser<E> {
         params.setStart(offset != null ? offset : 0);
         Consumer<E> filter = new Consumer<>(state, params.getStart());
         Stack<CheckNode<E>> nodes = new Stack<>();
-        Matcher<E>[] array = (Matcher<E>[]) matchers.toArray();
+        Matcher<E>[] array = matchers.toArray(new Matcher[0]);
         for (int i = 0, len = matchers.size(); i < len; i++) {
             Matcher<E> matcher = array[i];
             try {
@@ -104,7 +104,7 @@ public class InternalParser<E> {
                 filter.close();
             } catch (StopReason reason) {
                 Deque<TrackPoint> trackPoints = reason.getTrackPoints();
-                TrackPoint trackPoint = trackPoints.pop();
+                TrackPoint trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
                 while (trackPoint == null && !nodes.empty()) {
                     // Back to other track point.
                     CheckNode<E> node = nodes.pop();

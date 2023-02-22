@@ -54,7 +54,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     private T result() {
         Matcher<E> matcher = parent.matcher();
         matcher.setName(name);
-        return result();
+        return parent;
     }
 
     @Override
