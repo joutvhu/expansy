@@ -4,7 +4,7 @@ import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.filter.Consumer;
-import com.joutvhu.expansy.parser.ExpansyParser;
+import com.joutvhu.expansy.parser.InternalParser;
 
 import java.util.List;
 
@@ -40,8 +40,8 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
                 for (int i = 0; true; i++) {
                     boolean p = (i & 1) == 0;
                     try {
-                        ExpansyParser<E> parser = consumer.state().getParser();
-                        Params results = parser.parse(p ? matchers : bm, offset);
+                        InternalParser<E> parser = consumer.state().getParser();
+                        Params results = parser.parseByMatchers(p ? matchers : bm, offset);
                         offset = results.getEnd();
                         if (p) {
                             r++;

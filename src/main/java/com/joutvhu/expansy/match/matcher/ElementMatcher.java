@@ -24,7 +24,7 @@ public class ElementMatcher<E> extends Matcher<E> {
 
     @Override
     public void match(Consumer<E> consumer) {
-        List<Result<E>> results = consumer.state().getParser().parse(elements, consumer);
+        List<Result<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
         for (Result<E> result : results) {
             consumer.stack(result.getLength());
         }

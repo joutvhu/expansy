@@ -33,7 +33,7 @@ public class RegisteredMatcher<E> extends Matcher<E> {
         Collection<Element<E>> elements = names == null || names.isEmpty() ?
                 consumer.state().getRegister().elements() :
                 consumer.state().getRegister().get(names);
-        List<Result<E>> results = consumer.state().getParser().parse(elements, consumer);
+        List<Result<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
         for (Result<E> result : results) {
             consumer.stack(result.getLength());
         }

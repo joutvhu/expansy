@@ -4,7 +4,7 @@ import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.filter.Consumer;
-import com.joutvhu.expansy.parser.ExpansyParser;
+import com.joutvhu.expansy.parser.InternalParser;
 
 import java.util.List;
 
@@ -24,8 +24,8 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
                 consumer.stack();
                 if (!matchers.isEmpty()) {
                     try {
-                        ExpansyParser<E> parser = consumer.state().getParser();
-                        Params results = parser.parse(matchers, consumer.offset());
+                        InternalParser<E> parser = consumer.state().getParser();
+                        Params results = parser.parseByMatchers(matchers, consumer.offset());
                         consumer.stack(results.getEnd());
                     } catch (Exception e) {
                         consumer.error(e.getMessage());

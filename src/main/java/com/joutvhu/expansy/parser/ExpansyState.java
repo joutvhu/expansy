@@ -11,7 +11,7 @@ import java.util.Map;
 public class ExpansyState<E> {
     private Source source;
     private ElementRegister<E> register;
-    private ExpansyParser<E> parser;
+    private InternalParser<E> parser;
     private Map<String, Object> shared;
 
     public ExpansyState(Source source, ElementRegister<E> register) {
@@ -20,14 +20,7 @@ public class ExpansyState<E> {
         this.shared = new HashMap<>();
     }
 
-    private ExpansyState(Source source, ElementRegister<E> register, ExpansyParser<E> parser) {
-        this.source = source;
-        this.register = register;
-        this.parser = parser;
-        this.shared = new HashMap<>();
-    }
-
-    void setParser(ExpansyParser<E> parser) {
+    void setParser(InternalParser<E> parser) {
         this.parser = parser;
     }
 }

@@ -4,7 +4,7 @@ import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.filter.Consumer;
-import com.joutvhu.expansy.parser.ExpansyParser;
+import com.joutvhu.expansy.parser.InternalParser;
 
 import java.util.List;
 
@@ -36,8 +36,8 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                 int offset = consumer.offset();
                 for (int i = 0; true; i++) {
                     try {
-                        ExpansyParser<E> parser = consumer.state().getParser();
-                        Params results = parser.parse(matchers, offset);
+                        InternalParser<E> parser = consumer.state().getParser();
+                        Params results = parser.parseByMatchers(matchers, offset);
                         offset = results.getEnd();
                         if (minRepetitions == null || minRepetitions <= i)
                             consumer.stack(offset);
