@@ -48,6 +48,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
             }
             consumer.complete();
         } else {
+            consumer.stack();
             while (true) {
                 StopPoint point = consumer.next();
                 if (point == null) break;

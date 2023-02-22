@@ -41,7 +41,7 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
                     boolean p = (i & 1) == 0;
                     try {
                         InternalParser<E> parser = consumer.state().getParser();
-                        Params results = parser.parseByMatchers(p ? matchers : bm, offset);
+                        Params results = parser.parseByMatchers(p ? matchers : bm, consumer);
                         offset = results.getEnd();
                         if (p) {
                             r++;

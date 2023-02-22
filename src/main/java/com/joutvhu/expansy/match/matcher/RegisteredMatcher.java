@@ -1,16 +1,14 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.element.Element;
-import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
-import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-public class RegisteredMatcher<E> extends Matcher<E> {
+public class RegisteredMatcher<E> extends ElementMatcher<E> {
     private List<String> names;
 
     public RegisteredMatcher(Definer<E> parent) {
@@ -33,10 +31,6 @@ public class RegisteredMatcher<E> extends Matcher<E> {
         Collection<Element<E>> elements = names == null || names.isEmpty() ?
                 consumer.state().getRegister().elements() :
                 consumer.state().getRegister().get(names);
-        List<Params<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
-        for (Params<E> result : results) {
-            consumer.stack(result.getLength());
-        }
-        consumer.close();
+        super.match(consumer, elements);
     }
 }

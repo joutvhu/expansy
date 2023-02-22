@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Params<E>  {
+public class Params<E> {
     private Map<String, List<Object>> params = new HashMap<>();
     private String value;
     private int start;
@@ -66,20 +66,46 @@ public class Params<E>  {
         values.add(value);
     }
 
-    public String getString(String key) {
-        return getString(key, 0);
+    public Object get(String key, int index) {
+        List<Object> values = params.get(key);
+        if (values != null)
+            return values.get(index);
+        return null;
     }
 
-    public String getString(String key, int index) {
+    public String getString(String key) {
         List<Object> values = params.get(key);
-        if (values != null) {
-            Object value = values.get(index);
+        for (Object value : values) {
             if (value instanceof String)
                 return (String) value;
             if (value instanceof Params)
                 return ((Params<E>) value).getValue();
-            return null;
         }
+        return null;
+    }
+
+    public String getString(String key, int index) {
+        Object value = get(key, index);
+        if (value instanceof String)
+            return (String) value;
+        if (value instanceof Params)
+            return ((Params<E>) value).getValue();
+        return null;
+    }
+
+    public Params<E> getParams(String key) {
+        List<Object> values = params.get(key);
+        for (Object value : values) {
+            if (value instanceof Params)
+                return (Params<E>) value;
+        }
+        return null;
+    }
+
+    public Params<E> getParams(String key, int index) {
+        Object value = get(key, index);
+        if (value instanceof Params)
+            return (Params<E>) value;
         return null;
     }
 }

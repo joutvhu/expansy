@@ -37,7 +37,7 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                 for (int i = 0; true; i++) {
                     try {
                         InternalParser<E> parser = consumer.state().getParser();
-                        Params results = parser.parseByMatchers(matchers, offset);
+                        Params results = parser.parseByMatchers(matchers, offset, consumer.branch());
                         offset = results.getEnd();
                         if (minRepetitions == null || minRepetitions <= i)
                             consumer.stack(offset);
