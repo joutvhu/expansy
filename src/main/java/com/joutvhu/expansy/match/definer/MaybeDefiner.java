@@ -1,8 +1,12 @@
 package com.joutvhu.expansy.match.definer;
 
+import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.LinearConsumer;
+import com.joutvhu.expansy.match.filter.Consumer;
+import com.joutvhu.expansy.parser.ExpansyParser;
+
+import java.util.List;
 
 public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, MaybeDefiner<E, T>> {
     private T parent;
@@ -15,8 +19,18 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
     public Matcher<E> matcher() {
         return new Matcher<E>(this) {
             @Override
-            public void match(LinearConsumer<E> consumer) {
-
+            public void match(Consumer<E> consumer) {
+                List<Matcher<E>> matchers = matchers();
+                consumer.stack();
+                if (!matchers.isEmpty()) {
+                    try {
+                        ExpansyParser<E> parser = consumer.state().getParser();
+                        Params results = parser.parse(matchers, consumer.offset());
+                        consumer.stack(results.getEnd());
+                    } catch (Exception e) {
+                        consumer.error(e.getMessage());
+                    }
+                }
             }
         };
     }

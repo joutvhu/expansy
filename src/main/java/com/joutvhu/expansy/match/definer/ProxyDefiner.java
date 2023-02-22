@@ -2,7 +2,9 @@ package com.joutvhu.expansy.match.definer;
 
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.match.Definer;
+import com.joutvhu.expansy.match.Matcher;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -23,6 +25,12 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     public ProxyDefiner(T master, Definer<E> container) {
         this.master = master;
         this.container = container;
+    }
+
+    protected List<Matcher<E>> matchers() {
+        if (container instanceof DefaultDefiner)
+            return ((DefaultDefiner<E>) container).matchers;
+        return new ArrayList<>();
     }
 
     @Override

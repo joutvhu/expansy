@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.match.Matcher;
-import com.joutvhu.expansy.match.filter.LinearConsumer;
+import com.joutvhu.expansy.match.filter.Consumer;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.filter.StopPoint;
 
@@ -36,7 +36,7 @@ public class RegexMatcher<E> extends Matcher<E> {
     }
 
     @Override
-    public void match(LinearConsumer<E> consumer) {
+    public void match(Consumer<E> consumer) {
         StopPoint point = minLength != null && minLength > 0 ? consumer.next(minLength) : consumer.next();
         if (point == null)
             return;

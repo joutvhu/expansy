@@ -5,13 +5,13 @@ import lombok.Getter;
 @Getter
 public class StopPoint {
     private String value;
-    private long offset;
+    private int offset;
 
     public StopPoint(String value) {
         this(value, 0);
     }
 
-    public StopPoint(String value, long offset) {
+    public StopPoint(String value, int offset) {
         this.value = value;
         this.offset = offset;
     }
@@ -20,8 +20,8 @@ public class StopPoint {
         return value.length();
     }
 
-    public long getIndex() {
-        return offset + value.length() - 1;
+    public int getIndex() {
+        return offset + value.length();
     }
 
     public char getCharacter() {

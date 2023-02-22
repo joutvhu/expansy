@@ -27,11 +27,7 @@ public class ExpansyState<E> {
         this.shared = new HashMap<>();
     }
 
-    public void setParser(ExpansyParser<E> parser) {
+    void setParser(ExpansyParser<E> parser) {
         this.parser = parser;
-    }
-
-    public ExpansyState<E> copyWith(Source source) {
-        return new ExpansyState<>(source, register, parser);
     }
 }

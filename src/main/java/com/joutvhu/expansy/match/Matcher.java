@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match;
 
-import com.joutvhu.expansy.match.filter.LinearConsumer;
+import com.joutvhu.expansy.match.filter.Consumer;
 
 public abstract class Matcher<E> {
     protected String name;
@@ -23,5 +23,5 @@ public abstract class Matcher<E> {
         this.name = name;
     }
 
-    public abstract void match(LinearConsumer<E> consumer);
+    public abstract void match(Consumer<E> consumer);
 }

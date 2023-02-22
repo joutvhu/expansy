@@ -4,11 +4,9 @@ import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.element.Result;
 import com.joutvhu.expansy.exception.MathException;
-import com.joutvhu.expansy.io.ProxySource;
-import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
-import com.joutvhu.expansy.match.filter.LinearConsumer;
+import com.joutvhu.expansy.match.filter.Consumer;
 import com.joutvhu.expansy.match.filter.StopReason;
 import com.joutvhu.expansy.match.filter.TrackPoint;
 import lombok.AllArgsConstructor;
@@ -23,36 +21,38 @@ import java.util.Stack;
 public class ExpansyParser<E> {
     private ExpansyState<E> state;
 
-    public List<Result<E>> checkElements(List<Element<E>> elements) {
+    public ExpansyParser(ExpansyState<E> state) {
+        this.state = state;
+    }
+
+    public List<Result<E>> parse(List<Element<E>> elements) {
         List<Result<E>> results = new ArrayList<>();
         for (Element<E> element : elements) {
-            Params params = checkElement(element, state);
+            Params params = parse(element, 0);
             results.add(new Result<>(element, params));
         }
         return results;
     }
 
-    public List<Result<E>> checkElements(List<Element<E>> elements, LinearConsumer<E> filter) {
+    public List<Result<E>> parse(List<Element<E>> elements, Consumer<E> filter) {
         List<Result<E>> results = new ArrayList<>();
-        Source source = new ProxySource(filter);
         for (Element<E> element : elements) {
-            source.back(0);
-            ExpansyState<E> childState = state.copyWith(source);
-            Params params = checkElement(element, childState);
+            Params params = parse(element, filter.offset());
             results.add(new Result<>(element, params));
         }
         results.sort(Comparator.comparingInt(Result::getLength));
         return results;
     }
 
-    public Params checkElement(Element<E> element, ExpansyState<E> state) {
+    public Params parse(Element<E> element, Integer offset) {
         List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        return checkMatchers(matchers, state);
+        return parse(matchers, offset);
     }
 
-    public Params checkMatchers(List<Matcher<E>> matchers, ExpansyState<E> state) {
+    public Params parse(List<Matcher<E>> matchers, Integer offset) {
         Params params = new Params();
-        LinearConsumer<E> filter = new LinearConsumer<>(state);
+        params.setStart(offset != null ? offset : 0);
+        Consumer<E> filter = new Consumer<>(state, params.getStart());
         Stack<CheckNode<E>> nodes = new Stack<>();
         for (int i = 0, len = matchers.size(); i < len; i++) {
             Matcher<E> matcher = matchers.get(i);
@@ -71,10 +71,9 @@ public class ExpansyParser<E> {
                 }
 
                 if (trackPoint != null) {
-                    state.getSource().back(trackPoint.getIndex() + 1);
-                    filter = new LinearConsumer<E>(state, trackPoint.getIndex() + 1);
                     CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
                     nodes.push(node);
+                    filter = new Consumer<>(state, trackPoint.getIndex() + 1);
                 } else if (i == 0) {
                     if (StringUtils.isBlank(reason.getMessage())) {
                         if (trackPoints.isEmpty())
@@ -93,6 +92,7 @@ public class ExpansyParser<E> {
             // Join all value of nodes
             builder.append(node.point.getValue());
         }
+        params.setEnd(nodes.lastElement().point.getIndex());
         params.setValue(builder.toString());
 
         return params;

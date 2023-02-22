@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.parser;
 
 import com.joutvhu.expansy.element.ElementRegister;
-import com.joutvhu.expansy.io.StringSource;
+import com.joutvhu.expansy.io.Source;
 
 import java.util.List;
 
@@ -23,8 +23,8 @@ public class StringAnalyzer<E> extends Analyzer<E, String> {
     }
 
     private ExpansyParser<E> parser(String value) {
-        StringSource source = new StringSource(value);
+        Source source = new Source(value);
         ExpansyState<E> state = new ExpansyState<>(source, register);
-        return new ExpansyParser<>();
+        return new ExpansyParser<>(state);
     }
 }

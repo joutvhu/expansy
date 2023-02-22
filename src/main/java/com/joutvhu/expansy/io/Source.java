@@ -1,11 +1,21 @@
 package com.joutvhu.expansy.io;
 
-public interface Source {
-    void reset();
+public final class Source {
+    private String value;
 
-    long back(long offset);
+    public Source(String value) {
+        this.value = value;
+    }
 
-    String read(int length);
+    public int length() {
+        return value.length();
+    }
 
-    String read(long offset, int length);
+    public String read(int offset, int length) {
+        if (offset < length()) {
+            int end = Math.min(offset + length, value.length());
+            return value.substring(offset, end);
+        }
+        return "";
+    }
 }
