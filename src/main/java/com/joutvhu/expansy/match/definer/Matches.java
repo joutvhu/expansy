@@ -105,6 +105,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T check(Function<String, Boolean> checker);
 
+    /**
+     * Matches all registered elements with the specified name
+     */
     T element(String element);
 
     T element(String... elements);
@@ -115,5 +118,8 @@ public interface Matches<E, T extends Definer<E>> {
 
     T element(Element<E>... elements);
 
+    /**
+     * Matches with all registered elements
+     */
     T elements();
 }

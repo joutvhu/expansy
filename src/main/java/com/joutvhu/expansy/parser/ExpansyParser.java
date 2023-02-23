@@ -4,6 +4,8 @@ import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.ElementRegister;
 import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.io.BranchSelector;
+import com.joutvhu.expansy.io.DefaultSelector;
 import com.joutvhu.expansy.io.Source;
 
 import java.util.ArrayList;
@@ -14,15 +16,27 @@ import java.util.List;
 public class ExpansyParser<E> {
     private ElementRegister<E> register;
     private Collection<Element<E>> elements;
+    private BranchSelector selector;
 
     public ExpansyParser(ElementRegister<E> register, List<String> elements) {
+        this(register, new DefaultSelector(), elements);
+    }
+
+    public ExpansyParser(ElementRegister<E> register, BranchSelector selector, List<String> elements) {
         this.register = register;
+        this.selector = selector;
         this.elements = elements == null ? register.elements() : register.get(elements);
     }
 
-    public E parseSingle(String value) {
+    public List<Branch<E>> analysis(String value) {
         InternalParser<E> parser = parser(value);
         List<Branch<E>> branches = parser.parseByElements(elements);
+        return branches;
+    }
+
+    public E parseSingle(String value) {
+        List<Branch<E>> branches = analysis(value);
+        branches = selector.order(branches);
         for (Branch<E> branch : branches) {
             if (branch.size() == 1) {
                 Params<E> params = branch.get(0);
@@ -34,10 +48,8 @@ public class ExpansyParser<E> {
 
     public List<E> parse(String value) {
         List<E> results = new ArrayList<>();
-        InternalParser<E> parser = parser(value);
-        List<Branch<E>> branches = parser.parseByElements(elements);
-        branches.sort(Comparator.comparingInt(Branch::size));
-        Branch<E> branch = branches.get(0);
+        List<Branch<E>> branches = analysis(value);
+        Branch<E> branch = selector.select(branches);
         for (Params<E> params : branch) {
             E v = params.create();
             if (v != null) results.add(v);
