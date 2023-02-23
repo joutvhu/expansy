@@ -5,6 +5,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +17,16 @@ public class Branch<E> extends ArrayList<Params<E>> {
     public Branch() {
         shared = new HashMap<>();
         checking = new HashMap<>();
+    }
+
+    public List<E> create() {
+        List<E> results = new ArrayList<>();
+        for (Params<E> params : this) {
+            E value = params.create();
+            if (value != null)
+                results.add(value);
+        }
+        return results;
     }
 
     public void start(int index, Element<E> element) {

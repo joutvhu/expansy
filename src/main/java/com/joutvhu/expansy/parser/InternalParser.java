@@ -4,7 +4,7 @@ import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Params;
 import com.joutvhu.expansy.exception.ExpansyException;
-import com.joutvhu.expansy.exception.MathException;
+import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopReason;
@@ -137,9 +137,9 @@ public class InternalParser<E> {
                 } else if (i == 0) {
                     if (StringUtils.isBlank(reason.getMessage())) {
                         if (trackPoints.isEmpty())
-                            throw new MathException("No track point found.");
+                            throw new MatchException("No track point found.");
                     }
-                    throw new MathException(reason.getMessage());
+                    throw new MatchException(reason.getMessage());
                 }
             }
         }

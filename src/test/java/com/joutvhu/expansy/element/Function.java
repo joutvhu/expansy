@@ -2,9 +2,9 @@ package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.match.Definer;
 
-public class Function<E> extends Element<E> {
+public class Function extends Element<String> {
     @Override
-    public void define(Definer<E> definer) {
+    public void define(Definer<String> definer) {
         definer
                 .equals("#")
                 .name("name")
@@ -13,7 +13,7 @@ public class Function<E> extends Element<E> {
                 .between()
                 .name("param")
                 .spaces()
-                .element(new Variable<>())
+                .elements()
                 .spaces()
                 .is()
                 .equals(",")
@@ -22,7 +22,7 @@ public class Function<E> extends Element<E> {
     }
 
     @Override
-    public E create(Params params) {
+    public String create(Params<String> params) {
         return null;
     }
 }

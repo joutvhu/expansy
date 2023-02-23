@@ -6,6 +6,7 @@ import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.parser.ExpansyState;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.MessageFormat;
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -130,5 +131,9 @@ public class Consumer<E> {
 
     public void error(String message) {
         throw new StopReason(1, trackPoints, message);
+    }
+
+    public void error(String pattern, Object ... arguments) {
+        error(MessageFormat.format(pattern, arguments));
     }
 }

@@ -9,5 +9,5 @@ public abstract class Element<E> {
 
     public abstract void define(Definer<E> definer);
 
-    public abstract E create(Params params);
+    public abstract E create(Params<E> params);
 }

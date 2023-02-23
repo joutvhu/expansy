@@ -4,12 +4,12 @@ import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.matcher.CharacterMatcher;
-import com.joutvhu.expansy.match.matcher.UnregisteredMatcher;
 import com.joutvhu.expansy.match.matcher.EqualsMatcher;
 import com.joutvhu.expansy.match.matcher.FunctionMatcher;
 import com.joutvhu.expansy.match.matcher.NumericMatcher;
 import com.joutvhu.expansy.match.matcher.RegexMatcher;
 import com.joutvhu.expansy.match.matcher.RegisteredMatcher;
+import com.joutvhu.expansy.match.matcher.UnregisteredMatcher;
 import com.joutvhu.expansy.match.matcher.WordMatcher;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
 package com.joutvhu.expansy.match.matcher;
 
+import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
-import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
 
 public class NumericMatcher<E> extends Matcher<E> {

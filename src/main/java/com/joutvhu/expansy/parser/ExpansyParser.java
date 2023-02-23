@@ -1,9 +1,9 @@
 package com.joutvhu.expansy.parser;
 
+import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.ElementRegister;
 import com.joutvhu.expansy.element.Params;
-import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.io.Source;
 
 import java.util.ArrayList;

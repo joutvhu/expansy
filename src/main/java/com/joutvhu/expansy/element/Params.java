@@ -1,9 +1,12 @@
 package com.joutvhu.expansy.element;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Params<E> {
     private Map<String, List<Object>> params = new HashMap<>();
@@ -18,6 +21,12 @@ public class Params<E> {
 
     public void setStart(int start) {
         this.start = start;
+    }
+
+    public E create() {
+        if (element != null)
+            return element.create(this);
+        return null;
     }
 
     public int getEnd() {
@@ -93,6 +102,20 @@ public class Params<E> {
         return null;
     }
 
+    public Collection<String> getAllgetString(String key) {
+        List<Object> values = params.get(key);
+        return values.stream()
+                .map(value -> {
+                    if (value instanceof String)
+                        return (String) value;
+                    if (value instanceof Params)
+                        return ((Params<E>) value).getValue();
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
     public Params<E> getParams(String key) {
         List<Object> values = params.get(key);
         for (Object value : values) {
@@ -107,5 +130,13 @@ public class Params<E> {
         if (value instanceof Params)
             return (Params<E>) value;
         return null;
+    }
+
+    public Collection<Params<E>> getAllParams(String key) {
+        List<Object> values = params.get(key);
+        return values.stream()
+                .filter(value -> value instanceof Params)
+                .map(value -> (Params<E>) value)
+                .collect(Collectors.toList());
     }
 }

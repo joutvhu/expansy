@@ -2,17 +2,18 @@ package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.match.Definer;
 
-public class Group<E> extends Element<E> {
+public class Group extends Element<String> {
     @Override
-    public void define(Definer<E> definer) {
+    public void define(Definer<String> definer) {
         definer
                 .equals("(")
+                .name("operator")
                 .elements()
                 .equals(")");
     }
 
     @Override
-    public E create(Params params) {
-        return null;
+    public String create(Params<String> params) {
+        return "Group(" + params.getString("operator") + ")";
     }
 }
