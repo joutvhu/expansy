@@ -10,9 +10,17 @@ import java.util.function.Function;
 public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T> {
     protected String name;
     protected T parent;
+    protected Definer<E> container;
 
     public NamedDefiner(T parent, String name) {
         this.parent = parent;
+        this.container = parent;
+        this.name = name;
+    }
+
+    public NamedDefiner(T parent, String name, Definer<E> container) {
+        this.parent = parent;
+        this.container = container;
         this.name = name;
     }
 
@@ -52,7 +60,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
     
     private T result() {
-        Matcher<E> matcher = parent.matcher();
+        Matcher<E> matcher = container.matcher();
         matcher.setName(name);
         return parent;
     }

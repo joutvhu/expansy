@@ -39,7 +39,8 @@ public class ExpansyParser<E> {
         branches.sort(Comparator.comparingInt(Branch::size));
         Branch<E> branch = branches.get(0);
         for (Params<E> params : branch) {
-            results.add(params.getElement().create(params));
+            E v = params.create();
+            if (v != null) results.add(v);
         }
         return results;
     }

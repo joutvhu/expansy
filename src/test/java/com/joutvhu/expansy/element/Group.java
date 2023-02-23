@@ -14,6 +14,6 @@ public class Group extends Element<String> {
 
     @Override
     public String create(Params<String> params) {
-        return "Group(" + params.getString("operator") + ")";
+        return "Group(" + params.getParams("operator").create() + ")";
     }
 }

@@ -126,7 +126,7 @@ public class InternalParser<E> {
                     // Back to other track point.
                     CheckNode<E> node = nodes.pop();
                     trackPoints = node.trackPoints;
-                    trackPoint = trackPoints.pop();
+                    trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
                     i = nodes.size();
                 }
 
@@ -154,6 +154,7 @@ public class InternalParser<E> {
                 params.add(matcher.getName(), node.point.getValue());
             }
             if (p != null) {
+                params.addAll(p);
                 if (p.getStart() < params.getStart())
                     params.setStart(p.getStart());
                 if (params.getEnd() < p.getEnd())

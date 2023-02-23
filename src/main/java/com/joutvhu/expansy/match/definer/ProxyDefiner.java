@@ -35,7 +35,7 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
 
     @Override
     public Matches<E, T> name(String name) {
-        return new NamedDefiner<>(master, name);
+        return new NamedDefiner<>(master, name, container);
     }
 
     @Override

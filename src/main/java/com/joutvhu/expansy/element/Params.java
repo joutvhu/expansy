@@ -75,6 +75,22 @@ public class Params<E> {
         values.add(value);
     }
 
+    public void addAll(String key, List<Object> objects) {
+        List<Object> values = params.get(key);
+        if (values == null) {
+            values = new ArrayList<>();
+            params.put(key, values);
+        }
+        for (Object o : objects) {
+            if (o instanceof String || o instanceof Params)
+                values.add(o);
+        }
+    }
+
+    public void addAll(Params<E> value) {
+        value.params.forEach(this::addAll);
+    }
+
     public Object get(String key, int index) {
         List<Object> values = params.get(key);
         if (values != null)
@@ -84,6 +100,8 @@ public class Params<E> {
 
     public String getString(String key) {
         List<Object> values = params.get(key);
+        if (values == null)
+            return null;
         for (Object value : values) {
             if (value instanceof String)
                 return (String) value;
@@ -104,6 +122,8 @@ public class Params<E> {
 
     public Collection<String> getAllgetString(String key) {
         List<Object> values = params.get(key);
+        if (values == null)
+            return new ArrayList<>();
         return values.stream()
                 .map(value -> {
                     if (value instanceof String)
@@ -118,6 +138,8 @@ public class Params<E> {
 
     public Params<E> getParams(String key) {
         List<Object> values = params.get(key);
+        if (values == null)
+            return null;
         for (Object value : values) {
             if (value instanceof Params)
                 return (Params<E>) value;
@@ -134,9 +156,21 @@ public class Params<E> {
 
     public Collection<Params<E>> getAllParams(String key) {
         List<Object> values = params.get(key);
+        if (values == null)
+            return new ArrayList<>();
         return values.stream()
                 .filter(value -> value instanceof Params)
                 .map(value -> (Params<E>) value)
                 .collect(Collectors.toList());
+    }
+
+    public Params<E> clone() {
+        Params<E> result = new Params<>();
+        result.setStart(start);
+        result.setEnd(end);
+        result.setValue(value);
+        result.setElement(element);
+        params.forEach((key, values) -> result.params.put(key, new ArrayList<>(values)));
+        return result;
     }
 }
