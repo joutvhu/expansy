@@ -25,8 +25,8 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
                 if (!matchers.isEmpty()) {
                     try {
                         InternalParser<E> parser = consumer.state().getParser();
-                        Params results = parser.parseByMatchers(matchers, consumer);
-                        consumer.push(results.getEnd());
+                        Params<E> results = parser.parseByMatchers(matchers, consumer);
+                        consumer.push(results);
                     } catch (Exception e) {
                         consumer.error(e.getMessage());
                     }
