@@ -1,21 +1,21 @@
 package com.joutvhu.expansy.match.consumer;
 
-import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.element.Node;
 
 public class TrackPoint {
     private int index;
     private String value;
-    private Params<?> params;
+    private Node<?> node;
 
     public TrackPoint(int index, String value) {
         this.index = index;
         this.value = value;
     }
 
-    public TrackPoint(Params<?> params) {
-        this.index = params.getEnd();
-        this.value = params.getValue();
-        this.params = params;
+    public TrackPoint(Node<?> node) {
+        this.index = node.getEnd();
+        this.value = node.getValue();
+        this.node = node;
     }
 
     public int getIndex() {
@@ -26,12 +26,12 @@ public class TrackPoint {
         return value;
     }
 
-    public <E> Params<E> getParams() {
-        return (Params<E>) params;
+    public <E> Node<E> getParams() {
+        return (Node<E>) node;
     }
 
-    public TrackPoint with(Params<?> params) {
-        this.params = params;
+    public TrackPoint with(Node<?> node) {
+        this.node = node;
         return this;
     }
 }

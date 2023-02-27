@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.definer;
 
-import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -25,7 +25,7 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
                 if (!matchers.isEmpty()) {
                     try {
                         InternalParser<E> parser = consumer.state().getParser();
-                        Params<E> results = parser.parseByMatchers(matchers, consumer);
+                        Node<E> results = parser.parseByMatchers(matchers, consumer);
                         consumer.push(results);
                     } catch (Exception e) {
                         consumer.error(e.getMessage());

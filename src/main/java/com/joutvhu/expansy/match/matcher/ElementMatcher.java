@@ -2,7 +2,7 @@ package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
-import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -18,13 +18,13 @@ abstract class ElementMatcher<E> extends Matcher<E> {
     public void match(Consumer<E> consumer, Collection<Element<E>> elements) {
         Branch<E> branch = consumer.branch();
         if (branch != null) {
-            Params<E> params = branch.last();
-            if (params != null && consumer.offset() == params.getEnd()) {
-                Element<E> element = params.getElement();
+            Node<E> node = branch.last();
+            if (node != null && consumer.offset() == node.getEnd()) {
+                Element<E> element = node.getElement();
                 if (element != null) {
                     for (Element<E> type : elements) {
                         if (type.getClass().isInstance(element) && element.name().equals(type.name())) {
-                            consumer.push(params);
+                            consumer.push(node);
                             consumer.close();
                         }
                     }
@@ -32,8 +32,8 @@ abstract class ElementMatcher<E> extends Matcher<E> {
             }
         }
 
-        List<Params<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
-        for (Params<E> result : results) {
+        List<Node<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
+        for (Node<E> result : results) {
             consumer.push(result);
         }
         consumer.close();

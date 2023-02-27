@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Getter
-public class Branch<E> extends ArrayList<Params<E>> {
+public class Branch<E> extends ArrayList<Node<E>> {
     private Map<String, Object> shared;
     private Map<Integer, Set<Element<E>>> checking;
 
@@ -21,8 +21,8 @@ public class Branch<E> extends ArrayList<Params<E>> {
 
     public List<E> create() {
         List<E> results = new ArrayList<>();
-        for (Params<E> params : this) {
-            E value = params.create();
+        for (Node<E> node : this) {
+            E value = node.create();
             if (value != null)
                 results.add(value);
         }
@@ -59,33 +59,33 @@ public class Branch<E> extends ArrayList<Params<E>> {
         return (P) shared.get(key);
     }
 
-    public Params<E> first() {
+    public Node<E> first() {
         int len = size();
         return len > 0 ? get(0) : null;
     }
 
-    public Params<E> last() {
+    public Node<E> last() {
         int len = size();
         return len > 0 ? get(len - 1) : null;
     }
 
-    public void replace(int index, Params<E> params) {
+    public void replace(int index, Node<E> node) {
         boolean shouldRemove = true;
         if (index >= size()) {
             index = size();
             shouldRemove = false;
         }
-        add(index, params);
+        add(index, node);
         if (shouldRemove)
             remove(index + 1);
     }
 
-    public void replaceFirst(Params<E> params) {
-        replace(0, params);
+    public void replaceFirst(Node<E> node) {
+        replace(0, node);
     }
 
-    public void replaceLast(Params<E> params) {
-        replace(size() - 1, params);
+    public void replaceLast(Node<E> node) {
+        replace(size() - 1, node);
     }
 
     @Override

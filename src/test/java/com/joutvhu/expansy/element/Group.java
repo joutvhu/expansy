@@ -13,7 +13,7 @@ public class Group extends Element<String> {
     }
 
     @Override
-    public String create(Params<String> params) {
-        return "Group(" + params.getParams("operator").create() + ")";
+    public String create(Node<String> node) {
+        return "Group(" + node.getParams("operator").create() + ")";
     }
 }

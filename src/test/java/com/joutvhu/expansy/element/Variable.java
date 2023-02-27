@@ -12,7 +12,7 @@ public class Variable extends Element<String> {
     }
 
     @Override
-    public String create(Params<String> params) {
-        return "Variable(" + params.getString("name") + ")";
+    public String create(Node<String> node) {
+        return "Variable(" + node.getString("name") + ")";
     }
 }

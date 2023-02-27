@@ -3,14 +3,13 @@ package com.joutvhu.expansy.parser;
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.ElementRegister;
-import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.io.BranchSelector;
 import com.joutvhu.expansy.io.DefaultSelector;
 import com.joutvhu.expansy.io.Source;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 
 public class ExpansyParser<E> {
@@ -39,8 +38,8 @@ public class ExpansyParser<E> {
         branches = selector.order(branches);
         for (Branch<E> branch : branches) {
             if (branch.size() == 1) {
-                Params<E> params = branch.get(0);
-                return params.getElement().create(params);
+                Node<E> node = branch.get(0);
+                return node.getElement().create(node);
             }
         }
         return null;
@@ -50,8 +49,8 @@ public class ExpansyParser<E> {
         List<E> results = new ArrayList<>();
         List<Branch<E>> branches = analysis(value);
         Branch<E> branch = selector.select(branches);
-        for (Params<E> params : branch) {
-            E v = params.create();
+        for (Node<E> node : branch) {
+            E v = node.create();
             if (v != null) results.add(v);
         }
         return results;

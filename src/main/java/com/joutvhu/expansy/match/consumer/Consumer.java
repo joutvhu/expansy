@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.consumer;
 
 import com.joutvhu.expansy.element.Branch;
-import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.parser.ExpansyState;
 import org.apache.commons.lang3.StringUtils;
@@ -95,9 +95,9 @@ public class Consumer<E> {
         trackPoints.push(at(index));
     }
 
-    public void select(Params<E> params) {
+    public void select(Node<E> node) {
         trackPoints.clear();
-        trackPoints.push(new TrackPoint(params));
+        trackPoints.push(new TrackPoint(node));
     }
 
     public void stack() {
@@ -108,8 +108,8 @@ public class Consumer<E> {
         trackPoints.addLast(at(index));
     }
 
-    public void stack(Params<E> params) {
-        trackPoints.addLast(new TrackPoint(params));
+    public void stack(Node<E> node) {
+        trackPoints.addLast(new TrackPoint(node));
     }
 
     public void push() {
@@ -120,8 +120,8 @@ public class Consumer<E> {
         trackPoints.addFirst(at(index));
     }
 
-    public void push(Params<E> params) {
-        trackPoints.addFirst(new TrackPoint(params));
+    public void push(Node<E> node) {
+        trackPoints.addFirst(new TrackPoint(node));
     }
 
     public void close() {

@@ -17,9 +17,9 @@ public class AddSubtract extends Element<String> {
     }
 
     @Override
-    public String create(Params<String> params) {
-        String first = params.getParams("first").create();
-        String second = params.getParams("second").create();
-        return "AddSubtract(" + first + params.getString("operator") + second + ")";
+    public String create(Node<String> node) {
+        String first = node.getParams("first").create();
+        String second = node.getParams("second").create();
+        return "AddSubtract(" + first + node.getString("operator") + second + ")";
     }
 }

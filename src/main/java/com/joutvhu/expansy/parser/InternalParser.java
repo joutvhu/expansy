@@ -2,7 +2,7 @@ package com.joutvhu.expansy.parser;
 
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
-import com.joutvhu.expansy.element.Params;
+import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.exception.ExpansyException;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Matcher;
@@ -40,15 +40,15 @@ public class InternalParser<E> {
                 try {
                     if (branch != null)
                         branch.start(offset, element);
-                    Params<E> params = parseByElement(element, offset, branch);
-                    if (params.getLength() > 0) {
+                    Node<E> node = parseByElement(element, offset, branch);
+                    if (node.getLength() > 0) {
                         Branch<E> newBranch = branch.clone();
-                        newBranch.add(params);
+                        newBranch.add(node);
                         try {
-                            if (state.getLength() <= params.getEnd()) {
+                            if (state.getLength() <= node.getEnd()) {
                                 branches.add(newBranch);
                             } else {
-                                List<Branch<E>> values = parseByElements(elements, params.getEnd(), newBranch);
+                                List<Branch<E>> values = parseByElements(elements, node.getEnd(), newBranch);
                                 branches.addAll(values);
                             }
                         } catch (Exception e) {
@@ -69,8 +69,8 @@ public class InternalParser<E> {
         return branches;
     }
 
-    public List<Params<E>> parseByElements(Collection<Element<E>> elements, Consumer<E> consumer) {
-        List<Params<E>> results = new ArrayList<>();
+    public List<Node<E>> parseByElements(Collection<Element<E>> elements, Consumer<E> consumer) {
+        List<Node<E>> results = new ArrayList<>();
         ExpansyException error = null;
         Branch<E> branch = consumer.branch();
         if (consumer.offset() < state.getLength()) {
@@ -79,9 +79,9 @@ public class InternalParser<E> {
                     try {
                         if (branch != null)
                             branch.start(consumer.offset(), element);
-                        Params<E> params = parseByElement(element, consumer.offset(), consumer.branch());
-                        if (params.getLength() > 0)
-                            results.add(params);
+                        Node<E> node = parseByElement(element, consumer.offset(), consumer.branch());
+                        if (node.getLength() > 0)
+                            results.add(node);
                     } catch (Exception e) {
                         if (error == null)
                             error = ExpansyException.of(e);
@@ -91,24 +91,24 @@ public class InternalParser<E> {
                     }
                 }
             }
-            results.sort(Comparator.comparingInt(Params::getLength));
+            results.sort(Comparator.comparingInt(Node::getLength));
         }
         return results;
     }
 
-    public Params<E> parseByElement(Element<E> element, Integer offset, Branch<E> branch) {
+    public Node<E> parseByElement(Element<E> element, Integer offset, Branch<E> branch) {
         List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        Params<E> params = parseByMatchers(matchers, offset, branch);
-        params.setElement(element);
-        return params;
+        Node<E> node = parseByMatchers(matchers, offset, branch);
+        node.setElement(element);
+        return node;
     }
 
-    public Params<E> parseByMatchers(Collection<Matcher<E>> matchers, Consumer<E> consumer) {
+    public Node<E> parseByMatchers(Collection<Matcher<E>> matchers, Consumer<E> consumer) {
         return parseByMatchers(matchers, consumer.offset(), consumer.branch());
     }
 
-    public Params<E> parseByMatchers(Collection<Matcher<E>> matchers, Integer offset, Branch<E> branch) {
-        Params<E> params = new Params<>();
+    public Node<E> parseByMatchers(Collection<Matcher<E>> matchers, Integer offset, Branch<E> branch) {
+        Node<E> params = new Node<>();
         params.setStart(offset != null ? offset : 0);
         params.setEnd(params.getStart());
         Consumer<E> consumer = new Consumer<>(state, params.getStart(), branch);
@@ -147,7 +147,7 @@ public class InternalParser<E> {
         StringBuilder builder = new StringBuilder();
         for (CheckNode<E> node = nodes.pollLast(); node != null; node = nodes.pollLast()) {
             Matcher<E> matcher = node.matcher;
-            Params<E> p = node.point.getParams();
+            Node<E> p = node.point.getParams();
             if (matcher.getName() != null) {
                 if (p != null)
                     params.add(matcher.getName(), p);

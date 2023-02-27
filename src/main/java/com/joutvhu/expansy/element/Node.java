@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class Params<E> {
+public class Node<E> {
     private Map<String, List<Object>> params = new HashMap<>();
     private String value;
     private int start;
@@ -66,7 +66,7 @@ public class Params<E> {
         values.add(value);
     }
 
-    public void add(String key, Params<E> value) {
+    public void add(String key, Node<E> value) {
         List<Object> values = params.get(key);
         if (values == null) {
             values = new ArrayList<>();
@@ -82,12 +82,12 @@ public class Params<E> {
             params.put(key, values);
         }
         for (Object o : objects) {
-            if (o instanceof String || o instanceof Params)
+            if (o instanceof String || o instanceof Node)
                 values.add(o);
         }
     }
 
-    public void addAll(Params<E> value) {
+    public void addAll(Node<E> value) {
         value.params.forEach(this::addAll);
     }
 
@@ -105,8 +105,8 @@ public class Params<E> {
         for (Object value : values) {
             if (value instanceof String)
                 return (String) value;
-            if (value instanceof Params)
-                return ((Params<E>) value).getValue();
+            if (value instanceof Node)
+                return ((Node<E>) value).getValue();
         }
         return null;
     }
@@ -115,8 +115,8 @@ public class Params<E> {
         Object value = get(key, index);
         if (value instanceof String)
             return (String) value;
-        if (value instanceof Params)
-            return ((Params<E>) value).getValue();
+        if (value instanceof Node)
+            return ((Node<E>) value).getValue();
         return null;
     }
 
@@ -128,44 +128,44 @@ public class Params<E> {
                 .map(value -> {
                     if (value instanceof String)
                         return (String) value;
-                    if (value instanceof Params)
-                        return ((Params<E>) value).getValue();
+                    if (value instanceof Node)
+                        return ((Node<E>) value).getValue();
                     return null;
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
     }
 
-    public Params<E> getParams(String key) {
+    public Node<E> getParams(String key) {
         List<Object> values = params.get(key);
         if (values == null)
             return null;
         for (Object value : values) {
-            if (value instanceof Params)
-                return (Params<E>) value;
+            if (value instanceof Node)
+                return (Node<E>) value;
         }
         return null;
     }
 
-    public Params<E> getParams(String key, int index) {
+    public Node<E> getParams(String key, int index) {
         Object value = get(key, index);
-        if (value instanceof Params)
-            return (Params<E>) value;
+        if (value instanceof Node)
+            return (Node<E>) value;
         return null;
     }
 
-    public Collection<Params<E>> getAllParams(String key) {
+    public Collection<Node<E>> getAllParams(String key) {
         List<Object> values = params.get(key);
         if (values == null)
             return new ArrayList<>();
         return values.stream()
-                .filter(value -> value instanceof Params)
-                .map(value -> (Params<E>) value)
+                .filter(value -> value instanceof Node)
+                .map(value -> (Node<E>) value)
                 .collect(Collectors.toList());
     }
 
-    public Params<E> clone() {
-        Params<E> result = new Params<>();
+    public Node<E> clone() {
+        Node<E> result = new Node<>();
         result.setStart(start);
         result.setEnd(end);
         result.setValue(value);
