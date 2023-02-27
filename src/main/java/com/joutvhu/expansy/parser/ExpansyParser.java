@@ -39,7 +39,7 @@ public class ExpansyParser<E> {
         for (Branch<E> branch : branches) {
             if (branch.size() == 1) {
                 Node<E> node = branch.get(0);
-                return node.getElement().create(node);
+                return node.getElement().render(node);
             }
         }
         return null;
@@ -50,7 +50,7 @@ public class ExpansyParser<E> {
         List<Branch<E>> branches = analysis(value);
         Branch<E> branch = selector.select(branches);
         for (Node<E> node : branch) {
-            E v = node.create();
+            E v = node.render();
             if (v != null) results.add(v);
         }
         return results;

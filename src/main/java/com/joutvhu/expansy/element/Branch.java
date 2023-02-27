@@ -19,10 +19,10 @@ public class Branch<E> extends ArrayList<Node<E>> {
         checking = new HashMap<>();
     }
 
-    public List<E> create() {
+    public List<E> render() {
         List<E> results = new ArrayList<>();
         for (Node<E> node : this) {
-            E value = node.create();
+            E value = node.render();
             if (value != null)
                 results.add(value);
         }

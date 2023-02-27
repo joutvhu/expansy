@@ -25,9 +25,9 @@ public class Function extends Element<String> {
     }
 
     @Override
-    public String create(Node<String> node) {
+    public String render(Node<String> node) {
         Collection<Node<String>> p = node.getAllParams("param");
-        String pr = p.stream().map(v -> v.create()).collect(Collectors.joining(", "));
+        String pr = p.stream().map(v -> v.render()).collect(Collectors.joining(", "));
         return "Function(" + node.getString("name") + "(" + pr + "))";
     }
 }

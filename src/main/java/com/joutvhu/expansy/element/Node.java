@@ -23,9 +23,9 @@ public class Node<E> {
         this.start = start;
     }
 
-    public E create() {
+    public E render() {
         if (element != null)
-            return element.create(this);
+            return element.render(this);
         return null;
     }
 

@@ -11,7 +11,7 @@ public class Number extends Element<String> {
     }
 
     @Override
-    public String create(Node<String> node) {
+    public String render(Node<String> node) {
         return "Number(" + node.getString("value") + ")";
     }
 }

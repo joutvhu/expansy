@@ -17,9 +17,9 @@ public class MultiplyDivision extends Element<String> {
     }
 
     @Override
-    public String create(Node<String> node) {
-        String first = node.getParams("first").create();
-        String second = node.getParams("second").create();
+    public String render(Node<String> node) {
+        String first = node.getParams("first").render();
+        String second = node.getParams("second").render();
         return "MultiplyDivision(" + first + node.getString("operator") + second + ")";
     }
 }
