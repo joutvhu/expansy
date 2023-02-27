@@ -10,10 +10,6 @@ public class WordMatcher<E> extends Matcher<E> {
         super(parent);
     }
 
-    public WordMatcher(String name, Definer<E> parent) {
-        super(name, parent);
-    }
-
     @Override
     public void match(Consumer<E> consumer) {
         while (true) {

@@ -24,7 +24,7 @@ public class ExpansyParser<E> {
     public ExpansyParser(ElementRegister<E> register, BranchSelector selector, List<String> elements) {
         this.register = register;
         this.selector = selector;
-        this.elements = elements == null ? register.elements() : register.get(elements);
+        this.elements = elements == null || elements.isEmpty() ? register.elements() : register.get(elements);
     }
 
     public List<Branch<E>> analysis(String value) {

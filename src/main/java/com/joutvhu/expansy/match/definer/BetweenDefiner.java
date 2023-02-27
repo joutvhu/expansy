@@ -30,7 +30,7 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
 
     @Override
     public Matcher<E> matcher() {
-        return new Matcher<E>(this) {
+        return new Matcher<E>(this, name) {
             @Override
             public void match(Consumer<E> consumer) {
                 List<Matcher<E>> matchers = matchers();

@@ -34,7 +34,8 @@ public class Expansy<E> {
     }
 
     public Expansy<E> setSelector(BranchSelector selector) {
-        this.selector = selector;
+        if (selector != null)
+            this.selector = selector;
         return this;
     }
 

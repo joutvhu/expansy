@@ -9,7 +9,7 @@ import com.joutvhu.expansy.parser.InternalParser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, OrDefiner<E, T>> {
+public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, OrDefiner<E, T>> {
     private T parent;
     private List<OrDefiner<E, T>> definers;
 
@@ -27,7 +27,7 @@ public class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, OrDefine
 
     @Override
     public Matcher<E> matcher() {
-        return new Matcher<E>(this) {
+        return new Matcher<E>(this, name) {
             @Override
             public void match(Consumer<E> consumer) {
                 String error = null;

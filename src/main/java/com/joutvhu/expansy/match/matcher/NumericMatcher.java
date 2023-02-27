@@ -10,10 +10,6 @@ public class NumericMatcher<E> extends Matcher<E> {
         super(parent);
     }
 
-    public NumericMatcher(String name, Definer<E> parent) {
-        super(name, parent);
-    }
-
     @Override
     public void match(Consumer<E> consumer) {
         boolean started = false;

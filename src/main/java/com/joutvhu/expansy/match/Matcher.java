@@ -7,10 +7,10 @@ public abstract class Matcher<E> {
     protected Definer<E> parent;
 
     public Matcher(Definer<E> parent) {
-        this.parent = parent;
+        this(parent, null);
     }
 
-    public Matcher(String name, Definer<E> parent) {
+    public Matcher(Definer<E> parent, String name) {
         this.name = name;
         this.parent = parent;
     }
