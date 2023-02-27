@@ -47,5 +47,6 @@ public class RegexMatcher<E> extends Matcher<E> {
                 consumer.close();
             point = consumer.next();
         } while (point != null);
+        consumer.close();
     }
 }

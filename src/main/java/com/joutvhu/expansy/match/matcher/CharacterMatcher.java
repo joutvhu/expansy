@@ -44,7 +44,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
             StopPoint point = consumer.next(repetitions);
             for (char c : point.getValue().toCharArray()) {
                 if (!contains(c))
-                    consumer.error("");
+                    consumer.error("The character {} is not one of the following characters {}", c, characters);
             }
             consumer.complete();
         } else {
@@ -53,7 +53,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
                 StopPoint point = consumer.next();
                 if (point == null) break;
                 if (!contains(point.getCharacter()))
-                    consumer.error("");
+                    consumer.error("The character {} is not one of the following characters {}", point.getCharacter(), characters);
                 consumer.push();
             }
         }

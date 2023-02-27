@@ -53,7 +53,7 @@ public class EqualsMatcher<E> extends Matcher<E> {
             if (point == null) break;
             len = point.getLength();
             if (len != value.length())
-                consumer.error("");
+                consumer.error("The \"{}\" does not match with \"{}\"", point.getValue(), value);
             if (ignoreCase) {
                 if (value.equalsIgnoreCase(point.getValue()))
                     consumer.push();

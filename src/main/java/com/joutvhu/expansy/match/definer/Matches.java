@@ -85,6 +85,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T numeric();
 
+    /**
+     * Matches any word character (alphanumeric & underscore).
+     */
     T word();
 
     T equals(String value);

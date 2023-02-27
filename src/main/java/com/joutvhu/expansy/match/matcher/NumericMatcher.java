@@ -20,7 +20,7 @@ public class NumericMatcher<E> extends Matcher<E> {
             if (point == null) return;
             if (point.getCharacter() == '-') {
                 if (negative || started)
-                    consumer.error("");
+                    consumer.error("The minus sign appears more than once in a number.");
                 negative = true;
                 continue;
             }
@@ -31,9 +31,9 @@ public class NumericMatcher<E> extends Matcher<E> {
             }
             if (point.getCharacter() == '.') {
                 if (!started)
-                    consumer.error("");
+                    consumer.error("The decimal point appears before the digits.");
                 if (decimal)
-                    consumer.error("");
+                    consumer.error("The decimal point appears more than once in a number.");
                 decimal = true;
                 continue;
             }

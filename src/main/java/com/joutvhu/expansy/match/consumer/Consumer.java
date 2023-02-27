@@ -125,7 +125,9 @@ public class Consumer<E> {
     }
 
     public void close() {
-        throw new StopReason(0, trackPoints);
+        if (trackPoints.isEmpty())
+            throw new StopReason(trackPoints, "No track points found.", point.getIndex(), point.getValue());
+        throw new StopReason(trackPoints);
     }
 
     public void complete() {
@@ -134,10 +136,14 @@ public class Consumer<E> {
     }
 
     public void error(String message) {
-        throw new StopReason(1, trackPoints, message);
+        throw new StopReason(trackPoints, message, point.getIndex(), point.getValue());
     }
 
     public void error(String pattern, Object ... arguments) {
         error(MessageFormat.format(pattern, arguments));
+    }
+
+    public void error(String message, int index, String content) {
+        throw new StopReason(trackPoints, message, index, content);
     }
 }
