@@ -3,6 +3,8 @@ package com.joutvhu.expansy.match.matcher;
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.exception.ExpansyException;
+import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -32,10 +34,16 @@ abstract class ElementMatcher<E> extends Matcher<E> {
             }
         }
 
-        List<Node<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
-        for (Node<E> result : results) {
-            consumer.push(result);
+        try {
+            List<Node<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
+            for (Node<E> result : results) {
+                consumer.push(result);
+            }
+            consumer.close();
+        } catch (MatchException e) {
+            consumer.error(e.getMessage(), e.getIndex(), e.getContent());
+        } catch (ExpansyException e) {
+            consumer.error(e.getMessage(), null, null);
         }
-        consumer.close();
     }
 }

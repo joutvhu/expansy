@@ -143,7 +143,7 @@ public class Consumer<E> {
         error(MessageFormat.format(pattern, arguments));
     }
 
-    public void error(String message, int index, String content) {
+    public void error(String message, Integer index, String content) {
         throw new StopReason(trackPoints, message, index, content);
     }
 }

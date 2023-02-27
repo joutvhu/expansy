@@ -3,7 +3,6 @@ package com.joutvhu.expansy.parser;
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Node;
-import com.joutvhu.expansy.exception.ExpansyException;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -70,7 +69,7 @@ public class InternalParser<E> {
 
     public List<Node<E>> parseByElements(Collection<Element<E>> elements, Consumer<E> consumer) {
         List<Node<E>> results = new ArrayList<>();
-        ExpansyException error = null;
+        MatchException error = null;
         Branch<E> branch = consumer.branch();
         if (consumer.offset() < state.getLength()) {
             for (Element<E> element : elements) {
@@ -82,16 +81,17 @@ public class InternalParser<E> {
                         if (node.getLength() > 0)
                             results.add(node);
                     } catch (Exception e) {
-                        if (error == null)
-                            error = ExpansyException.of(e);
+                        error = MatchException.or(error, MatchException.of(e));
                     } finally {
                         if (branch != null)
                             branch.complete(consumer.offset(), element);
                     }
                 }
             }
-            results.sort(Comparator.comparingInt(Node::getLength));
         }
+        if (results.isEmpty() && error != null)
+            throw error;
+        results.sort(Comparator.comparingInt(Node::getLength));
         return results;
     }
 
