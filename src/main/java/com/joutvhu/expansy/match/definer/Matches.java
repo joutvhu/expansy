@@ -9,6 +9,8 @@ import java.util.function.Function;
 public interface Matches<E, T extends Definer<E>> {
     MaybeDefiner<E, ?> maybe();
 
+    OrDefiner<E, ?> or();
+
     LoopDefiner<E, ?> loop();
 
     LoopDefiner<E, ?> loop(int repetitions);

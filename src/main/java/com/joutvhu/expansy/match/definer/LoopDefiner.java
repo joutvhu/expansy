@@ -8,7 +8,7 @@ import com.joutvhu.expansy.parser.InternalParser;
 
 import java.util.List;
 
-public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, MaybeDefiner<E, T>> {
+public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, LoopDefiner<E, T>> {
     private T parent;
     private Integer minRepetitions;
     private Integer maxRepetitions;
@@ -60,6 +60,11 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                 }
             }
         };
+    }
+
+    @Override
+    public OrDefiner<E, LoopDefiner<E, T>> or() {
+        return (OrDefiner<E, LoopDefiner<E, T>>) super.or();
     }
 
     public T end() {

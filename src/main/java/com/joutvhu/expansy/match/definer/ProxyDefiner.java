@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Function;
 
 public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E> {
+    protected String name;
     protected T master;
     protected Definer<E> container;
 
@@ -27,6 +28,11 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
         this.container = container;
     }
 
+    <R extends ProxyDefiner<E, T>> R withName(String name) {
+        this.name = name;
+        return (R) this;
+    }
+
     protected List<Matcher<E>> matchers() {
         if (container instanceof DefaultDefiner)
             return ((DefaultDefiner<E>) container).matchers;
@@ -41,6 +47,11 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     @Override
     public MaybeDefiner<E, T> maybe() {
         return new MaybeDefiner<>(master);
+    }
+
+    @Override
+    public OrDefiner<E, ?> or() {
+        return new OrDefiner<>(master);
     }
 
     @Override

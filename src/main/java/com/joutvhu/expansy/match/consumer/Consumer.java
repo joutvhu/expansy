@@ -81,6 +81,10 @@ public class Consumer<E> {
         return new TrackPoint(offset + index, value.substring(0, end));
     }
 
+    public boolean matched() {
+        return !trackPoints.isEmpty();
+    }
+
     public void select() {
         trackPoints.clear();
         trackPoints.push(at(null));

@@ -1,6 +1,7 @@
 package com.joutvhu.expansy.match.definer;
 
 import com.joutvhu.expansy.element.Element;
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 
@@ -26,39 +27,46 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
 
     @Override
     public MaybeDefiner<E, T> maybe() {
-        return new MaybeDefiner<>(parent);
+        return new MaybeDefiner<>(parent).withName(name);
+    }
+
+    @Override
+    public OrDefiner<E, T> or() {
+        if (parent instanceof OrDefiner)
+            throw new DefineException("Unable to name a selection of OrDefiner.");
+        return new OrDefiner<>(parent).withName(name);
     }
 
     @Override
     public LoopDefiner<E, T> loop() {
-        return new LoopDefiner<>(parent);
+        return new LoopDefiner<>(parent).withName(name);
     }
 
     @Override
     public LoopDefiner<E, T> loop(int repetitions) {
-        return new LoopDefiner<>(parent, repetitions);
+        return new LoopDefiner<>(parent, repetitions).withName(name);
     }
 
     @Override
     public LoopDefiner<E, T> loop(int minRepetitions, Integer maxRepetitions) {
-        return new LoopDefiner<>(parent, minRepetitions, maxRepetitions);
+        return new LoopDefiner<>(parent, minRepetitions, maxRepetitions).withName(name);
     }
 
     @Override
     public BetweenDefiner<E, T> between() {
-        return new BetweenDefiner<>(parent);
+        return new BetweenDefiner<>(parent).withName(name);
     }
 
     @Override
     public BetweenDefiner<E, T> between(int repetitions) {
-        return new BetweenDefiner<>(parent, repetitions);
+        return new BetweenDefiner<>(parent, repetitions).withName(name);
     }
 
     @Override
     public BetweenDefiner<E, T> between(int minRepetitions, Integer maxRepetitions) {
-        return new BetweenDefiner<>(parent, minRepetitions, maxRepetitions);
+        return new BetweenDefiner<>(parent, minRepetitions, maxRepetitions).withName(name);
     }
-    
+
     private T result() {
         Matcher<E> matcher = container.matcher();
         matcher.setName(name);

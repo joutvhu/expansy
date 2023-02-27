@@ -39,6 +39,13 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
+    public OrDefiner<E, ?> or() {
+        OrDefiner<E, DefaultDefiner<E>> matcher = new OrDefiner<>(this);
+        matchers.add(matcher.matcher());
+        return matcher;
+    }
+
+    @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop() {
         LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this);
         matchers.add(matcher.matcher());
