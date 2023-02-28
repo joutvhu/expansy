@@ -97,8 +97,14 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T spaces(int time) {
-        container.spaces(time);
+    public T spaces(int length) {
+        container.spaces(length);
+        return master;
+    }
+
+    @Override
+    public T spaces(Integer minLength, Integer maxLength) {
+        container.spaces(minLength, maxLength);
         return master;
     }
 
@@ -115,8 +121,14 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T characters(char[] values, int repetitions) {
-        container.characters(values, repetitions);
+    public T characters(char[] values, int length) {
+        container.characters(values, length);
+        return master;
+    }
+
+    @Override
+    public T characters(char[] values, Integer minLength, Integer maxLength) {
+        container.characters(values, minLength, maxLength);
         return master;
     }
 
@@ -133,8 +145,14 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T whitespaces(int repetitions) {
-        container.whitespaces(repetitions);
+    public T whitespaces(int length) {
+        container.whitespaces(length);
+        return master;
+    }
+
+    @Override
+    public T whitespaces(Integer minLength, Integer maxLength) {
+        container.whitespaces(minLength, maxLength);
         return master;
     }
 
@@ -151,8 +169,14 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T digits(int repetitions) {
-        container.digits(repetitions);
+    public T digits(int length) {
+        container.digits(length);
+        return master;
+    }
+
+    @Override
+    public T digits(Integer minLength, Integer maxLength) {
+        container.digits(minLength, maxLength);
         return master;
     }
 
@@ -169,8 +193,14 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T lowercases(int repetitions) {
-        container.lowercases(repetitions);
+    public T lowercases(int length) {
+        container.lowercases(length);
+        return master;
+    }
+
+    @Override
+    public T lowercases(Integer minLength, Integer maxLength) {
+        container.lowercases(minLength, maxLength);
         return master;
     }
 
@@ -187,8 +217,14 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T uppercases(int repetitions) {
-        container.uppercases(repetitions);
+    public T uppercases(int length) {
+        container.uppercases(length);
+        return master;
+    }
+
+    @Override
+    public T uppercases(Integer minLength, Integer maxLength) {
+        container.uppercases(minLength, maxLength);
         return master;
     }
 
@@ -205,8 +241,38 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T alphabets(int repetitions) {
-        container.alphabets(repetitions);
+    public T alphabets(int length) {
+        container.alphabets(length);
+        return master;
+    }
+
+    @Override
+    public T alphabets(Integer minLength, Integer maxLength) {
+        container.alphabets(minLength, maxLength);
+        return master;
+    }
+
+    @Override
+    public T alphanumeric() {
+        container.alphanumeric();
+        return master;
+    }
+
+    @Override
+    public T alphanumerics() {
+        container.alphanumerics();
+        return master;
+    }
+
+    @Override
+    public T alphanumerics(int length) {
+        container.alphanumerics(length);
+        return master;
+    }
+
+    @Override
+    public T alphanumerics(Integer minLength, Integer maxLength) {
+        container.alphanumerics(minLength, maxLength);
         return master;
     }
 
@@ -271,7 +337,7 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T pattern(String regex, int minLength, int maxLength) {
+    public T pattern(String regex, Integer minLength, Integer maxLength) {
         container.pattern(regex, minLength, maxLength);
         return master;
     }

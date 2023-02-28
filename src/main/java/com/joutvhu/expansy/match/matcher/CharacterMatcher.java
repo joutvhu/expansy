@@ -5,6 +5,7 @@ import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
 import com.joutvhu.expansy.util.Joiner;
+import org.apache.commons.lang3.ArrayUtils;
 
 public class CharacterMatcher<E> extends Matcher<E> {
     public static char[] WHITESPACE = new char[]{
@@ -19,48 +20,59 @@ public class CharacterMatcher<E> extends Matcher<E> {
     public static char[] UPPERCASE = new char[]{
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
     };
-    public static char[] ALPHABET = new char[]{
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
-    };
+    public static char[] ALPHABET = ArrayUtils.addAll(LOWERCASE, UPPERCASE);
+    public static char[] ALPHANUMERIC = ArrayUtils.addAll(ALPHABET, DIGIT);
 
     private char[] characters;
-    private Integer repetitions;
+    private Integer minLength;
+    private Integer maxLength;
 
-    public CharacterMatcher(Definer<E> parent, char character, Integer repetitions) {
-        super(parent);
-        this.characters = new char[]{character};
-        this.repetitions = repetitions;
+    public CharacterMatcher(Definer<E> parent, char character, Integer length) {
+        this(parent, new char[]{character}, length, length);
     }
 
-    public CharacterMatcher(Definer<E> parent, char[] characters, Integer repetitions) {
+    public CharacterMatcher(Definer<E> parent, char character, Integer minLength, Integer maxLength) {
+        this(parent, new char[]{character}, minLength, maxLength);
+    }
+
+    public CharacterMatcher(Definer<E> parent, char[] characters, Integer length) {
+        this(parent, characters, length, length);
+    }
+
+    public CharacterMatcher(Definer<E> parent, char[] characters, Integer minLength, Integer maxLength) {
         super(parent);
         this.characters = characters;
-        this.repetitions = repetitions;
+        this.minLength = minLength;
+        this.maxLength = maxLength;
     }
 
     @Override
     public void match(Consumer<E> consumer) {
-        if (repetitions != null && repetitions > 0) {
-            StopPoint point = consumer.next(repetitions);
+        StopPoint point;
+        if (minLength == null || minLength <= 0)
+            consumer.push();
+        if (minLength != null && minLength > 0) {
+            point = consumer.next(minLength);
             if (point == null)
-                consumer.error("Not enough length.");
+                consumer.error("Minimum length is {0}", minLength);
             for (char c : point.getValue().toCharArray()) {
                 if (!contains(c))
                     consumer.error("The character {0} is not one of the following characters {1}", c, Joiner.on(",").join(characters));
             }
-            consumer.complete();
-        } else {
             consumer.push();
-            while (true) {
-                StopPoint point = consumer.next();
-                if (point == null)
-                    consumer.error("No characters.");
-                if (!contains(point.getCharacter()))
-                    consumer.error("The character {0} is not one of the following characters {1}", point.getCharacter(), Joiner.on(",").join(characters));
-                consumer.push();
-            }
+            if (maxLength != null && maxLength <= point.getLength())
+                consumer.close();
         }
+
+        do {
+            point = consumer.next();
+            if (point == null)
+                consumer.error("No characters.");
+            if (!contains(point.getCharacter()))
+                consumer.error("The character {0} is not one of the following characters {1}", point.getCharacter(), Joiner.on(",").join(characters));
+            consumer.push();
+        } while (maxLength == null || point.getLength() < maxLength);
+        consumer.close();
     }
 
     private boolean contains(char character) {

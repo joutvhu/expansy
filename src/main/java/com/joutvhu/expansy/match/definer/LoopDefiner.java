@@ -39,7 +39,7 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                 node.setStart(consumer.offset());
                 node.setEnd(consumer.offset());
                 node.setValue("");
-                if (minRepetitions == 0) {
+                if (minRepetitions != null && minRepetitions == 0) {
                     consumer.push(node);
                     node = node.clone();
                 }

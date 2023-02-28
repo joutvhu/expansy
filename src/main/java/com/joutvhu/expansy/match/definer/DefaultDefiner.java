@@ -100,8 +100,14 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> spaces(int time) {
-        matchers.add(new CharacterMatcher<>(this, ' ', time));
+    public DefaultDefiner<E> spaces(int length) {
+        matchers.add(new CharacterMatcher<>(this, ' ', length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> spaces(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, ' ', minLength, maxLength));
         return this;
     }
 
@@ -118,8 +124,14 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> characters(char[] values, int repetitions) {
-        matchers.add(new CharacterMatcher<>(this, values, repetitions));
+    public DefaultDefiner<E> characters(char[] values, int length) {
+        matchers.add(new CharacterMatcher<>(this, values, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> characters(char[] values, Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, values, minLength, maxLength));
         return this;
     }
 
@@ -136,8 +148,14 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> whitespaces(int repetitions) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, repetitions));
+    public DefaultDefiner<E> whitespaces(int length) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> whitespaces(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.WHITESPACE, minLength, maxLength));
         return this;
     }
 
@@ -154,8 +172,14 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> digits(int repetitions) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, repetitions));
+    public DefaultDefiner<E> digits(int length) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> digits(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.DIGIT, minLength, maxLength));
         return this;
     }
 
@@ -172,8 +196,14 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> lowercases(int repetitions) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, repetitions));
+    public DefaultDefiner<E> lowercases(int length) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> lowercases(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.LOWERCASE, minLength, maxLength));
         return this;
     }
 
@@ -190,8 +220,14 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> uppercases(int repetitions) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, repetitions));
+    public DefaultDefiner<E> uppercases(int length) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> uppercases(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.UPPERCASE, minLength, maxLength));
         return this;
     }
 
@@ -208,8 +244,38 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> alphabets(int repetitions) {
-        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, repetitions));
+    public DefaultDefiner<E> alphabets(int length) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> alphabets(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHABET, minLength, maxLength));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> alphanumeric() {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHANUMERIC, 1));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> alphanumerics() {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHANUMERIC, null));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> alphanumerics(int length) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHANUMERIC, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> alphanumerics(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, CharacterMatcher.ALPHANUMERIC, minLength, maxLength));
         return this;
     }
 
@@ -272,7 +338,7 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> pattern(String regex, int minLength, int maxLength) {
+    public DefaultDefiner<E> pattern(String regex, Integer minLength, Integer maxLength) {
         matchers.add(new RegexMatcher<>(this, regex, 0, minLength, maxLength));
         return this;
     }

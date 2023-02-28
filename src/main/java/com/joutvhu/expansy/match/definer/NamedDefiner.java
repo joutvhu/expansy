@@ -86,8 +86,14 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T spaces(int time) {
-        this.dub(parent.spaces(time));
+    public T spaces(int length) {
+        this.dub(parent.spaces(length));
+        return parent;
+    }
+
+    @Override
+    public T spaces(Integer minLength, Integer maxLength) {
+        this.dub(parent.spaces(minLength, maxLength));
         return parent;
     }
 
@@ -104,8 +110,14 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T characters(char[] values, int repetitions) {
-        this.dub(parent.characters(values, repetitions));
+    public T characters(char[] values, int length) {
+        this.dub(parent.characters(values, length));
+        return parent;
+    }
+
+    @Override
+    public T characters(char[] values, Integer minLength, Integer maxLength) {
+        this.dub(parent.characters(values, minLength, maxLength));
         return parent;
     }
 
@@ -122,8 +134,14 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T whitespaces(int repetitions) {
-        this.dub(parent.whitespaces(repetitions));
+    public T whitespaces(int length) {
+        this.dub(parent.whitespaces(length));
+        return parent;
+    }
+
+    @Override
+    public T whitespaces(Integer minLength, Integer maxLength) {
+        this.dub(parent.whitespaces(minLength, maxLength));
         return parent;
     }
 
@@ -140,8 +158,14 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T digits(int repetitions) {
-        this.dub(parent.digits(repetitions));
+    public T digits(int length) {
+        this.dub(parent.digits(length));
+        return parent;
+    }
+
+    @Override
+    public T digits(Integer minLength, Integer maxLength) {
+        this.dub(parent.digits(minLength, maxLength));
         return parent;
     }
 
@@ -158,8 +182,14 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T lowercases(int repetitions) {
-        this.dub(parent.lowercases(repetitions));
+    public T lowercases(int length) {
+        this.dub(parent.lowercases(length));
+        return parent;
+    }
+
+    @Override
+    public T lowercases(Integer minLength, Integer maxLength) {
+        this.dub(parent.lowercases(minLength, maxLength));
         return parent;
     }
 
@@ -176,8 +206,14 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T uppercases(int repetitions) {
-        this.dub(parent.uppercases(repetitions));
+    public T uppercases(int length) {
+        this.dub(parent.uppercases(length));
+        return parent;
+    }
+
+    @Override
+    public T uppercases(Integer minLength, Integer maxLength) {
+        this.dub(parent.uppercases(minLength, maxLength));
         return parent;
     }
 
@@ -194,8 +230,38 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T alphabets(int repetitions) {
-        this.dub(parent.alphabets(repetitions));
+    public T alphabets(int length) {
+        this.dub(parent.alphabets(length));
+        return parent;
+    }
+
+    @Override
+    public T alphabets(Integer minLength, Integer maxLength) {
+        this.dub(parent.alphabets(minLength, maxLength));
+        return parent;
+    }
+
+    @Override
+    public T alphanumeric() {
+        this.dub(parent.alphanumeric());
+        return parent;
+    }
+
+    @Override
+    public T alphanumerics() {
+        this.dub(parent.alphanumerics());
+        return parent;
+    }
+
+    @Override
+    public T alphanumerics(int length) {
+        this.dub(parent.alphanumerics(length));
+        return parent;
+    }
+
+    @Override
+    public T alphanumerics(Integer minLength, Integer maxLength) {
+        this.dub(parent.alphanumerics(minLength, maxLength));
         return parent;
     }
 
@@ -260,7 +326,7 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T pattern(String regex, int minLength, int maxLength) {
+    public T pattern(String regex, Integer minLength, Integer maxLength) {
         this.dub(parent.pattern(regex, minLength, maxLength));
         return parent;
     }

@@ -30,13 +30,20 @@ public interface Matches<E, T extends Definer<E>> {
 
     T spaces();
 
-    T spaces(int time);
+    T spaces(int length);
 
+    T spaces(Integer minLength, Integer maxLength);
+
+    /**
+     * Matches any characters provided.
+     */
     T character(char... values);
 
     T characters(char... values);
 
-    T characters(char[] values, int repetitions);
+    T characters(char[] values, int length);
+
+    T characters(char[] values, Integer minLength, Integer maxLength);
 
     /**
      * Matches any whitespace character (spaces, tabs, line breaks)
@@ -45,7 +52,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T whitespaces();
 
-    T whitespaces(int repetitions);
+    T whitespaces(int length);
+
+    T whitespaces(Integer minLength, Integer maxLength);
 
     /**
      * Matches any digit character (0-9). Equivalent to [0-9].
@@ -54,7 +63,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T digits();
 
-    T digits(int repetitions);
+    T digits(int length);
+
+    T digits(Integer minLength, Integer maxLength);
 
     /**
      * Matches any lowercase character
@@ -63,7 +74,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T lowercases();
 
-    T lowercases(int repetitions);
+    T lowercases(int length);
+
+    T lowercases(Integer minLength, Integer maxLength);
 
     /**
      * Matches any uppercase character
@@ -72,7 +85,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T uppercases();
 
-    T uppercases(int repetitions);
+    T uppercases(int length);
+
+    T uppercases(Integer minLength, Integer maxLength);
 
     /**
      * Matches any alphabet character
@@ -81,7 +96,20 @@ public interface Matches<E, T extends Definer<E>> {
 
     T alphabets();
 
-    T alphabets(int repetitions);
+    T alphabets(int length);
+
+    T alphabets(Integer minLength, Integer maxLength);
+
+    /**
+     * Matches any alphanumeric character
+     */
+    T alphanumeric();
+
+    T alphanumerics();
+
+    T alphanumerics(int length);
+
+    T alphanumerics(Integer minLength, Integer maxLength);
 
     T numeric();
 
@@ -106,7 +134,7 @@ public interface Matches<E, T extends Definer<E>> {
 
     T pattern(String regex, int length);
 
-    T pattern(String regex, int minLength, int maxLength);
+    T pattern(String regex, Integer minLength, Integer maxLength);
 
     T check(Function<String, Boolean> checker);
 
