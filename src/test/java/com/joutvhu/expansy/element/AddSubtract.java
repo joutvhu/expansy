@@ -18,8 +18,8 @@ public class AddSubtract extends Element<String> {
 
     @Override
     public String render(Node<String> node) {
-        String first = node.getParams("first").render();
-        String second = node.getParams("second").render();
-        return "AddSubtract(" + first + node.getString("operator") + second + ")";
+        String first = node.getNode("first").render();
+        String second = node.getNode("second").render();
+        return "AddSubtract(" + first + node.getAsString("operator") + second + ")";
     }
 }

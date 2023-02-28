@@ -14,6 +14,6 @@ public class Group extends Element<String> {
 
     @Override
     public String render(Node<String> node) {
-        return "Group(" + node.getParams("operator").render() + ")";
+        return "Group(" + node.getNode("operator").render() + ")";
     }
 }

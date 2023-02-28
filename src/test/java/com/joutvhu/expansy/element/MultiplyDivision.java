@@ -18,8 +18,8 @@ public class MultiplyDivision extends Element<String> {
 
     @Override
     public String render(Node<String> node) {
-        String first = node.getParams("first").render();
-        String second = node.getParams("second").render();
-        return "MultiplyDivision(" + first + node.getString("operator") + second + ")";
+        String first = node.getNode("first").render();
+        String second = node.getNode("second").render();
+        return "MultiplyDivision(" + first + node.getAsString("operator") + second + ")";
     }
 }

@@ -9,7 +9,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Node<E> {
-    private Map<String, List<Object>> params = new HashMap<>();
+    private Node<E> parent;
+    private Map<String, List<Object>> children = new HashMap<>();
     private String value;
     private int start;
     private int end;
@@ -57,49 +58,62 @@ public class Node<E> {
         this.element = element;
     }
 
+    public Node<E> getParent() {
+        return parent;
+    }
+
+    public void setParent(Node<E> parent) {
+        this.parent = parent;
+    }
+
     public void add(String key, String value) {
-        List<Object> values = params.get(key);
+        List<Object> values = children.get(key);
         if (values == null) {
             values = new ArrayList<>();
-            params.put(key, values);
+            children.put(key, values);
         }
         values.add(value);
     }
 
     public void add(String key, Node<E> value) {
-        List<Object> values = params.get(key);
+        List<Object> values = children.get(key);
         if (values == null) {
             values = new ArrayList<>();
-            params.put(key, values);
+            children.put(key, values);
         }
+        value.setParent(this);
         values.add(value);
     }
 
     public void addAll(String key, List<Object> objects) {
-        List<Object> values = params.get(key);
+        List<Object> values = children.get(key);
         if (values == null) {
             values = new ArrayList<>();
-            params.put(key, values);
+            children.put(key, values);
         }
         for (Object o : objects) {
-            if (o instanceof String || o instanceof Node)
+            if (o instanceof String)
                 values.add(o);
+            else if (o instanceof Node) {
+                ((Node<E>) o).setParent(this);
+                values.add(o);
+            }
         }
     }
 
     public void addAll(Node<E> value) {
-        value.params.forEach(this::addAll);
+        value.children.forEach(this::addAll);
     }
 
-    public Object get(String key, int index) {
-        List<Object> values = params.get(key);
+    public <R> R get(String key, int index) {
+        List<Object> values = children.get(key);
         if (values != null)
-            return values.get(index);
+            return (R) values.get(index);
         return null;
     }
 
-    public String getString(String key) {
-        List<Object> values = params.get(key);
+    public String getAsString(String key) {
+        List<Object> values = children.get(key);
         if (values == null)
             return null;
         for (Object value : values) {
@@ -111,7 +125,7 @@ public class Node<E> {
         return null;
     }
 
-    public String getString(String key, int index) {
+    public String getAsString(String key, int index) {
         Object value = get(key, index);
         if (value instanceof String)
             return (String) value;
@@ -120,8 +134,8 @@ public class Node<E> {
         return null;
     }
 
-    public Collection<String> getAllgetString(String key) {
-        List<Object> values = params.get(key);
+    public Collection<String> getAllAsString(String key) {
+        List<Object> values = children.get(key);
         if (values == null)
             return new ArrayList<>();
         return values.stream()
@@ -136,8 +150,56 @@ public class Node<E> {
                 .collect(Collectors.toList());
     }
 
-    public Node<E> getParams(String key) {
-        List<Object> values = params.get(key);
+    public String getString(String key) {
+        List<Object> values = children.get(key);
+        if (values == null)
+            return null;
+        for (Object value : values) {
+            if (value instanceof String)
+                return (String) value;
+        }
+        return null;
+    }
+
+    public String getString(String key, int index) {
+        Object value = get(key, index);
+        if (value instanceof String)
+            return (String) value;
+        return null;
+    }
+
+    public Collection<String> getAllString(String key) {
+        List<Object> values = children.get(key);
+        if (values == null)
+            return new ArrayList<>();
+        return values.stream()
+                .map(value -> {
+                    if (value instanceof String)
+                        return (String) value;
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
+    public String getStringAt(String key, int index) {
+        List<Object> values = children.get(key);
+        if (values == null)
+            return null;
+        return values.stream()
+                .map(value -> {
+                    if (value instanceof String)
+                        return (String) value;
+                    return null;
+                })
+                .filter(Objects::nonNull)
+                .skip(index)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Node<E> getNode(String key) {
+        List<Object> values = children.get(key);
         if (values == null)
             return null;
         for (Object value : values) {
@@ -147,15 +209,15 @@ public class Node<E> {
         return null;
     }
 
-    public Node<E> getParams(String key, int index) {
+    public Node<E> getNode(String key, int index) {
         Object value = get(key, index);
         if (value instanceof Node)
             return (Node<E>) value;
         return null;
     }
 
-    public Collection<Node<E>> getAllParams(String key) {
-        List<Object> values = params.get(key);
+    public Collection<Node<E>> getAllNodes(String key) {
+        List<Object> values = children.get(key);
         if (values == null)
             return new ArrayList<>();
         return values.stream()
@@ -164,13 +226,25 @@ public class Node<E> {
                 .collect(Collectors.toList());
     }
 
+    public Node<E> getNodeAt(String key, int index) {
+        List<Object> values = children.get(key);
+        if (values == null)
+            return null;
+        return values.stream()
+                .filter(value -> value instanceof Node)
+                .map(value -> (Node<E>) value)
+                .skip(index)
+                .findFirst()
+                .orElse(null);
+    }
+
     public Node<E> clone() {
         Node<E> result = new Node<>();
         result.setStart(start);
         result.setEnd(end);
         result.setValue(value);
         result.setElement(element);
-        params.forEach((key, values) -> result.params.put(key, new ArrayList<>(values)));
+        children.forEach((key, values) -> result.children.put(key, new ArrayList<>(values)));
         return result;
     }
 }
