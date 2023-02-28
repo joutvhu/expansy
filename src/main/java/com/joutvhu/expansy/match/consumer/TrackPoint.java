@@ -2,17 +2,17 @@ package com.joutvhu.expansy.match.consumer;
 
 import com.joutvhu.expansy.element.Node;
 
-public class TrackPoint {
+public class TrackPoint<E> {
     private int index;
     private String value;
-    private Node<?> node;
+    private Node<E> node;
 
     public TrackPoint(int index, String value) {
         this.index = index;
         this.value = value;
     }
 
-    public TrackPoint(Node<?> node) {
+    public TrackPoint(Node<E> node) {
         this.index = node.getEnd();
         this.value = node.getValue();
         this.node = node;
@@ -26,11 +26,11 @@ public class TrackPoint {
         return value;
     }
 
-    public <E> Node<E> getNode() {
-        return (Node<E>) node;
+    public Node<E> getNode() {
+        return node;
     }
 
-    public TrackPoint with(Node<?> node) {
+    public TrackPoint with(Node<E> node) {
         this.node = node;
         return this;
     }

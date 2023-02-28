@@ -1,55 +1,49 @@
 package com.joutvhu.expansy.match.consumer;
 
+import com.joutvhu.expansy.match.Matcher;
+
 import java.util.Deque;
 
-public final class StopReason extends RuntimeException {
-    private int status;
+public final class StopReason<E> {
+    private String message;
     private Integer position;
     private String content;
-    private Deque<TrackPoint> trackPoints;
+    private Deque<TrackPoint<E>> trackPoints;
 
-    StopReason(Deque<TrackPoint> trackPoints) {
-        this.status = 0;
-        this.trackPoints = trackPoints;
-    }
-
-    StopReason(Deque<TrackPoint> trackPoints, String message, Integer position, String content) {
-        super(message);
-        this.status = 1;
-        this.trackPoints = trackPoints;
+    StopReason(Deque<?> trackPoints, String message, Integer position, String content) {
+        this.message = message;
+        this.trackPoints = (Deque<TrackPoint<E>>) trackPoints;
         this.position = position;
         this.content = content;
     }
 
     public boolean isSuccess() {
-        return status == 0 && trackPoints != null && !trackPoints.isEmpty();
+        return message == null && trackPoints != null && !trackPoints.isEmpty();
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public String getMessage() {
+        return message;
     }
 
     public Integer getPosition() {
         return position;
     }
 
-    public void setPosition(Integer position) {
-        this.position = position;
-    }
-
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public Deque<TrackPoint<E>> getTrackPoints() {
+        return trackPoints;
     }
 
-    public Deque<TrackPoint> getTrackPoints() {
-        return trackPoints;
+    public static <E> StopReason<E> of(Matcher<E> matcher, Consumer<E> consumer) {
+        try {
+            matcher.match(consumer);
+            consumer.close();
+            return null;
+        } catch (StopReasonThrowable e) {
+            return e.reason();
+        }
     }
 }

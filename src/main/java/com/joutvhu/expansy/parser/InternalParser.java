@@ -113,42 +113,39 @@ public class InternalParser<E> {
         Consumer<E> consumer = new Consumer<>(state, result.getStart(), branch);
         Deque<CheckNode<E>> nodes = new ArrayDeque<>();
         Matcher<E>[] array = matchers.toArray(new Matcher[0]);
-        StopReason error = null;
+        StopReason<E> error = null;
         for (int i = 0, len = matchers.size(); i < len; i++) {
             Matcher<E> matcher = array[i];
-            try {
-                matcher.match(consumer);
-                consumer.close();
-            } catch (StopReason reason) {
-                if (!reason.isSuccess()) {
-                    if (error == null || error.getPosition() == null ||
-                            (reason.getPosition() != null && error.getPosition() < reason.getPosition()))
-                        error = reason;
-                }
+            StopReason<E> reason = StopReason.of(matcher, consumer);
 
-                Deque<TrackPoint> trackPoints = reason.getTrackPoints();
-                TrackPoint trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
-                while (trackPoint == null && !nodes.isEmpty()) {
-                    // Back to other track point.
-                    CheckNode<E> node = nodes.pop();
-                    trackPoints = node.trackPoints;
-                    trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
-                    i = nodes.size();
-                }
+            if (!reason.isSuccess()) {
+                if (error == null || error.getPosition() == null ||
+                        (reason.getPosition() != null && error.getPosition() < reason.getPosition()))
+                    error = reason;
+            }
 
-                if (trackPoint != null) {
-                    CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
-                    nodes.push(node);
-                    consumer = new Consumer<>(state, trackPoint.getIndex(), branch);
-                } else if (i == 0) {
-                    if (error != null)
-                        throw new MatchException(error.getMessage(), error.getPosition(), error.getContent());
-                    if (StringUtils.isBlank(reason.getMessage())) {
-                        if (trackPoints.isEmpty())
-                            throw new MatchException("No track point found.");
-                    }
-                    throw new MatchException(reason.getMessage(), reason.getPosition(), reason.getContent());
+            Deque<TrackPoint<E>> trackPoints = reason.getTrackPoints();
+            TrackPoint<E> trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
+            while (trackPoint == null && !nodes.isEmpty()) {
+                // Back to other track point.
+                CheckNode<E> node = nodes.pop();
+                trackPoints = node.trackPoints;
+                trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
+                i = nodes.size();
+            }
+
+            if (trackPoint != null) {
+                CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
+                nodes.push(node);
+                consumer = new Consumer<>(state, trackPoint.getIndex(), branch);
+            } else if (i == 0) {
+                if (error != null)
+                    throw new MatchException(error.getMessage(), error.getPosition(), error.getContent());
+                if (StringUtils.isBlank(reason.getMessage())) {
+                    if (trackPoints.isEmpty())
+                        throw new MatchException("No track point found.");
                 }
+                throw new MatchException(reason.getMessage(), reason.getPosition(), reason.getContent());
             }
         }
 
@@ -181,7 +178,7 @@ public class InternalParser<E> {
     @AllArgsConstructor
     private class CheckNode<E> {
         private Matcher<E> matcher;
-        private TrackPoint point;
-        private Deque<TrackPoint> trackPoints;
+        private TrackPoint<E> point;
+        private Deque<TrackPoint<E>> trackPoints;
     }
 }

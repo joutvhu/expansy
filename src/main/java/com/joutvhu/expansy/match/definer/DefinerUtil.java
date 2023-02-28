@@ -19,6 +19,8 @@ public class DefinerUtil {
     public <E> List<Matcher<E>> matchersOf(Definer<E> definer) {
         if (definer instanceof DefaultDefiner)
             return ((DefaultDefiner<E>) definer).matchers;
+        if (definer instanceof ProxyDefiner)
+            return ((ProxyDefiner<E, ?>) definer).matchers();
         return new ArrayList<>();
     }
 }

@@ -14,7 +14,7 @@ public class Consumer<E> {
     protected final Source source;
     protected final int offset;
     protected final ExpansyState<E> state;
-    protected final Deque<TrackPoint> trackPoints;
+    protected final Deque<TrackPoint<E>> trackPoints;
     protected Branch<E> branch;
     protected StopPoint point;
 
@@ -47,7 +47,7 @@ public class Consumer<E> {
         return state;
     }
 
-    public Deque<TrackPoint> trackPoints() {
+    public Deque<TrackPoint<E>> trackPoints() {
         return trackPoints;
     }
 
@@ -141,8 +141,8 @@ public class Consumer<E> {
 
     public void close() {
         if (trackPoints.isEmpty())
-            throw new StopReason(trackPoints, "No track points found.", point.getIndex(), point.getValue());
-        throw new StopReason(trackPoints);
+            throw new StopReasonThrowable(trackPoints, "No track points found.", point.getIndex(), point.getValue());
+        throw new StopReasonThrowable(trackPoints);
     }
 
     public void complete() {
@@ -152,11 +152,11 @@ public class Consumer<E> {
 
     public void error(String pattern, Object ... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
-        throw new StopReason(trackPoints, message, point.getIndex(), point.getValue());
+        throw new StopReasonThrowable(trackPoints, message, point.getIndex(), point.getValue());
     }
 
     public void errorAt(String pattern, Integer index, String content, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
-        throw new StopReason(trackPoints, message, index, content);
+        throw new StopReasonThrowable(trackPoints, message, index, content);
     }
 }

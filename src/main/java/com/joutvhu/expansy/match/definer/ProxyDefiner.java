@@ -28,9 +28,7 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     protected List<Matcher<E>> matchers() {
-        if (container instanceof DefaultDefiner)
-            return ((DefaultDefiner<E>) container).matchers;
-        return new ArrayList<>();
+        return DefinerUtil.matchersOf(container);
     }
 
     @Override
@@ -39,8 +37,7 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     private <R extends Definer<E>> R add(R definer) {
-        if (container instanceof DefaultDefiner)
-            ((DefaultDefiner<E>) container).matchers.add(definer.matcher());
+        matchers().add(definer.matcher());
         return definer;
     }
 
