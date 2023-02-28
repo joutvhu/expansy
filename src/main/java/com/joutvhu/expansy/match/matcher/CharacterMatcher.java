@@ -4,6 +4,7 @@ import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
+import com.joutvhu.expansy.util.Joiner;
 
 public class CharacterMatcher<E> extends Matcher<E> {
     public static char[] WHITESPACE = new char[]{
@@ -40,20 +41,23 @@ public class CharacterMatcher<E> extends Matcher<E> {
 
     @Override
     public void match(Consumer<E> consumer) {
-        if (repetitions != null) {
+        if (repetitions != null && repetitions > 0) {
             StopPoint point = consumer.next(repetitions);
+            if (point == null)
+                consumer.error("Not enough length.");
             for (char c : point.getValue().toCharArray()) {
                 if (!contains(c))
-                    consumer.error("The character {} is not one of the following characters {}", c, characters);
+                    consumer.error("The character {0} is not one of the following characters {1}", c, Joiner.on(",").join(characters));
             }
             consumer.complete();
         } else {
             consumer.push();
             while (true) {
                 StopPoint point = consumer.next();
-                if (point == null) break;
+                if (point == null)
+                    consumer.error("No characters.");
                 if (!contains(point.getCharacter()))
-                    consumer.error("The character {} is not one of the following characters {}", point.getCharacter(), characters);
+                    consumer.error("The character {0} is not one of the following characters {1}", point.getCharacter(), Joiner.on(",").join(characters));
                 consumer.push();
             }
         }

@@ -51,6 +51,10 @@ public class Consumer<E> {
         return trackPoints;
     }
 
+    public StopPoint current() {
+        return point;
+    }
+
     public StopPoint next() {
         return next(1);
     }
@@ -65,6 +69,17 @@ public class Consumer<E> {
             return point;
         }
         return null;
+    }
+
+    public StopPoint tryNext(int length) {
+        if (length == 0)
+            return point;
+        assert (length > 0);
+        String value = source.read(point.getIndex(), length);
+        if (value != null) {
+            point = point != null ? point.next(value) : new StopPoint(value, offset);
+        }
+        return point;
     }
 
     private TrackPoint at(Integer index) {
@@ -135,15 +150,13 @@ public class Consumer<E> {
         this.close();
     }
 
-    public void error(String message) {
+    public void error(String pattern, Object ... arguments) {
+        String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
         throw new StopReason(trackPoints, message, point.getIndex(), point.getValue());
     }
 
-    public void error(String pattern, Object ... arguments) {
-        error(MessageFormat.format(pattern, arguments));
-    }
-
-    public void error(String message, Integer index, String content) {
+    public void errorAt(String pattern, Integer index, String content, Object... arguments) {
+        String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
         throw new StopReason(trackPoints, message, index, content);
     }
 }

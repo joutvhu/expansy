@@ -1,6 +1,8 @@
 package com.joutvhu.expansy.match.definer;
 
 import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.exception.ExpansyException;
+import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -48,14 +50,16 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                         node.setValue(node.getValue().concat(results.getValue()));
                         node.addAll(results);
                         node.setEnd(results.getEnd());
-                        if (minRepetitions == null || minRepetitions <= i){
+                        if (minRepetitions == null || minRepetitions == 0 || minRepetitions <= i){
                             consumer.push(node);
                             node = node.clone();
                         }
                         if (maxRepetitions != null && maxRepetitions >= i)
                             consumer.close();
-                    } catch (Exception e) {
-                        consumer.error(e.getMessage());
+                    } catch (MatchException e) {
+                        consumer.errorAt(e.getMessage(), e.getIndex(), e.getContent());
+                    } catch (ExpansyException e) {
+                        consumer.errorAt(e.getMessage(), null, null);
                     }
                 }
             }

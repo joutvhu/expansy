@@ -29,8 +29,7 @@ public class ExpansyParser<E> {
 
     public List<Branch<E>> analysis(String value) {
         InternalParser<E> parser = parser(value);
-        List<Branch<E>> branches = parser.parseByElements(elements);
-        return branches;
+        return parser.parseByElements(elements);
     }
 
     public E parseSingle(String value) {
@@ -49,6 +48,8 @@ public class ExpansyParser<E> {
         List<E> results = new ArrayList<>();
         List<Branch<E>> branches = analysis(value);
         Branch<E> branch = selector.select(branches);
+        if (branch == null)
+            return null;
         for (Node<E> node : branch) {
             E v = node.render();
             if (v != null) results.add(v);

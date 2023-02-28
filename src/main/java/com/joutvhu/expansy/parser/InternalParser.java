@@ -121,8 +121,8 @@ public class InternalParser<E> {
                 consumer.close();
             } catch (StopReason reason) {
                 if (!reason.isSuccess()) {
-                    if (error == null || error.getIndex() == null ||
-                            (reason.getIndex() != null && error.getIndex() < reason.getIndex()))
+                    if (error == null || error.getPosition() == null ||
+                            (reason.getPosition() != null && error.getPosition() < reason.getPosition()))
                         error = reason;
                 }
 
@@ -142,12 +142,12 @@ public class InternalParser<E> {
                     consumer = new Consumer<>(state, trackPoint.getIndex(), branch);
                 } else if (i == 0) {
                     if (error != null)
-                        throw new MatchException(error.getMessage(), error.getIndex(), error.getContent());
+                        throw new MatchException(error.getMessage(), error.getPosition(), error.getContent());
                     if (StringUtils.isBlank(reason.getMessage())) {
                         if (trackPoints.isEmpty())
                             throw new MatchException("No track point found.");
                     }
-                    throw new MatchException(reason.getMessage(), reason.getIndex(), reason.getContent());
+                    throw new MatchException(reason.getMessage(), reason.getPosition(), reason.getContent());
                 }
             }
         }

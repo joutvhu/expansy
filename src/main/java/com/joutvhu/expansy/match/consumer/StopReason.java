@@ -4,7 +4,7 @@ import java.util.Deque;
 
 public final class StopReason extends RuntimeException {
     private int status;
-    private Integer index;
+    private Integer position;
     private String content;
     private Deque<TrackPoint> trackPoints;
 
@@ -13,11 +13,11 @@ public final class StopReason extends RuntimeException {
         this.trackPoints = trackPoints;
     }
 
-    StopReason(Deque<TrackPoint> trackPoints, String message, Integer index, String content) {
+    StopReason(Deque<TrackPoint> trackPoints, String message, Integer position, String content) {
         super(message);
         this.status = 1;
         this.trackPoints = trackPoints;
-        this.index = index;
+        this.position = position;
         this.content = content;
     }
 
@@ -33,12 +33,12 @@ public final class StopReason extends RuntimeException {
         this.status = status;
     }
 
-    public Integer getIndex() {
-        return index;
+    public Integer getPosition() {
+        return position;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     public String getContent() {

@@ -50,10 +50,11 @@ public class EqualsMatcher<E> extends Matcher<E> {
         for (String value : values) {
             if (len != value.length())
                 point = consumer.next(value.length() - len);
-            if (point == null) break;
+            if (point == null)
+                consumer.error("Does not match with \"{1}\"", value);
             len = point.getLength();
             if (len != value.length())
-                consumer.error("The \"{}\" does not match with \"{}\"", point.getValue(), value);
+                consumer.error("The \"{0}\" does not match with \"{1}\"", point.getValue(), value);
             if (ignoreCase) {
                 if (value.equalsIgnoreCase(point.getValue()))
                     consumer.push();

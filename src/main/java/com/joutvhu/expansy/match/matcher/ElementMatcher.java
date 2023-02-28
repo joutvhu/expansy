@@ -41,9 +41,9 @@ abstract class ElementMatcher<E> extends Matcher<E> {
             }
             consumer.close();
         } catch (MatchException e) {
-            consumer.error(e.getMessage(), e.getIndex(), e.getContent());
+            consumer.errorAt(e.getMessage(), e.getIndex(), e.getContent());
         } catch (ExpansyException e) {
-            consumer.error(e.getMessage(), null, null);
+            consumer.errorAt(e.getMessage(), null, null);
         }
     }
 }
