@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.function.Function;
 
 public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E> {
-    protected String name;
     protected T master;
     protected Definer<E> container;
 
@@ -28,11 +27,6 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
         this.container = container;
     }
 
-    <R extends ProxyDefiner<E, T>> R withName(String name) {
-        this.name = name;
-        return (R) this;
-    }
-
     protected List<Matcher<E>> matchers() {
         if (container instanceof DefaultDefiner)
             return ((DefaultDefiner<E>) container).matchers;
@@ -44,44 +38,50 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
         return new NamedDefiner<>(master, name, container);
     }
 
+    private <R extends Definer<E>> R add(R definer) {
+        if (container instanceof DefaultDefiner)
+            ((DefaultDefiner<E>) container).matchers.add(definer.matcher());
+        return definer;
+    }
+
     @Override
     public MaybeDefiner<E, T> maybe() {
-        return new MaybeDefiner<>(master);
+        return add(new MaybeDefiner<>(master));
     }
 
     @Override
     public OrDefiner<E, ?> or() {
-        return new OrDefiner<>(master);
+        return add(new OrDefiner<>(master));
     }
 
     @Override
     public LoopDefiner<E, T> loop() {
-        return new LoopDefiner<>(master);
+        return add(new LoopDefiner<>(master));
     }
 
     @Override
     public LoopDefiner<E, T> loop(int repetitions) {
-        return new LoopDefiner<>(master, repetitions);
+        return add(new LoopDefiner<>(master, repetitions));
     }
 
     @Override
     public LoopDefiner<E, T> loop(int minRepetitions, Integer maxRepetitions) {
-        return new LoopDefiner<>(master, minRepetitions, maxRepetitions);
+        return add(new LoopDefiner<>(master, minRepetitions, maxRepetitions));
     }
 
     @Override
     public BetweenDefiner<E, T> between() {
-        return new BetweenDefiner<>(master);
+        return add(new BetweenDefiner<>(master));
     }
 
     @Override
     public BetweenDefiner<E, T> between(int repetitions) {
-        return new BetweenDefiner<>(master, repetitions);
+        return add(new BetweenDefiner<>(master, repetitions));
     }
 
     @Override
     public BetweenDefiner<E, T> between(int minRepetitions, Integer maxRepetitions) {
-        return new BetweenDefiner<>(master, minRepetitions, maxRepetitions);
+        return add(new BetweenDefiner<>(master, minRepetitions, maxRepetitions));
     }
 
     @Override

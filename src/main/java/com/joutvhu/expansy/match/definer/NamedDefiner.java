@@ -25,284 +25,284 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
         this.name = name;
     }
 
+    private <R extends Definer<E>> R dub(Definer<E> definer) {
+        Matcher<E> matcher = container.matcher();
+        matcher.setName(name);
+        return (R) definer;
+    }
+
     @Override
     public MaybeDefiner<E, T> maybe() {
-        return new MaybeDefiner<>(parent).withName(name);
+        return this.dub(parent.maybe());
     }
 
     @Override
     public OrDefiner<E, T> or() {
         if (parent instanceof OrDefiner)
             throw new DefineException("Unable to name a selection of OrDefiner.");
-        return new OrDefiner<>(parent).withName(name);
+        return this.dub(parent.or());
     }
 
     @Override
     public LoopDefiner<E, T> loop() {
-        return new LoopDefiner<>(parent).withName(name);
+        return this.dub(parent.loop());
     }
 
     @Override
     public LoopDefiner<E, T> loop(int repetitions) {
-        return new LoopDefiner<>(parent, repetitions).withName(name);
+        return this.dub(parent.loop(repetitions));
     }
 
     @Override
     public LoopDefiner<E, T> loop(int minRepetitions, Integer maxRepetitions) {
-        return new LoopDefiner<>(parent, minRepetitions, maxRepetitions).withName(name);
+        return this.dub(parent.loop(minRepetitions, maxRepetitions));
     }
 
     @Override
     public BetweenDefiner<E, T> between() {
-        return new BetweenDefiner<>(parent).withName(name);
+        return this.dub(parent.between());
     }
 
     @Override
     public BetweenDefiner<E, T> between(int repetitions) {
-        return new BetweenDefiner<>(parent, repetitions).withName(name);
+        return this.dub(parent.between(repetitions));
     }
 
     @Override
     public BetweenDefiner<E, T> between(int minRepetitions, Integer maxRepetitions) {
-        return new BetweenDefiner<>(parent, minRepetitions, maxRepetitions).withName(name);
-    }
-
-    private T result() {
-        Matcher<E> matcher = container.matcher();
-        matcher.setName(name);
-        return parent;
+        return this.dub(parent.between(minRepetitions, maxRepetitions));
     }
 
     @Override
     public T space() {
-        parent.space();
-        return result();
+        this.dub(parent.space());
+        return parent;
     }
 
     @Override
     public T spaces() {
-        parent.spaces();
-        return result();
+        this.dub(parent.spaces());
+        return parent;
     }
 
     @Override
     public T spaces(int time) {
-        parent.spaces(time);
-        return result();
+        this.dub(parent.spaces(time));
+        return parent;
     }
 
     @Override
     public T character(char... values) {
-        parent.character(values);
-        return result();
+        this.dub(parent.character(values));
+        return parent;
     }
 
     @Override
     public T characters(char... values) {
-        parent.characters(values);
-        return result();
+        this.dub(parent.characters(values));
+        return parent;
     }
 
     @Override
     public T characters(char[] values, int repetitions) {
-        parent.characters(values, repetitions);
-        return result();
+        this.dub(parent.characters(values, repetitions));
+        return parent;
     }
 
     @Override
     public T whitespace() {
-        parent.whitespace();
-        return result();
+        this.dub(parent.whitespace());
+        return parent;
     }
 
     @Override
     public T whitespaces() {
-        parent.whitespaces();
-        return result();
+        this.dub(parent.whitespaces());
+        return parent;
     }
 
     @Override
     public T whitespaces(int repetitions) {
-        parent.whitespaces(repetitions);
-        return result();
+        this.dub(parent.whitespaces(repetitions));
+        return parent;
     }
 
     @Override
     public T digit() {
-        parent.digit();
-        return result();
+        this.dub(parent.digit());
+        return parent;
     }
 
     @Override
     public T digits() {
-        parent.digits();
-        return result();
+        this.dub(parent.digits());
+        return parent;
     }
 
     @Override
     public T digits(int repetitions) {
-        parent.digits(repetitions);
-        return result();
+        this.dub(parent.digits(repetitions));
+        return parent;
     }
 
     @Override
     public T lowercase() {
-        parent.lowercase();
-        return result();
+        this.dub(parent.lowercase());
+        return parent;
     }
 
     @Override
     public T lowercases() {
-        parent.lowercases();
-        return result();
+        this.dub(parent.lowercases());
+        return parent;
     }
 
     @Override
     public T lowercases(int repetitions) {
-        parent.lowercases(repetitions);
-        return result();
+        this.dub(parent.lowercases(repetitions));
+        return parent;
     }
 
     @Override
     public T uppercase() {
-        parent.uppercase();
-        return result();
+        this.dub(parent.uppercase());
+        return parent;
     }
 
     @Override
     public T uppercases() {
-        parent.uppercases();
-        return result();
+        this.dub(parent.uppercases());
+        return parent;
     }
 
     @Override
     public T uppercases(int repetitions) {
-        parent.uppercases(repetitions);
-        return result();
+        this.dub(parent.uppercases(repetitions));
+        return parent;
     }
 
     @Override
     public T alphabet() {
-        parent.alphabet();
-        return result();
+        this.dub(parent.alphabet());
+        return parent;
     }
 
     @Override
     public T alphabets() {
-        parent.alphabets();
-        return result();
+        this.dub(parent.alphabets());
+        return parent;
     }
 
     @Override
     public T alphabets(int repetitions) {
-        parent.alphabets(repetitions);
-        return result();
+        this.dub(parent.alphabets(repetitions));
+        return parent;
     }
 
     @Override
     public T numeric() {
-        parent.numeric();
-        return result();
+        this.dub(parent.numeric());
+        return parent;
     }
 
     @Override
     public T word() {
-        parent.word();
-        return result();
+        this.dub(parent.word());
+        return parent;
     }
 
     @Override
     public T equals(String value) {
-        parent.equals(value);
-        return result();
+        this.dub(parent.equals(value));
+        return parent;
     }
 
     @Override
     public T equals(String... values) {
-        parent.equals(values);
-        return result();
+        this.dub(parent.equals(values));
+        return parent;
     }
 
     @Override
     public T equals(List<String> values) {
-        parent.equals(values);
-        return result();
+        this.dub(parent.equals(values));
+        return parent;
     }
 
     @Override
     public T equalsIgnoreCase(String value) {
-        parent.equalsIgnoreCase(value);
-        return result();
+        this.dub(parent.equalsIgnoreCase(value));
+        return parent;
     }
 
     @Override
     public T equalsIgnoreCase(String... values) {
-        parent.equalsIgnoreCase(values);
-        return result();
+        this.dub(parent.equalsIgnoreCase(values));
+        return parent;
     }
 
     @Override
     public T equalsIgnoreCase(List<String> values) {
-        parent.equalsIgnoreCase(values);
-        return result();
+        this.dub(parent.equalsIgnoreCase(values));
+        return parent;
     }
 
     @Override
     public T pattern(String regex) {
-        parent.pattern(regex);
-        return result();
+        this.dub(parent.pattern(regex));
+        return parent;
     }
 
     @Override
     public T pattern(String regex, int length) {
-        parent.pattern(regex, length);
-        return result();
+        this.dub(parent.pattern(regex, length));
+        return parent;
     }
 
     @Override
     public T pattern(String regex, int minLength, int maxLength) {
-        parent.pattern(regex, minLength, maxLength);
-        return result();
+        this.dub(parent.pattern(regex, minLength, maxLength));
+        return parent;
     }
 
     @Override
     public T check(Function<String, Boolean> checker) {
-        parent.check(checker);
-        return result();
+        this.dub(parent.check(checker));
+        return parent;
     }
 
     @Override
     public T element(String element) {
-        parent.element(element);
-        return result();
+        this.dub(parent.element(element));
+        return parent;
     }
 
     @Override
     public T element(String... elements) {
-        parent.element(elements);
-        return result();
+        this.dub(parent.element(elements));
+        return parent;
     }
 
     public T element(List<String> elements) {
-        parent.element(elements);
-        return result();
+        this.dub(parent.element(elements));
+        return parent;
     }
 
     @Override
     public T element(Element<E> element) {
-        parent.element(element);
-        return result();
+        this.dub(parent.element(element));
+        return parent;
     }
 
     @Override
     public T element(Element<E>... elements) {
-        parent.element(elements);
-        return result();
+        this.dub(parent.element(elements));
+        return parent;
     }
 
     @Override
     public T elements() {
-        parent.elements();
-        return result();
+        this.dub(parent.elements());
+        return parent;
     }
 }

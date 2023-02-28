@@ -30,6 +30,10 @@ public class Node<E> {
         return null;
     }
 
+    public boolean isEmpty() {
+        return value.length() == 0 && children.isEmpty();
+    }
+
     public int getEnd() {
         return end;
     }

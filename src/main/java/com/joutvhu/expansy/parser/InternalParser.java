@@ -40,7 +40,7 @@ public class InternalParser<E> {
                     if (branch != null)
                         branch.start(offset, element);
                     Node<E> node = parseByElement(element, offset, branch);
-                    if (node.getLength() > 0) {
+                    if (!node.isEmpty()) {
                         Branch<E> newBranch = branch.clone();
                         newBranch.add(node);
                         try {
@@ -107,10 +107,10 @@ public class InternalParser<E> {
     }
 
     public Node<E> parseByMatchers(Collection<Matcher<E>> matchers, Integer offset, Branch<E> branch) {
-        Node<E> params = new Node<>();
-        params.setStart(offset != null ? offset : 0);
-        params.setEnd(params.getStart());
-        Consumer<E> consumer = new Consumer<>(state, params.getStart(), branch);
+        Node<E> result = new Node<>();
+        result.setStart(offset != null ? offset : 0);
+        result.setEnd(result.getStart());
+        Consumer<E> consumer = new Consumer<>(state, result.getStart(), branch);
         Deque<CheckNode<E>> nodes = new ArrayDeque<>();
         Matcher<E>[] array = matchers.toArray(new Matcher[0]);
         StopReason error = null;
@@ -155,27 +155,27 @@ public class InternalParser<E> {
         StringBuilder builder = new StringBuilder();
         for (CheckNode<E> node = nodes.pollLast(); node != null; node = nodes.pollLast()) {
             Matcher<E> matcher = node.matcher;
-            Node<E> p = node.point.getParams();
+            Node<E> p = node.point.getNode();
             if (matcher.getName() != null) {
                 if (p != null)
-                    params.add(matcher.getName(), p);
-                params.add(matcher.getName(), node.point.getValue());
+                    result.add(matcher.getName(), p);
+                result.add(matcher.getName(), node.point.getValue());
             }
             if (p != null) {
-                params.addAll(p);
-                if (p.getStart() < params.getStart())
-                    params.setStart(p.getStart());
-                if (params.getEnd() < p.getEnd())
-                    params.setEnd(p.getEnd());
+                result.addAll(p);
+                if (p.getStart() < result.getStart())
+                    result.setStart(p.getStart());
+                if (result.getEnd() < p.getEnd())
+                    result.setEnd(p.getEnd());
             }
-            if (params.getEnd() < node.point.getIndex())
-                params.setEnd(node.point.getIndex());
+            if (result.getEnd() < node.point.getIndex())
+                result.setEnd(node.point.getIndex());
             // Join all value of nodes
             builder.append(node.point.getValue());
         }
-        params.setValue(builder.toString());
+        result.setValue(builder.toString());
 
-        return params;
+        return result;
     }
 
     @AllArgsConstructor

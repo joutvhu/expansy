@@ -29,7 +29,7 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
 
     @Override
     public Matcher<E> matcher() {
-        return new Matcher<E>(this, name) {
+        return new Matcher<E>(this) {
             @Override
             public void match(Consumer<E> consumer) {
                 ExpansyException error = null;

@@ -33,58 +33,58 @@ public class DefaultDefiner<E> implements Definer<E> {
 
     @Override
     public MaybeDefiner<E, DefaultDefiner<E>> maybe() {
-        MaybeDefiner<E, DefaultDefiner<E>> matcher = new MaybeDefiner<>(this);
-        matchers.add(matcher.matcher());
-        return matcher;
+        MaybeDefiner<E, DefaultDefiner<E>> definer = new MaybeDefiner<>(this);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override
     public OrDefiner<E, ?> or() {
-        OrDefiner<E, DefaultDefiner<E>> matcher = new OrDefiner<>(this);
-        matchers.add(matcher.matcher());
-        return matcher;
+        OrDefiner<E, DefaultDefiner<E>> definer = new OrDefiner<>(this);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop() {
-        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this);
-        matchers.add(matcher.matcher());
-        return matcher;
+        LoopDefiner<E, DefaultDefiner<E>> definer = new LoopDefiner<>(this);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop(int repetitions) {
-        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, repetitions);
-        matchers.add(matcher.matcher());
-        return matcher;
+        LoopDefiner<E, DefaultDefiner<E>> definer = new LoopDefiner<>(this, repetitions);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override
     public LoopDefiner<E, DefaultDefiner<E>> loop(int minRepetitions, Integer maxRepetitions) {
-        LoopDefiner<E, DefaultDefiner<E>> matcher = new LoopDefiner<>(this, minRepetitions, maxRepetitions);
-        matchers.add(matcher.matcher());
-        return matcher;
+        LoopDefiner<E, DefaultDefiner<E>> definer = new LoopDefiner<>(this, minRepetitions, maxRepetitions);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override
     public BetweenDefiner<E, DefaultDefiner<E>> between() {
-        BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this);
-        matchers.add(matcher.matcher());
-        return matcher;
+        BetweenDefiner<E, DefaultDefiner<E>> definer = new BetweenDefiner<>(this);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override
     public BetweenDefiner<E, DefaultDefiner<E>> between(int repetitions) {
-        BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this, repetitions);
-        matchers.add(matcher.matcher());
-        return matcher;
+        BetweenDefiner<E, DefaultDefiner<E>> definer = new BetweenDefiner<>(this, repetitions);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override
     public BetweenDefiner<E, DefaultDefiner<E>> between(int minRepetitions, Integer maxRepetitions) {
-        BetweenDefiner<E, DefaultDefiner<E>> matcher = new BetweenDefiner<>(this, minRepetitions, maxRepetitions);
-        matchers.add(matcher.matcher());
-        return matcher;
+        BetweenDefiner<E, DefaultDefiner<E>> definer = new BetweenDefiner<>(this, minRepetitions, maxRepetitions);
+        matchers.add(definer.matcher());
+        return definer;
     }
 
     @Override

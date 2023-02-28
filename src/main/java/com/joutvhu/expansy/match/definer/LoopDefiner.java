@@ -31,7 +31,7 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
 
     @Override
     public Matcher<E> matcher() {
-        return new Matcher<E>(this, name) {
+        return new Matcher<>(this) {
             @Override
             public void match(Consumer<E> consumer) {
                 List<Matcher<E>> matchers = matchers();

@@ -26,7 +26,7 @@ public class TrackPoint {
         return value;
     }
 
-    public <E> Node<E> getParams() {
+    public <E> Node<E> getNode() {
         return (Node<E>) node;
     }
 
