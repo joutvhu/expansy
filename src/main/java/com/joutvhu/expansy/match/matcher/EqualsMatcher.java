@@ -1,5 +1,6 @@
 package com.joutvhu.expansy.match.matcher;
 
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -34,7 +35,7 @@ public class EqualsMatcher<E> extends Matcher<E> {
         super(parent);
         this.ignoreCase = ignoreCase;
         if (values == null || values.isEmpty())
-            throw new IllegalArgumentException("");
+            throw new DefineException("The values must be non-blank.");
         this.values = values.stream()
                 .sorted(Comparator.comparingInt(String::length))
                 .filter(StringUtils::isNotEmpty)

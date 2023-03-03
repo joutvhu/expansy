@@ -4,6 +4,7 @@ import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
+import com.joutvhu.expansy.match.type.MatchFunction;
 
 import java.util.List;
 import java.util.function.Function;
@@ -333,6 +334,12 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
 
     @Override
     public T check(Function<String, Boolean> checker) {
+        this.dub(parent.check(checker));
+        return parent;
+    }
+
+    @Override
+    public T check(MatchFunction<E> checker) {
         this.dub(parent.check(checker));
         return parent;
     }

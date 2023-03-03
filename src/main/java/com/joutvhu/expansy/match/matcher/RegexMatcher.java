@@ -1,5 +1,6 @@
 package com.joutvhu.expansy.match.matcher;
 
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -30,6 +31,8 @@ public class RegexMatcher<E> extends Matcher<E> {
 
     public RegexMatcher(Definer<E> parent, Pattern pattern, Integer minLength, Integer maxLength) {
         super(parent);
+        if (pattern == null)
+            throw new DefineException("The pattern must be non-null.");
         this.pattern = pattern;
         this.minLength = minLength;
         this.maxLength = maxLength;

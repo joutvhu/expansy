@@ -3,6 +3,7 @@ package com.joutvhu.expansy.match.definer;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
+import com.joutvhu.expansy.match.type.MatchFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -341,6 +342,12 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
 
     @Override
     public T check(Function<String, Boolean> checker) {
+        container.check(checker);
+        return master;
+    }
+
+    @Override
+    public Definer<E> check(MatchFunction<E> checker) {
         container.check(checker);
         return master;
     }

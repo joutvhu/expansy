@@ -5,12 +5,14 @@ import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.matcher.CharacterMatcher;
 import com.joutvhu.expansy.match.matcher.EqualsMatcher;
-import com.joutvhu.expansy.match.matcher.FunctionMatcher;
+import com.joutvhu.expansy.match.matcher.BoolFunctionMatcher;
+import com.joutvhu.expansy.match.matcher.MatchFunctionMatcher;
 import com.joutvhu.expansy.match.matcher.NumericMatcher;
 import com.joutvhu.expansy.match.matcher.RegexMatcher;
 import com.joutvhu.expansy.match.matcher.RegisteredMatcher;
 import com.joutvhu.expansy.match.matcher.UnregisteredMatcher;
 import com.joutvhu.expansy.match.matcher.WordMatcher;
+import com.joutvhu.expansy.match.type.MatchFunction;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -345,7 +347,13 @@ public class DefaultDefiner<E> implements Definer<E> {
 
     @Override
     public DefaultDefiner<E> check(Function<String, Boolean> checker) {
-        matchers.add(new FunctionMatcher<>(this, checker));
+        matchers.add(new BoolFunctionMatcher<>(this, checker));
+        return this;
+    }
+
+    @Override
+    public Definer<E> check(MatchFunction<E> checker) {
+        matchers.add(new MatchFunctionMatcher<>(this, checker));
         return this;
     }
 

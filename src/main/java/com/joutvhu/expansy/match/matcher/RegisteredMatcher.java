@@ -1,6 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.element.Element;
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.consumer.Consumer;
 
@@ -23,6 +24,8 @@ public class RegisteredMatcher<E> extends ElementMatcher<E> {
 
     public RegisteredMatcher(Definer<E> parent, List<String> elements) {
         super(parent);
+        if (elements == null || elements.isEmpty())
+            throw new DefineException("The elements must be non-blank.");
         this.names = elements;
     }
 

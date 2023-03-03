@@ -2,6 +2,7 @@ package com.joutvhu.expansy.match.definer;
 
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.match.Definer;
+import com.joutvhu.expansy.match.type.MatchFunction;
 
 import java.util.List;
 import java.util.function.Function;
@@ -137,6 +138,8 @@ public interface Matches<E, T extends Definer<E>> {
     T pattern(String regex, Integer minLength, Integer maxLength);
 
     T check(Function<String, Boolean> checker);
+
+    T check(MatchFunction<E> checker);
 
     /**
      * Matches all registered elements with the specified name

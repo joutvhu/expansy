@@ -1,5 +1,6 @@
 package com.joutvhu.expansy.match.matcher;
 
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -41,6 +42,8 @@ public class CharacterMatcher<E> extends Matcher<E> {
 
     public CharacterMatcher(Definer<E> parent, char[] characters, Integer minLength, Integer maxLength) {
         super(parent);
+        if (characters == null || characters.length == 0)
+            throw new DefineException("The characters must be non-blank.");
         this.characters = characters;
         this.minLength = minLength;
         this.maxLength = maxLength;
