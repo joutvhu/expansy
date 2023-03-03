@@ -6,6 +6,7 @@ import com.joutvhu.expansy.match.type.MatchFunction;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 public interface Matches<E, T extends Definer<E>> {
     MaybeDefiner<E, ?> maybe();
@@ -137,9 +138,19 @@ public interface Matches<E, T extends Definer<E>> {
 
     T pattern(String regex, Integer minLength, Integer maxLength);
 
-    T check(Function<String, Boolean> checker);
+    T pattern(Pattern pattern);
+
+    T pattern(Pattern pattern, int length);
+
+    T pattern(Pattern pattern, Integer minLength, Integer maxLength);
 
     T check(MatchFunction<E> checker);
+
+    T check(Function<String, Boolean> checker);
+
+    T check(Function<String, Boolean> checker, int length);
+
+    T check(Function<String, Boolean> checker, Integer minLength, Integer maxLength);
 
     /**
      * Matches all registered elements with the specified name

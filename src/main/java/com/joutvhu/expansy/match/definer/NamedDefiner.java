@@ -8,6 +8,7 @@ import com.joutvhu.expansy.match.type.MatchFunction;
 
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T> {
     protected String name;
@@ -333,14 +334,44 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T check(Function<String, Boolean> checker) {
-        this.dub(parent.check(checker));
+    public T pattern(Pattern pattern) {
+        this.dub(parent.pattern(pattern));
+        return parent;
+    }
+
+    @Override
+    public T pattern(Pattern pattern, int length) {
+        this.dub(parent.pattern(pattern, length));
+        return parent;
+    }
+
+    @Override
+    public T pattern(Pattern pattern, Integer minLength, Integer maxLength) {
+        this.dub(parent.pattern(pattern, minLength, maxLength));
         return parent;
     }
 
     @Override
     public T check(MatchFunction<E> checker) {
         this.dub(parent.check(checker));
+        return parent;
+    }
+
+    @Override
+    public T check(Function<String, Boolean> checker) {
+        this.dub(parent.check(checker));
+        return parent;
+    }
+
+    @Override
+    public T check(Function<String, Boolean> checker, int length) {
+        this.dub(parent.check(checker, length));
+        return parent;
+    }
+
+    @Override
+    public T check(Function<String, Boolean> checker, Integer minLength, Integer maxLength) {
+        this.dub(parent.check(checker, minLength, maxLength));
         return parent;
     }
 

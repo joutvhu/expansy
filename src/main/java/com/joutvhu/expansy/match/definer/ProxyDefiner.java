@@ -3,11 +3,13 @@ package com.joutvhu.expansy.match.definer;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
+import com.joutvhu.expansy.match.matcher.BoolFunctionMatcher;
 import com.joutvhu.expansy.match.type.MatchFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E> {
     protected T master;
@@ -341,14 +343,44 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
+    public T pattern(Pattern pattern) {
+        container.pattern(pattern);
+        return master;
+    }
+
+    @Override
+    public T pattern(Pattern pattern, int length) {
+        container.pattern(pattern, length);
+        return master;
+    }
+
+    @Override
+    public T pattern(Pattern pattern, Integer minLength, Integer maxLength) {
+        container.pattern(pattern, minLength, maxLength);
+        return master;
+    }
+
+    @Override
+    public T check(MatchFunction<E> checker) {
+        container.check(checker);
+        return master;
+    }
+
+    @Override
     public T check(Function<String, Boolean> checker) {
         container.check(checker);
         return master;
     }
 
     @Override
-    public Definer<E> check(MatchFunction<E> checker) {
-        container.check(checker);
+    public T check(Function<String, Boolean> checker, int length) {
+        container.check(checker, length);
+        return master;
+    }
+
+    @Override
+    public T check(Function<String, Boolean> checker, Integer minLength, Integer maxLength) {
+        container.check(checker, minLength, maxLength);
         return master;
     }
 

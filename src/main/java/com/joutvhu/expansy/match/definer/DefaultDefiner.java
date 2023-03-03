@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 public class DefaultDefiner<E> implements Definer<E> {
     List<Matcher<E>> matchers = new ArrayList<>();
@@ -346,14 +347,44 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
+    public DefaultDefiner<E> pattern(Pattern pattern) {
+        matchers.add(new RegexMatcher<>(this, pattern, null, null));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> pattern(Pattern pattern, int length) {
+        matchers.add(new RegexMatcher<>(this, pattern, length, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> pattern(Pattern pattern, Integer minLength, Integer maxLength) {
+        matchers.add(new RegexMatcher<>(this, pattern, minLength, maxLength));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> check(MatchFunction<E> checker) {
+        matchers.add(new MatchFunctionMatcher<>(this, checker));
+        return this;
+    }
+
+    @Override
     public DefaultDefiner<E> check(Function<String, Boolean> checker) {
         matchers.add(new BoolFunctionMatcher<>(this, checker));
         return this;
     }
 
     @Override
-    public Definer<E> check(MatchFunction<E> checker) {
-        matchers.add(new MatchFunctionMatcher<>(this, checker));
+    public DefaultDefiner<E> check(Function<String, Boolean> checker, int length) {
+        matchers.add(new BoolFunctionMatcher<>(this, checker, length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> check(Function<String, Boolean> checker, Integer minLength, Integer maxLength) {
+        matchers.add(new BoolFunctionMatcher<>(this, checker, minLength, maxLength));
         return this;
     }
 
