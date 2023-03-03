@@ -36,8 +36,11 @@ public class BoolFunctionMatcher<E> extends Matcher<E> {
         if (point == null)
             return;
         do {
-            if (Boolean.TRUE.equals(checker.apply(point.getValue())))
+            Boolean v = checker.apply(point.getValue());
+            if (Boolean.TRUE.equals(v))
                 consumer.push();
+            if (Boolean.FALSE.equals(v))
+                consumer.error("Cannot match value {0}", point.getValue());
             if (maxLength != null && point.getLength() >= maxLength)
                 consumer.close();
             point = consumer.next();
