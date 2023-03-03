@@ -5,10 +5,10 @@ import com.joutvhu.expansy.match.Matcher;
 import java.util.Deque;
 
 public final class StopReason<E> {
-    private String message;
-    private Integer position;
-    private String content;
-    private Deque<TrackPoint<E>> trackPoints;
+    private final String message;
+    private final Integer position;
+    private final String content;
+    private final Deque<TrackPoint<E>> trackPoints;
 
     StopReason(Deque<?> trackPoints, String message, Integer position, String content) {
         this.message = message;
@@ -43,7 +43,7 @@ public final class StopReason<E> {
             consumer.close();
             return null;
         } catch (StopReasonThrowable e) {
-            return e.reason();
+            return (StopReason<E>) e.reason();
         }
     }
 }

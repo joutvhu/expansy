@@ -3,13 +3,14 @@ package com.joutvhu.expansy.match.consumer;
 import com.joutvhu.expansy.element.Node;
 
 public class TrackPoint<E> {
-    private int index;
-    private String value;
-    private Node<E> node;
+    private final int index;
+    private final String value;
+    private final Node<E> node;
 
     public TrackPoint(int index, String value) {
         this.index = index;
         this.value = value;
+        this.node = null;
     }
 
     public TrackPoint(Node<E> node) {
@@ -28,10 +29,5 @@ public class TrackPoint<E> {
 
     public Node<E> getNode() {
         return node;
-    }
-
-    public TrackPoint with(Node<E> node) {
-        this.node = node;
-        return this;
     }
 }

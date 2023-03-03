@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public class StopPoint {
+    private final int offset;
     private String value;
-    private int offset;
 
     public StopPoint(String value) {
         this(value, 0);
