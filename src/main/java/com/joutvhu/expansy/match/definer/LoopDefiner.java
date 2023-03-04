@@ -6,7 +6,7 @@ import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
-import com.joutvhu.expansy.parser.InternalParser;
+import com.joutvhu.expansy.parser.Analyser;
 
 import java.util.List;
 
@@ -45,8 +45,8 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                 }
                 for (int i = 0; true; i++) {
                     try {
-                        InternalParser<E> parser = consumer.state().getParser();
-                        Node<E> results = parser.parseByMatchers(matchers, node.getEnd(), consumer.branch());
+                        Analyser<E> analyser = consumer.state().getAnalyser();
+                        Node<E> results = analyser.analyseMatchers(matchers, node.getEnd(), consumer.branch());
                         node.setValue(node.getValue().concat(results.getValue()));
                         node.addAll(results);
                         node.setEnd(results.getEnd());

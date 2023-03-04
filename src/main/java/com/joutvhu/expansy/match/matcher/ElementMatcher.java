@@ -8,6 +8,7 @@ import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
+import com.joutvhu.expansy.parser.Analyser;
 
 import java.util.Collection;
 import java.util.List;
@@ -35,7 +36,8 @@ abstract class ElementMatcher<E> extends Matcher<E> {
         }
 
         try {
-            List<Node<E>> results = consumer.state().getParser().parseByElements(elements, consumer);
+            Analyser<E> analyser = consumer.state().getAnalyser();
+            List<Node<E>> results = analyser.analyseElements(elements, consumer);
             for (Node<E> result : results) {
                 consumer.push(result);
             }

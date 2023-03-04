@@ -6,7 +6,7 @@ import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
-import com.joutvhu.expansy.parser.InternalParser;
+import com.joutvhu.expansy.parser.Analyser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +33,11 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
             @Override
             public void match(Consumer<E> consumer) {
                 ExpansyException error = null;
-                InternalParser<E> parser = consumer.state().getParser();
+                Analyser<E> analyser = consumer.state().getAnalyser();
                 for (OrDefiner<E, T> definer : definers) {
                     try {
                         List<Matcher<E>> matchers = definer.matchers();
-                        Node<E> results = parser.parseByMatchers(matchers, consumer);
+                        Node<E> results = analyser.analyseMatchers(matchers, consumer);
                         consumer.add(results);
                     } catch (MatchException e) {
                         if (error == null)

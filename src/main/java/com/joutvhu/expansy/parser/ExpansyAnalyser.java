@@ -9,7 +9,6 @@ import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopReason;
 import com.joutvhu.expansy.match.consumer.TrackPoint;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
-import com.joutvhu.expansy.parser.domain.CheckNode;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayDeque;
@@ -19,19 +18,25 @@ import java.util.Comparator;
 import java.util.Deque;
 import java.util.List;
 
-public class InternalParser<E> {
+public class ExpansyAnalyser<E> implements Analyser<E> {
     private ExpansyState<E> state;
 
-    public InternalParser(ExpansyState<E> state) {
+    ExpansyAnalyser(ExpansyState<E> state) {
         this.state = state;
-        this.state.setParser(this);
     }
 
-    public List<Branch<E>> parseByElements(Collection<Element<E>> elements) {
-        return parseByElements(elements, 0, new Branch<>());
+    @Override
+    public List<Branch<E>> analyse(Collection<Element<E>> elements) {
+        return analyse(elements, 0, new Branch<>());
     }
 
-    public List<Branch<E>> parseByElements(Collection<Element<E>> elements, int offset, Branch<E> branch) {
+    @Override
+    public List<Branch<E>> analyse(Collection<Element<E>> elements, Consumer<E> consumer) {
+        return analyse(elements, consumer.offset(), consumer.branch());
+    }
+
+    @Override
+    public List<Branch<E>> analyse(Collection<Element<E>> elements, Integer offset, Branch<E> branch) {
         List<Branch<E>> branches = new ArrayList<>();
         MatchException error = null;
         for (Element<E> element : elements) {
@@ -39,7 +44,7 @@ public class InternalParser<E> {
                 try {
                     if (branch != null)
                         branch.start(offset, element);
-                    Node<E> node = parseByElement(element, offset, branch);
+                    Node<E> node = analyseElement(element, offset, branch);
                     if (!node.isEmpty()) {
                         Branch<E> newBranch = branch.clone();
                         newBranch.add(node);
@@ -47,7 +52,7 @@ public class InternalParser<E> {
                             if (state.getLength() <= node.getEnd()) {
                                 branches.add(newBranch);
                             } else {
-                                List<Branch<E>> values = parseByElements(elements, node.getEnd(), newBranch);
+                                List<Branch<E>> values = analyse(elements, node.getEnd(), newBranch);
                                 branches.addAll(values);
                             }
                         } catch (Exception e) {
@@ -67,24 +72,29 @@ public class InternalParser<E> {
         return branches;
     }
 
-    public List<Node<E>> parseByElements(Collection<Element<E>> elements, Consumer<E> consumer) {
+    @Override
+    public List<Node<E>> analyseElements(Collection<Element<E>> elements, Consumer<E> consumer) {
+        return analyseElements(elements, consumer.offset(), consumer.branch());
+    }
+
+    @Override
+    public List<Node<E>> analyseElements(Collection<Element<E>> elements, Integer offset, Branch<E> branch) {
         List<Node<E>> results = new ArrayList<>();
         MatchException error = null;
-        Branch<E> branch = consumer.branch();
-        if (consumer.offset() < state.getLength()) {
+        if (offset < state.getLength()) {
             for (Element<E> element : elements) {
-                if (branch == null || !branch.started(consumer.offset(), element)) {
+                if (branch == null || !branch.started(offset, element)) {
                     try {
                         if (branch != null)
-                            branch.start(consumer.offset(), element);
-                        Node<E> node = parseByElement(element, consumer.offset(), consumer.branch());
+                            branch.start(offset, element);
+                        Node<E> node = analyseElement(element, offset, branch);
                         if (node.getLength() > 0)
                             results.add(node);
                     } catch (Exception e) {
                         error = MatchException.or(error, MatchException.of(e));
                     } finally {
                         if (branch != null)
-                            branch.complete(consumer.offset(), element);
+                            branch.complete(offset, element);
                     }
                 }
             }
@@ -95,18 +105,26 @@ public class InternalParser<E> {
         return results;
     }
 
-    public Node<E> parseByElement(Element<E> element, Integer offset, Branch<E> branch) {
+    @Override
+    public Node<E> analyseElement(Element<E> element, Consumer<E> consumer) {
+        return analyseElement(element, consumer.offset(), consumer.branch());
+    }
+
+    @Override
+    public Node<E> analyseElement(Element<E> element, Integer offset, Branch<E> branch) {
         List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        Node<E> node = parseByMatchers(matchers, offset, branch);
+        Node<E> node = analyseMatchers(matchers, offset, branch);
         node.setElement(element);
         return node;
     }
 
-    public Node<E> parseByMatchers(Collection<Matcher<E>> matchers, Consumer<E> consumer) {
-        return parseByMatchers(matchers, consumer.offset(), consumer.branch());
+    @Override
+    public Node<E> analyseMatchers(Collection<Matcher<E>> matchers, Consumer<E> consumer) {
+        return analyseMatchers(matchers, consumer.offset(), consumer.branch());
     }
 
-    public Node<E> parseByMatchers(Collection<Matcher<E>> matchers, Integer offset, Branch<E> branch) {
+    @Override
+    public Node<E> analyseMatchers(Collection<Matcher<E>> matchers, Integer offset, Branch<E> branch) {
         Node<E> result = new Node<>();
         result.setStart(offset != null ? offset : 0);
         result.setEnd(result.getStart());

@@ -27,9 +27,15 @@ public class ExpansyParser<E> {
         this.elements = elements == null || elements.isEmpty() ? register.elements() : register.get(elements);
     }
 
+    protected Analyser<E> analyser(String value) {
+        Source source = new Source(value);
+        ExpansyState<E> state = new ExpansyState<>(source, register);
+        return state.getAnalyser();
+    }
+
     public List<Branch<E>> analysis(String value) {
-        InternalParser<E> parser = parser(value);
-        return parser.parseByElements(elements);
+        Analyser<E> analyser = analyser(value);
+        return analyser.analyse(elements);
     }
 
     public E parseSingle(String value) {
@@ -55,11 +61,5 @@ public class ExpansyParser<E> {
             if (v != null) results.add(v);
         }
         return results;
-    }
-
-    protected InternalParser<E> parser(String value) {
-        Source source = new Source(value);
-        ExpansyState<E> state = new ExpansyState<>(source, register);
-        return new InternalParser<>(state);
     }
 }
