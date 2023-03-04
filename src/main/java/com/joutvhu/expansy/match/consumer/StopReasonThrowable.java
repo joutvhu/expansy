@@ -7,10 +7,6 @@ final class StopReasonThrowable extends RuntimeException {
     private final String content;
     private final Deque<? extends TrackPoint<?>> trackPoints;
 
-    StopReasonThrowable(Deque<? extends TrackPoint<?>> trackPoints) {
-        this(trackPoints, null, null, null);
-    }
-
     StopReasonThrowable(Deque<? extends TrackPoint<?>> trackPoints, String message, Integer position, String content) {
         super(message);
         this.trackPoints = trackPoints;

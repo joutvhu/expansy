@@ -195,9 +195,7 @@ public class Consumer<E> {
     }
 
     public void close() {
-        if (trackPoints.isEmpty())
-            throw new StopReasonThrowable(trackPoints, "No track points found.", point.getIndex(), point.getValue());
-        throw new StopReasonThrowable(trackPoints);
+        throw new StopReasonThrowable(trackPoints, null, point.getIndex(), point.getValue());
     }
 
     public void complete() {

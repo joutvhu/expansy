@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.util;
 
 public final class Joiner {
-    private CharSequence delimiter;
+    private final CharSequence delimiter;
 
     private Joiner(CharSequence delimiter) {
         this.delimiter = delimiter;

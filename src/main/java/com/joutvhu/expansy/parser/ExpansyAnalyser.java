@@ -11,6 +11,7 @@ import com.joutvhu.expansy.match.consumer.TrackPoint;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import java.text.MessageFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -136,10 +137,9 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
             Matcher<E> matcher = array[i];
             StopReason<E> reason = StopReason.of(matcher, consumer);
 
-            if (!reason.isSuccess()) {
-                if (error == null || error.getPosition() == null ||
-                        (reason.getPosition() != null && error.getPosition() < reason.getPosition()))
-                    error = reason;
+            if (error == null || error.getPosition() == null ||
+                    (reason.getPosition() != null && error.getPosition() < reason.getPosition())) {
+                error = reason;
             }
 
             CheckNode<E> node = new CheckNode<>(matcher, reason.getTrackPoints());
@@ -155,11 +155,9 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                 nodes.push(node);
                 consumer = new Consumer<>(state, trackPoint.getIndex(), branch);
             } else if (i == 0) {
-                if (error != null)
-                    throw new MatchException(error.getMessage(), error.getPosition(), error.getContent());
-                throw new MatchException(StringUtils
-                        .defaultIfBlank(reason.getMessage(), "No track point found."),
-                        reason.getPosition(), reason.getContent());
+                String message = StringUtils.isNotBlank(error.getMessage()) ? error.getMessage() :
+                        MessageFormat.format("Unable to parse \"{0}\".", error.getContent());
+                throw new MatchException(message, error.getPosition(), error.getContent());
             }
         }
 
