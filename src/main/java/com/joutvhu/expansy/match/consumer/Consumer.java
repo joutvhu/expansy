@@ -7,14 +7,15 @@ import com.joutvhu.expansy.parser.ExpansyState;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
-import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class Consumer<E> {
     protected final Source source;
     protected final int offset;
     protected final ExpansyState<E> state;
-    protected final Deque<TrackPoint<E>> trackPoints;
+    protected final LinkedList<TrackPoint<E>> trackPoints;
     protected Branch<E> branch;
     protected StopPoint point;
 
@@ -32,7 +33,7 @@ public class Consumer<E> {
         this.offset = offset;
         this.branch = branch;
         this.point = new StopPoint("", offset);
-        this.trackPoints = new ArrayDeque<>();
+        this.trackPoints = new LinkedList<>();
     }
 
     public Branch<E> branch() {
@@ -82,9 +83,9 @@ public class Consumer<E> {
         return point;
     }
 
-    private TrackPoint at(Integer index) {
+    private TrackPoint<E> at(Integer index) {
         if (index == null)
-            return new TrackPoint(point.getIndex(), point.getValue());
+            return new TrackPoint<>(point.getIndex(), point.getValue());
         String value = point.getValue();
         int end = index;
         int next = end - value.length();
@@ -93,50 +94,100 @@ public class Consumer<E> {
             if (StringUtils.isNotEmpty(v))
                 value = value.concat(v);
         }
-        return new TrackPoint(offset + index, value.substring(0, end));
+        return new TrackPoint<>(offset + index, value.substring(0, end));
     }
 
     public boolean matched() {
         return !trackPoints.isEmpty();
     }
 
-    public void select() {
+    public void removeBefore(int position) {
+        final Iterator<TrackPoint<E>> each = trackPoints.iterator();
+        while (each.hasNext()) {
+            each.next();
+            if (position > 0)
+                each.remove();
+            else
+                break;
+            position--;
+        }
+    }
+
+    public void remove(int position) {
+        trackPoints.remove(position);
+    }
+
+    public void removeAfter(int position) {
+        final Iterator<TrackPoint<E>> each = trackPoints.iterator();
+        while (each.hasNext()) {
+            each.next();
+            if (position < 0)
+                each.remove();
+            position--;
+        }
+    }
+
+    /**
+     * Remove all other track points, and add a new track point.
+     */
+    public void only() {
         trackPoints.clear();
         trackPoints.push(at(null));
     }
 
-    public void select(int index) {
+    public void only(int index) {
         trackPoints.clear();
         trackPoints.push(at(index));
     }
 
-    public void select(Node<E> node) {
+    public void only(Node<E> node) {
         trackPoints.clear();
-        trackPoints.push(new TrackPoint(node));
+        trackPoints.push(new TrackPoint<>(node));
     }
 
-    public void stack() {
-        trackPoints.addLast(at(null));
+    /**
+     * Add a new track point at the end of the list.
+     */
+    public void add() {
+        trackPoints.add(at(null));
     }
 
-    public void stack(int index) {
-        trackPoints.addLast(at(index));
+    public void add(int index) {
+        trackPoints.add(at(index));
     }
 
-    public void stack(Node<E> node) {
-        trackPoints.addLast(new TrackPoint(node));
+    public void add(Node<E> node) {
+        trackPoints.add(new TrackPoint<>(node));
     }
 
+    /**
+     * Add a new track point to the specified position in the list.
+     */
+    public void insert(int position) {
+        trackPoints.add(position, at(null));
+    }
+
+    public void insert(int position, int index) {
+        trackPoints.add(position, at(index));
+    }
+
+    public void insert(int position, Node<E> node) {
+        trackPoints.add(position, new TrackPoint<>(node));
+    }
+
+    /**
+     * Add a new track point at the first of the list.
+     */
     public void push() {
-        trackPoints.addFirst(at(null));
+        trackPoints.push(at(null));
     }
 
     public void push(int index) {
-        trackPoints.addFirst(at(index));
+        trackPoints.push(at(index));
     }
 
     public void push(Node<E> node) {
-        trackPoints.addFirst(new TrackPoint(node));
+        trackPoints.push(new TrackPoint<>(node));
     }
 
     public void close() {
@@ -150,7 +201,7 @@ public class Consumer<E> {
         this.close();
     }
 
-    public void error(String pattern, Object ... arguments) {
+    public void error(String pattern, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
         throw new StopReasonThrowable(trackPoints, message, point.getIndex(), point.getValue());
     }

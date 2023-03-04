@@ -38,7 +38,7 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
                     try {
                         List<Matcher<E>> matchers = definer.matchers();
                         Node<E> results = parser.parseByMatchers(matchers, consumer);
-                        consumer.stack(results);
+                        consumer.add(results);
                     } catch (MatchException e) {
                         if (error == null)
                             error = e;
