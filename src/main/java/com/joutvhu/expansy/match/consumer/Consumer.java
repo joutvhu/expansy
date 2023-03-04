@@ -101,6 +101,10 @@ public class Consumer<E> {
         return !trackPoints.isEmpty();
     }
 
+    public int size() {
+        return trackPoints.size();
+    }
+
     public void removeBefore(int position) {
         final Iterator<TrackPoint<E>> each = trackPoints.iterator();
         while (each.hasNext()) {

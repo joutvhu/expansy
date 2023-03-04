@@ -17,7 +17,7 @@ public class WordMatcher<E> extends Matcher<E> {
             if (point == null) break;
             char c = point.getCharacter();
             if (c == '_' || ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z') || ('0' <= c && c <= '9'))
-                consumer.push();
+                consumer.only();
             else
                 consumer.error("Character {0} doesn't match word matcher.", c);
         }

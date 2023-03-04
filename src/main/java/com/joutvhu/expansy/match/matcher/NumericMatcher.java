@@ -26,7 +26,7 @@ public class NumericMatcher<E> extends Matcher<E> {
             }
             if ('0' <= point.getCharacter() && point.getCharacter() <= '9') {
                 started = true;
-                consumer.push();
+                consumer.only();
                 continue;
             }
             if (point.getCharacter() == '.') {
