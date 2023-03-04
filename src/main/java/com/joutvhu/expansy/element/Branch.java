@@ -29,6 +29,19 @@ public class Branch<E> extends ArrayList<Node<E>> {
         return results;
     }
 
+    public void push(Node<E> node) {
+        while (!isEmpty()) {
+            Node<E> lastNode = last();
+            if (lastNode == null)
+                break;
+            if (lastNode.getStart() >= node.getStart())
+                removeLast();
+            else
+                break;
+        }
+        add(node);
+    }
+
     /**
      * Highlight an Element being checked at the specified position.
      */
@@ -82,6 +95,12 @@ public class Branch<E> extends ArrayList<Node<E>> {
         return len > 0 ? get(0) : null;
     }
 
+    public void removeFirst() {
+        int len = size();
+        if (len > 0)
+            remove(0);
+    }
+
     /**
      * Returns the node at the specified position in this branch.
      */
@@ -95,6 +114,12 @@ public class Branch<E> extends ArrayList<Node<E>> {
     public Node<E> last() {
         int len = size();
         return len > 0 ? get(len - 1) : null;
+    }
+
+    public void removeLast() {
+        int len = size();
+        if (len > 0)
+            remove(len - 1);
     }
 
     /**

@@ -48,7 +48,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                     Node<E> node = analyseElement(element, offset, branch);
                     if (!node.isEmpty()) {
                         Branch<E> newBranch = branch.clone();
-                        newBranch.add(node);
+                        newBranch.push(node);
                         try {
                             if (state.getLength() <= node.getEnd()) {
                                 branches.add(newBranch);
