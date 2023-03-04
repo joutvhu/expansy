@@ -9,7 +9,7 @@ import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopReason;
 import com.joutvhu.expansy.match.consumer.TrackPoint;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
-import lombok.AllArgsConstructor;
+import com.joutvhu.expansy.parser.domain.CheckNode;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayDeque;
@@ -124,39 +124,35 @@ public class InternalParser<E> {
                     error = reason;
             }
 
-            Deque<TrackPoint<E>> trackPoints = reason.getTrackPoints();
-            TrackPoint<E> trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
+            CheckNode<E> node = new CheckNode<>(matcher, reason.getTrackPoints());
+            TrackPoint<E> trackPoint = node.getPoint();
             while (trackPoint == null && !nodes.isEmpty()) {
                 // Back to other track point.
-                CheckNode<E> node = nodes.pop();
-                trackPoints = node.trackPoints;
-                trackPoint = trackPoints.isEmpty() ? null : trackPoints.pop();
+                node = nodes.pop();
+                trackPoint = node.pop();
                 i = nodes.size();
             }
 
             if (trackPoint != null) {
-                CheckNode<E> node = new CheckNode<>(matcher, trackPoint, trackPoints);
                 nodes.push(node);
                 consumer = new Consumer<>(state, trackPoint.getIndex(), branch);
             } else if (i == 0) {
                 if (error != null)
                     throw new MatchException(error.getMessage(), error.getPosition(), error.getContent());
-                if (StringUtils.isBlank(reason.getMessage())) {
-                    if (trackPoints.isEmpty())
-                        throw new MatchException("No track point found.");
-                }
-                throw new MatchException(reason.getMessage(), reason.getPosition(), reason.getContent());
+                throw new MatchException(StringUtils
+                        .defaultIfBlank(reason.getMessage(), "No track point found."),
+                        reason.getPosition(), reason.getContent());
             }
         }
 
         StringBuilder builder = new StringBuilder();
         for (CheckNode<E> node = nodes.pollLast(); node != null; node = nodes.pollLast()) {
-            Matcher<E> matcher = node.matcher;
-            Node<E> p = node.point.getNode();
+            Matcher<E> matcher = node.getMatcher();
+            Node<E> p = node.getPoint().getNode();
             if (matcher.getName() != null) {
                 if (p != null)
                     result.add(matcher.getName(), p);
-                result.add(matcher.getName(), node.point.getValue());
+                result.add(matcher.getName(), node.getPoint().getValue());
             }
             if (p != null) {
                 result.addAll(p);
@@ -165,20 +161,13 @@ public class InternalParser<E> {
                 if (result.getEnd() < p.getEnd())
                     result.setEnd(p.getEnd());
             }
-            if (result.getEnd() < node.point.getIndex())
-                result.setEnd(node.point.getIndex());
+            if (result.getEnd() < node.getPoint().getIndex())
+                result.setEnd(node.getPoint().getIndex());
             // Join all value of nodes
-            builder.append(node.point.getValue());
+            builder.append(node.getPoint().getValue());
         }
         result.setValue(builder.toString());
 
         return result;
-    }
-
-    @AllArgsConstructor
-    private class CheckNode<E> {
-        private Matcher<E> matcher;
-        private TrackPoint<E> point;
-        private Deque<TrackPoint<E>> trackPoints;
     }
 }
