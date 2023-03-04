@@ -1,7 +1,6 @@
 package com.joutvhu.expansy.match.definer;
 
 import com.joutvhu.expansy.element.Node;
-import com.joutvhu.expansy.exception.ExpansyException;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
@@ -32,7 +31,7 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
         return new Matcher<E>(this) {
             @Override
             public void match(Consumer<E> consumer) {
-                ExpansyException error = null;
+                MatchException error = null;
                 Analyser<E> analyser = consumer.state().getAnalyser();
                 for (OrDefiner<E, T> definer : definers) {
                     try {
@@ -40,26 +39,15 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
                         Node<E> results = analyser.analyseMatchers(matchers, consumer);
                         consumer.add(results);
                     } catch (MatchException e) {
-                        if (error == null)
-                            error = e;
-                        else if (error instanceof MatchException)
-                            error = MatchException.or((MatchException) error, e);
-                    } catch (ExpansyException e) {
-                        if (error == null)
-                            error = e;
+                        error = MatchException.or(error, e);
                     }
                 }
                 if (consumer.matched())
                     consumer.close();
-                else if (error != null) {
-                    if (error instanceof MatchException) {
-                        consumer.errorAt(error.getMessage(), ((MatchException) error).getIndex(), ((MatchException) error).getContent());
-                    } else {
-                        consumer.errorAt(error.getMessage(), null, null);
-                    }
-                } else {
+                else if (error != null)
+                    consumer.errorAt(error.getMessage(), error.getIndex(), error.getContent());
+                else
                     consumer.error("Not match with all options.");
-                }
             }
         };
     }
