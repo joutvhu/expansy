@@ -376,23 +376,6 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T element(String element) {
-        this.dub(parent.element(element));
-        return parent;
-    }
-
-    @Override
-    public T element(String... elements) {
-        this.dub(parent.element(elements));
-        return parent;
-    }
-
-    public T element(List<String> elements) {
-        this.dub(parent.element(elements));
-        return parent;
-    }
-
-    @Override
     public T element(Element<E> element) {
         this.dub(parent.element(element));
         return parent;
@@ -405,8 +388,50 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
+    public T element(List<Element<E>> elements) {
+        this.dub(parent.element(elements));
+        return parent;
+    }
+
+    @Override
     public T elements() {
         this.dub(parent.elements());
+        return parent;
+    }
+
+    @Override
+    public T include(String element) {
+        this.dub(parent.include(element));
+        return parent;
+    }
+
+    @Override
+    public T include(String... elements) {
+        this.dub(parent.include(elements));
+        return parent;
+    }
+
+    @Override
+    public T include(List<String> elements) {
+        this.dub(parent.include(elements));
+        return parent;
+    }
+
+    @Override
+    public T exclude(String element) {
+        this.dub(parent.exclude(element));
+        return parent;
+    }
+
+    @Override
+    public T exclude(String... elements) {
+        this.dub(parent.exclude(elements));
+        return parent;
+    }
+
+    @Override
+    public T exclude(List<String> elements) {
+        this.dub(parent.exclude(elements));
         return parent;
     }
 }

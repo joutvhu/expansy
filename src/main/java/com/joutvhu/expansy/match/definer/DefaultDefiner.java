@@ -6,6 +6,7 @@ import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.matcher.CharacterMatcher;
 import com.joutvhu.expansy.match.matcher.EqualsMatcher;
 import com.joutvhu.expansy.match.matcher.BoolFunctionMatcher;
+import com.joutvhu.expansy.match.matcher.ExcludeMatcher;
 import com.joutvhu.expansy.match.matcher.MatchFunctionMatcher;
 import com.joutvhu.expansy.match.matcher.NumericMatcher;
 import com.joutvhu.expansy.match.matcher.RegexMatcher;
@@ -389,22 +390,6 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> element(String element) {
-        matchers.add(new RegisteredMatcher<>(this, element));
-        return this;
-    }
-
-    public DefaultDefiner<E> element(List<String> elements) {
-        matchers.add(new RegisteredMatcher<>(this, elements));
-        return this;
-    }
-
-    @Override
-    public DefaultDefiner<E> element(String... elements) {
-        return element(Arrays.asList(elements));
-    }
-
-    @Override
     public DefaultDefiner<E> element(Element<E> element) {
         matchers.add(new UnregisteredMatcher<>(this, element));
         return this;
@@ -412,13 +397,51 @@ public class DefaultDefiner<E> implements Definer<E> {
 
     @Override
     public DefaultDefiner<E> element(Element<E>... elements) {
-        matchers.add(new UnregisteredMatcher<>(this, Arrays.asList(elements)));
+        return element(Arrays.asList(elements));
+    }
+
+    @Override
+    public DefaultDefiner<E> element(List<Element<E>> elements) {
+        matchers.add(new UnregisteredMatcher<>(this, elements));
         return this;
     }
 
     @Override
     public DefaultDefiner<E> elements() {
         matchers.add(new RegisteredMatcher<>(this));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> include(String element) {
+        matchers.add(new RegisteredMatcher<>(this, element));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> include(String... elements) {
+        return include(Arrays.asList(elements));
+    }
+
+    public DefaultDefiner<E> include(List<String> elements) {
+        matchers.add(new RegisteredMatcher<>(this, elements));
+        return this;
+    }
+
+    @Override
+    public Definer<E> exclude(String element) {
+        matchers.add(new ExcludeMatcher<>(this, element));
+        return this;
+    }
+
+    @Override
+    public Definer<E> exclude(String... elements) {
+        return exclude(Arrays.asList(elements));
+    }
+
+    @Override
+    public Definer<E> exclude(List<String> elements) {
+        matchers.add(new ExcludeMatcher<>(this, elements));
         return this;
     }
 }

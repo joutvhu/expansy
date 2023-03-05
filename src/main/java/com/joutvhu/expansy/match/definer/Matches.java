@@ -152,21 +152,29 @@ public interface Matches<E, T extends Definer<E>> {
 
     T check(Function<String, Boolean> checker, Integer minLength, Integer maxLength);
 
-    /**
-     * Matches all registered elements with the specified name
-     */
-    T element(String element);
-
-    T element(String... elements);
-
-    T element(List<String> elements);
-
     T element(Element<E> element);
 
     T element(Element<E>... elements);
+
+    T element(List<Element<E>> elements);
 
     /**
      * Matches with all registered elements
      */
     T elements();
+
+    /**
+     * Matches all registered elements with the specified name
+     */
+    T include(String element);
+
+    T include(String... elements);
+
+    T include(List<String> elements);
+
+    T exclude(String element);
+
+    T exclude(String... elements);
+
+    T exclude(List<String> elements);
 }

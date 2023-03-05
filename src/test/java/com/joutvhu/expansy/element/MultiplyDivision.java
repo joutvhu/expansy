@@ -7,13 +7,13 @@ public class MultiplyDivision extends Element<String> {
     public void define(Definer<String> definer) {
         definer
                 .name("first")
-                .elements()
+                .exclude("AddSubtract")
                 .spaces()
                 .name("operator")
                 .equals("/", "*")
                 .spaces()
                 .name("second")
-                .elements();
+                .exclude("AddSubtract");
     }
 
     @Override

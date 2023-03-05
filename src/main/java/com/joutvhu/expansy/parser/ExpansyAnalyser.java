@@ -171,7 +171,8 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                 result.add(matcher.getName(), node.getPoint().getValue());
             }
             if (p != null) {
-                result.addAll(p);
+                if (matcher.getName() == null)
+                    result.addAll(p);
                 if (p.getStart() < result.getStart())
                     result.setStart(p.getStart());
                 if (result.getEnd() < p.getEnd())

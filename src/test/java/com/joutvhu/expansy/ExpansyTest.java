@@ -1,6 +1,7 @@
 package com.joutvhu.expansy;
 
 import com.joutvhu.expansy.element.AddSubtract;
+import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Function;
 import com.joutvhu.expansy.element.Group;
 import com.joutvhu.expansy.element.MultiplyDivision;
@@ -75,5 +76,17 @@ public class ExpansyTest {
         List<String> result = expansy.selectAll().parse("#fsd(25.122 , $saf)");
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("Function(fsd(Number(25.122), Variable(saf)))", result.get(0));
+    }
+
+    @Test
+    public void test_prioritize_1() {
+        String result = expansy.selectAll().parseSingle("12+774*54");
+        Assertions.assertEquals("AddSubtract(Number(12)+MultiplyDivision(Number(774)*Number(54)))", result);
+    }
+
+    @Test
+    public void test_prioritize_2() {
+        String result = expansy.selectAll().parseSingle("12*774+54");
+        Assertions.assertEquals("AddSubtract(MultiplyDivision(Number(12)*Number(774))+Number(54))", result);
     }
 }
