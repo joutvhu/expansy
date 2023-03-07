@@ -13,13 +13,13 @@ public class MultiplyDivision extends Element<String> {
                 .equals("/", "*")
                 .spaces()
                 .name("second")
-                .exclude("AddSubtract");
+                .exclude("AddSubtract", "MultiplyDivision");
     }
 
     @Override
     public String render(Node<String> node) {
         String first = node.getNode("first").render();
         String second = node.getNode("second").render();
-        return "MultiplyDivision(" + first + node.getAsString("operator") + second + ")";
+        return "MD(" + first + node.getAsString("operator") + second + ")";
     }
 }

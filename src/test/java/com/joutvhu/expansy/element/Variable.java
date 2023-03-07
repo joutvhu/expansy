@@ -13,6 +13,6 @@ public class Variable extends Element<String> {
 
     @Override
     public String render(Node<String> node) {
-        return "Variable(" + node.getAsString("name") + ")";
+        return "V(" + node.getAsString("name") + ")";
     }
 }

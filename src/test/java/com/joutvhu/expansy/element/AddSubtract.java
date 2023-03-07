@@ -13,13 +13,13 @@ public class AddSubtract extends Element<String> {
                 .equals("+", "-")
                 .spaces()
                 .name("second")
-                .elements();
+                .exclude("AddSubtract");
     }
 
     @Override
     public String render(Node<String> node) {
         String first = node.getNode("first").render();
         String second = node.getNode("second").render();
-        return "AddSubtract(" + first + node.getAsString("operator") + second + ")";
+        return "AS(" + first + node.getAsString("operator") + second + ")";
     }
 }

@@ -28,6 +28,7 @@ public class Function extends Element<String> {
     public String render(Node<String> node) {
         Collection<Node<String>> p = node.getAllNodes("param");
         String pr = p.stream().map(v -> v.render()).collect(Collectors.joining(", "));
-        return "Function(" + node.getAsString("name") + "(" + pr + "))";
+        return "" +
+                "F(" + node.getAsString("name") + "(" + pr + "))";
     }
 }
