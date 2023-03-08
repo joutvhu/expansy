@@ -93,7 +93,6 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         } else {
             newBranch = branch;
         }
-        ExpansyException error = null;
         List<Node<E>> nodes = analyseElements(elements, offset, newBranch);
         for (Node<E> eNode : nodes) {
             if (node == null || eNode.getStart() < node.getEnd()) {
@@ -102,12 +101,9 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                     result.addAll(children);
                 } catch (Exception e) {
                     if (node == null) result.add(eNode);
-                    error = ExpansyException.or(error, e);
                 }
             }
         }
-        if (result.isEmpty() && error != null)
-            throw error;
         return result;
     }
 
