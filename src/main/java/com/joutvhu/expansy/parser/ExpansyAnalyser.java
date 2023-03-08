@@ -79,7 +79,36 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
 
     @Override
     public List<Node<E>> analyseElements(Collection<Element<E>> elements, Consumer<E> consumer) {
-        return analyseElements(elements, consumer.offset(), consumer.branch());
+        return analyseElements(elements, consumer.offset(), consumer.branch(), null);
+    }
+
+    private List<Node<E>> analyseElements(Collection<Element<E>> elements, Integer offset, Branch<E> branch, Node<E> node) {
+        List<Node<E>> result = new ArrayList<>();
+        Branch<E> newBranch;
+        if (node != null) {
+            offset = node.getEnd();
+            result.add(node);
+            newBranch = branch.clone();
+            newBranch.push(node);
+        } else {
+            newBranch = branch;
+        }
+        ExpansyException error = null;
+        List<Node<E>> nodes = analyseElements(elements, offset, newBranch);
+        for (Node<E> eNode : nodes) {
+            if (node == null || eNode.getStart() < node.getEnd()) {
+                try {
+                    List<Node<E>> children = analyseElements(elements, eNode.getEnd(), branch, eNode);
+                    result.addAll(children);
+                } catch (Exception e) {
+                    if (node == null) result.add(eNode);
+                    error = ExpansyException.or(error, e);
+                }
+            }
+        }
+        if (result.isEmpty() && error != null)
+            throw error;
+        return result;
     }
 
     @Override

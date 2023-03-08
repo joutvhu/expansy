@@ -111,6 +111,18 @@ public class ExpansyTest {
 
     @Test
     public void test_prioritize_4() {
+        String result = expansy.selectAll().parseSingle("(9-3)");
+        Assertions.assertEquals("G(AS(N(9)-N(3)))", result);
+    }
+
+    @Test
+    public void test_prioritize_5() {
+        String result = expansy.selectAll().parseSingle("(8-3+3)");
+        Assertions.assertEquals("G(AS(AS(N(8)-N(3))+N(3)))", result);
+    }
+
+    @Test
+    public void test_prioritize_6() {
         String result = expansy.selectAll().parseSingle("(9-3)+(8-3+3)");
         Assertions.assertEquals("AS(G(AS(N(9)-N(3)))+G(AS(AS(N(8)-N(3))+N(3))))", result);
     }
