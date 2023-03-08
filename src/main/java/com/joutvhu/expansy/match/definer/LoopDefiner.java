@@ -5,8 +5,11 @@ import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
+import com.joutvhu.expansy.match.consumer.TrackPoint;
+import com.joutvhu.expansy.match.consumer.TrackPoints;
 import com.joutvhu.expansy.parser.Analyser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, LoopDefiner<E, T>> {
@@ -34,24 +37,37 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
             @Override
             public void match(Consumer<E> consumer) {
                 List<Matcher<E>> matchers = matchers();
+                List<TrackPoints<E>> trackPoints = new ArrayList<>();
+                TrackPoints<E> points = new TrackPoints<>();
+                trackPoints.add(points);
+
+                List<Node<E>> nodes = new ArrayList<>();
                 Node<E> node = new Node<>();
                 node.setStart(consumer.offset());
                 node.setEnd(consumer.offset());
                 node.setValue("");
+                nodes.add(node);
+                node.setTrackPoints(points);
+
                 if (minRepetitions != null && minRepetitions == 0) {
-                    consumer.push(node);
-                    node = node.clone();
+                    points.push(new TrackPoint<>(node));
+                    consumer.setPointBranches(trackPoints);
                 }
+                Analyser<E> analyser = consumer.state().getAnalyser();
                 for (int i = 0; true; i++) {
+                    if (nodes.isEmpty())
+                        consumer.error("");
                     try {
-                        Analyser<E> analyser = consumer.state().getAnalyser();
-                        Node<E> results = analyser.analyseMatchers(matchers, node.getEnd(), consumer.branch());
-                        node.setValue(node.getValue().concat(results.getValue()));
-                        node.addAll(results);
-                        node.setEnd(results.getEnd());
-                        if (minRepetitions == null || minRepetitions == 0 || minRepetitions <= i){
-                            consumer.push(node);
-                            node = node.clone();
+                        nodes = analyser.analyseMatchers(matchers, nodes, consumer.branch());
+                        if (!nodes.isEmpty() && (minRepetitions == null || minRepetitions == 0 || minRepetitions <= i)) {
+                            trackPoints = new ArrayList<>();
+                            for (Node<E> eNode : nodes) {
+                                points = eNode.getTrackPoints().clone();
+                                points.push(new TrackPoint<>(eNode));
+                                eNode.setTrackPoints(points);
+                                trackPoints.add(points);
+                            }
+                            consumer.setPointBranches(trackPoints);
                         }
                         if (maxRepetitions != null && maxRepetitions >= i)
                             consumer.close();

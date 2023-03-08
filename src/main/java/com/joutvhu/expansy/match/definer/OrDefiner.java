@@ -36,8 +36,8 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
                 for (OrDefiner<E, T> definer : definers) {
                     try {
                         List<Matcher<E>> matchers = definer.matchers();
-                        Node<E> results = analyser.analyseMatchers(matchers, consumer);
-                        consumer.add(results);
+                        List<Node<E>> nodes = analyser.analyseMatchers(matchers, consumer);
+                        consumer.addForAll(nodes);
                     } catch (MatchException e) {
                         error = MatchException.or(error, e);
                     }

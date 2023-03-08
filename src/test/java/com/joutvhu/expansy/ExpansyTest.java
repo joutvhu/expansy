@@ -64,7 +64,21 @@ public class ExpansyTest {
     }
 
     @Test
-    public void test_group() {
+    public void test_group_1() {
+        List<String> result = expansy.selectAll().parse("(25.122)");
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("G(N(25.122))", result.get(0));
+    }
+
+    @Test
+    public void test_group_2() {
+        List<String> result = expansy.selectAll().parse("(25.122 + 25)");
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("G(AS(N(25.122)+N(25)))", result.get(0));
+    }
+
+    @Test
+    public void test_group_3() {
         List<String> result = expansy.selectAll().parse("$d2 * (25.122 + $saf)");
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("MD(V(d2)*G(AS(N(25.122)+V(saf))))", result.get(0));

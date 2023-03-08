@@ -26,8 +26,13 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
                 if (!matchers.isEmpty()) {
                     try {
                         Analyser<E> analyser = consumer.state().getAnalyser();
-                        Node<E> results = analyser.analyseMatchers(matchers, consumer);
-                        consumer.push(results);
+                        List<Node<E>> nodes = analyser.analyseMatchers(matchers, consumer);
+                        for (Node<E> node : nodes) {
+                            if (consumer.size() == 0)
+                                consumer.push();
+                            consumer.push(node);
+                            consumer.fork();
+                        }
                     } catch (MatchException e) {
                         consumer.errorAt(e.getMessage(), e.getIndex(), e.getContent());
                     }

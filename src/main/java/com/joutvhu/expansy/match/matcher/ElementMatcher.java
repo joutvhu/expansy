@@ -39,6 +39,7 @@ abstract class ElementMatcher<E> extends Matcher<E> {
             List<Node<E>> results = analyser.analyseElements(elements, consumer);
             for (Node<E> result : results) {
                 consumer.push(result);
+                consumer.fork();
             }
             consumer.close();
         } catch (MatchException e) {

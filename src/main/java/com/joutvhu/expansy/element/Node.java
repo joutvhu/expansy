@@ -1,5 +1,7 @@
 package com.joutvhu.expansy.element;
 
+import com.joutvhu.expansy.match.consumer.TrackPoints;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -15,6 +17,7 @@ public class Node<E> {
     private int start;
     private int end;
     private Element<E> element;
+    private TrackPoints<E> trackPoints;
 
     public int getStart() {
         return start;
@@ -70,6 +73,14 @@ public class Node<E> {
         this.parent = parent;
     }
 
+    public TrackPoints<E> getTrackPoints() {
+        return trackPoints;
+    }
+
+    public void setTrackPoints(TrackPoints<E> trackPoints) {
+        this.trackPoints = trackPoints;
+    }
+
     public void add(String key, String value) {
         List<Object> values = children.get(key);
         if (values == null) {
@@ -102,6 +113,16 @@ public class Node<E> {
                 ((Node<E>) o).setParent(this);
                 values.add(o);
             }
+        }
+    }
+
+    public void addBase(Node<E> value) {
+        for (Map.Entry<String, List<Object>> entry : value.children.entrySet()) {
+            List<Object> objects = children.get(entry.getKey());
+            if (objects == null)
+                children.put(entry.getKey(), entry.getValue());
+            else
+                objects.addAll(0, entry.getValue());
         }
     }
 
@@ -244,10 +265,12 @@ public class Node<E> {
 
     public Node<E> clone() {
         Node<E> result = new Node<>();
+        result.setParent(parent);
         result.setStart(start);
         result.setEnd(end);
         result.setValue(value);
         result.setElement(element);
+        result.setTrackPoints(trackPoints);
         children.forEach((key, values) -> result.children.put(key, new ArrayList<>(values)));
         return result;
     }

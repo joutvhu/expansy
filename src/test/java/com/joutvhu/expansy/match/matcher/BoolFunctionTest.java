@@ -5,7 +5,6 @@ import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
-import com.joutvhu.expansy.match.consumer.StopPoint;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

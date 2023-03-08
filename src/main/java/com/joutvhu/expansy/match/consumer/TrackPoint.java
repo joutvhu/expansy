@@ -2,7 +2,11 @@ package com.joutvhu.expansy.match.consumer;
 
 import com.joutvhu.expansy.element.Node;
 
-public class TrackPoint<E> {
+import java.io.Serializable;
+
+public class TrackPoint<E> implements Serializable {
+    private static final long serialVersionUID = 4950650075805378208L;
+
     private final int index;
     private final String value;
     private final Node<E> node;

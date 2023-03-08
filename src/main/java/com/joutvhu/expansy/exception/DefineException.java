@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.exception;
 
-public class DefineException extends ExpansyException  {
+public class DefineException extends ExpansyException {
     public DefineException(String message) {
         super(message);
     }

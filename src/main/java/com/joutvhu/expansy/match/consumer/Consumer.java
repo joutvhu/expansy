@@ -7,15 +7,17 @@ import com.joutvhu.expansy.parser.ExpansyState;
 import org.apache.commons.lang3.StringUtils;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
 
 public class Consumer<E> {
     protected final Source source;
     protected final int offset;
     protected final ExpansyState<E> state;
-    protected final LinkedList<TrackPoint<E>> trackPoints;
+    protected TrackPoints<E> trackPoints;
+    protected List<TrackPoints<E>> pointBranches;
     protected Branch<E> branch;
     protected StopPoint point;
 
@@ -33,7 +35,8 @@ public class Consumer<E> {
         this.offset = offset;
         this.branch = branch;
         this.point = new StopPoint("", offset);
-        this.trackPoints = new LinkedList<>();
+        this.trackPoints = new TrackPoints<>();
+        this.pointBranches = new ArrayList<>();
     }
 
     public Branch<E> branch() {
@@ -105,6 +108,10 @@ public class Consumer<E> {
         return trackPoints.size();
     }
 
+    public int branchesSize() {
+        return pointBranches.size();
+    }
+
     public void removeBefore(int position) {
         final Iterator<TrackPoint<E>> each = trackPoints.iterator();
         while (each.hasNext()) {
@@ -131,6 +138,53 @@ public class Consumer<E> {
         }
     }
 
+    public void fork() {
+        if (!trackPoints.isEmpty()) {
+            pointBranches.add(trackPoints);
+            trackPoints = new TrackPoints<>();
+        }
+    }
+
+    public void setPointBranches(List<TrackPoints<E>> pointBranches) {
+        this.pointBranches = pointBranches;
+    }
+
+    List<TrackPoints<E>> pointBranches() {
+        if (!trackPoints.isEmpty())
+            pointBranches.add(trackPoints);
+        return pointBranches;
+    }
+
+    private void forEach(java.util.function.Consumer<TrackPoints<E>> action) {
+        pointBranches.forEach(action);
+        action.accept(trackPoints);
+    }
+
+    private void addForAll(List<Node<E>> nodes, Integer position) {
+        List<TrackPoints<E>> pointBranches = new ArrayList<>();
+        for (Node<E> node : nodes) {
+            List<TrackPoints<E>> branches = clonePointBranches();
+            for (TrackPoints<E> trackPoints : branches) {
+                if (position == null)
+                    trackPoints.add(new TrackPoint<>(node));
+                else
+                    trackPoints.add(position, new TrackPoint<>(node));
+            }
+            pointBranches.addAll(branches);
+        }
+        this.pointBranches = pointBranches;
+    }
+
+    private List<TrackPoints<E>> clonePointBranches() {
+        List<TrackPoints<E>> pointBranches = new ArrayList<>();
+        pointBranches.addAll(this.pointBranches);
+        if (!trackPoints.isEmpty())
+            pointBranches.add(trackPoints);
+        if (pointBranches.isEmpty())
+            pointBranches.add(new TrackPoints<>());
+        return pointBranches;
+    }
+
     /**
      * Remove all other track points, and add a new track point.
      */
@@ -149,6 +203,27 @@ public class Consumer<E> {
         trackPoints.push(new TrackPoint<>(node));
     }
 
+    public void onlyForAll() {
+        forEach(value -> {
+            value.clear();
+            value.push(at(null));
+        });
+    }
+
+    public void onlyForAll(int index) {
+        forEach(value -> {
+            value.clear();
+            value.push(at(index));
+        });
+    }
+
+    public void onlyForAll(Node<E> node) {
+        forEach(value -> {
+            value.clear();
+            value.push(new TrackPoint<>(node));
+        });
+    }
+
     /**
      * Add a new track point at the end of the list.
      */
@@ -162,6 +237,22 @@ public class Consumer<E> {
 
     public void add(Node<E> node) {
         trackPoints.add(new TrackPoint<>(node));
+    }
+
+    public void addForAll() {
+        forEach(value -> value.add(at(null)));
+    }
+
+    public void addForAll(int index) {
+        forEach(value -> value.add(at(index)));
+    }
+
+    public void addForAll(Node<E> node) {
+        forEach(value -> value.add(new TrackPoint<>(node)));
+    }
+
+    public void addForAll(List<Node<E>> nodes) {
+        addForAll(nodes, null);
     }
 
     /**
@@ -179,6 +270,22 @@ public class Consumer<E> {
         trackPoints.add(position, new TrackPoint<>(node));
     }
 
+    public void insertForAll(int position) {
+        forEach(value -> value.add(position, at(null)));
+    }
+
+    public void insertForAll(int position, int index) {
+        forEach(value -> value.add(position, at(index)));
+    }
+
+    public void insertForAll(int position, Node<E> node) {
+        forEach(value -> value.add(position, new TrackPoint<>(node)));
+    }
+
+    public void insertForAll(int position, List<Node<E>> nodes) {
+        addForAll(nodes, position);
+    }
+
     /**
      * Add a new track point at the first of the list.
      */
@@ -194,8 +301,24 @@ public class Consumer<E> {
         trackPoints.push(new TrackPoint<>(node));
     }
 
+    public void pushForAll() {
+        forEach(value -> value.push(at(null)));
+    }
+
+    public void pushForAll(int index) {
+        forEach(value -> value.push(at(index)));
+    }
+
+    public void pushForAll(Node<E> node) {
+        forEach(value -> value.push(new TrackPoint<>(node)));
+    }
+
+    public void pushForAll(List<Node<E>> nodes) {
+        addForAll(nodes, 0);
+    }
+
     public void close() {
-        throw new StopReasonThrowable(trackPoints, null, point.getIndex(), point.getValue());
+        throw new StopReasonThrowable(pointBranches(), null, point.getIndex(), point.getValue());
     }
 
     public void complete() {
@@ -205,11 +328,11 @@ public class Consumer<E> {
 
     public void error(String pattern, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
-        throw new StopReasonThrowable(trackPoints, message, point.getIndex(), point.getValue());
+        throw new StopReasonThrowable(pointBranches(), message, point.getIndex(), point.getValue());
     }
 
     public void errorAt(String pattern, Integer index, String content, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
-        throw new StopReasonThrowable(trackPoints, message, index, content);
+        throw new StopReasonThrowable(pointBranches(), message, index, content);
     }
 }
