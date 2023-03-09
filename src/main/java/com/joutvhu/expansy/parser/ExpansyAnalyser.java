@@ -11,7 +11,7 @@ import com.joutvhu.expansy.match.consumer.StopReason;
 import com.joutvhu.expansy.match.consumer.TrackPoint;
 import com.joutvhu.expansy.match.consumer.TrackPoints;
 import com.joutvhu.expansy.match.definer.DefinerUtil;
-import org.apache.commons.lang3.StringUtils;
+import com.joutvhu.expansy.util.StringUtils;
 
 import java.text.MessageFormat;
 import java.util.ArrayDeque;

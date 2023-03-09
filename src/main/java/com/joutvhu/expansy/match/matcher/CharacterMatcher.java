@@ -5,8 +5,8 @@ import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
+import com.joutvhu.expansy.util.ArrayUtils;
 import com.joutvhu.expansy.util.Joiner;
-import org.apache.commons.lang3.ArrayUtils;
 
 public class CharacterMatcher<E> extends Matcher<E> {
     public static char[] WHITESPACE = new char[]{

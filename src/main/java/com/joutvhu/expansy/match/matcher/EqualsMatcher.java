@@ -5,7 +5,7 @@ import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
-import org.apache.commons.lang3.StringUtils;
+import com.joutvhu.expansy.util.StringUtils;
 
 import java.util.Comparator;
 import java.util.List;

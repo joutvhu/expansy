@@ -4,7 +4,7 @@ import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.parser.ExpansyState;
-import org.apache.commons.lang3.StringUtils;
+import com.joutvhu.expansy.util.StringUtils;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;

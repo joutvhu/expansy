@@ -85,10 +85,17 @@ public class ExpansyTest {
     }
 
     @Test
-    public void test_function() {
+    public void test_function_1() {
         List<String> result = expansy.selectAll().parse("#fsd(25.122 , $saf)");
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("F(fsd(N(25.122), V(saf)))", result.get(0));
+    }
+
+    @Test
+    public void test_function_2() {
+        List<String> result = expansy.selectAll().parse("#fsd(25.122 - 5 * 6, ($saf + 2) * 7)");
+        Assertions.assertEquals(1, result.size());
+        Assertions.assertEquals("F(fsd(AS(N(25.122)-MD(N(5)*N(6))), MD(G(AS(V(saf)+N(2)))*N(7))))", result.get(0));
     }
 
     @Test
