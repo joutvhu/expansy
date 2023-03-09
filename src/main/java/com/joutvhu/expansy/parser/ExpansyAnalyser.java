@@ -354,26 +354,31 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
 
     private Node<E> mergeNode(Node<E> node, Deque<TrackPoints<E>> nodes) {
         StringBuilder builder = new StringBuilder();
+        if (node.getValue() != null)
+            builder.append(node.getValue());
         for (TrackPoints<E> trackPoints = nodes.pollLast(); trackPoints != null; trackPoints = nodes.pollLast()) {
             Matcher<E> matcher = trackPoints.getMatcher();
-            Node<E> p = trackPoints.trackPoint().getNode();
-            if (matcher.getName() != null) {
-                if (p != null)
-                    node.add(matcher.getName(), p);
-                node.add(matcher.getName(), trackPoints.trackPoint().getValue());
+            TrackPoint<E> trackPoint = trackPoints.trackPoint();
+            if (trackPoint != null) {
+                Node<E> p = trackPoint.getNode();
+                if (matcher.getName() != null) {
+                    if (p != null)
+                        node.add(matcher.getName(), p);
+                    node.add(matcher.getName(), trackPoint.getValue());
+                }
+                if (p != null) {
+                    if (matcher.getName() == null)
+                        node.addAll(p);
+                    if (p.getStart() < node.getStart())
+                        node.setStart(p.getStart());
+                    if (node.getEnd() < p.getEnd())
+                        node.setEnd(p.getEnd());
+                }
+                if (node.getEnd() < trackPoint.getIndex())
+                    node.setEnd(trackPoint.getIndex());
+                // Join all value of nodes
+                builder.append(trackPoint.getValue());
             }
-            if (p != null) {
-                if (matcher.getName() == null)
-                    node.addAll(p);
-                if (p.getStart() < node.getStart())
-                    node.setStart(p.getStart());
-                if (node.getEnd() < p.getEnd())
-                    node.setEnd(p.getEnd());
-            }
-            if (node.getEnd() < trackPoints.trackPoint().getIndex())
-                node.setEnd(trackPoints.trackPoint().getIndex());
-            // Join all value of nodes
-            builder.append(trackPoints.trackPoint().getValue());
         }
         node.setValue(builder.toString());
         return node;
