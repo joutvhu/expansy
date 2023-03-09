@@ -152,4 +152,26 @@ Used to define a matcher group it is repeatable.
 
 Used to define a matcher group it can repeat and be interspersed by another matcher group.
 
+```java
+public class FunctionElement implements Element<BigDecimal> {
+    @Override
+    public void define(Definer<BigDecimal> definer) {
+        definer
+                .equals("#")
+                .name("name")
+                .word()        // Function name
+                .equals("(")
+                .between()
+                .spaces()
+                .name("param")
+                .elements()    // The parameter can be any element
+                .spaces()
+                .is()
+                .equals(",")   // There is a comma between the parameters
+                .end()
+                .equals(")");
+    }
+}
+```
+
 ## Render
