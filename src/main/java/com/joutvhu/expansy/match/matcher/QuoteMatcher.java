@@ -1,6 +1,7 @@
 package com.joutvhu.expansy.match.matcher;
 
 import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -15,6 +16,8 @@ public class QuoteMatcher<E> extends Matcher<E> {
 
     public QuoteMatcher(Definer<E> parent, char... types) {
         super(parent);
+        if (types == null && types.length == 0)
+            throw new DefineException("Quote type is not provided.");
         this.types = types;
     }
 

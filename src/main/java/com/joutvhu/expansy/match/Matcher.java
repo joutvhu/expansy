@@ -1,8 +1,8 @@
 package com.joutvhu.expansy.match;
 
-import com.joutvhu.expansy.match.consumer.Consumer;
+import com.joutvhu.expansy.match.type.MatchFunction;
 
-public abstract class Matcher<E> {
+public abstract class Matcher<E> implements MatchFunction<E> {
     protected String name;
     protected Definer<E> parent;
 
@@ -22,6 +22,4 @@ public abstract class Matcher<E> {
     public void setName(String name) {
         this.name = name;
     }
-
-    public abstract void match(Consumer<E> consumer);
 }

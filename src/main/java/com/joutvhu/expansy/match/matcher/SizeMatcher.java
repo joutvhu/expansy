@@ -1,5 +1,6 @@
 package com.joutvhu.expansy.match.matcher;
 
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
@@ -10,6 +11,8 @@ public class SizeMatcher<E> extends Matcher<E> {
 
     public SizeMatcher(Definer<E> parent, int length) {
         super(parent);
+        if (length < 1)
+            throw new DefineException("The length cannot be less than 1.");
         this.length = length;
     }
 

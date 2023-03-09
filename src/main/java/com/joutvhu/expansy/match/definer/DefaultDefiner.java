@@ -100,30 +100,6 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> space() {
-        matchers.add(new CharacterMatcher<>(this, ' ', 1));
-        return this;
-    }
-
-    @Override
-    public DefaultDefiner<E> spaces() {
-        matchers.add(new CharacterMatcher<>(this, ' ', null));
-        return this;
-    }
-
-    @Override
-    public DefaultDefiner<E> spaces(int length) {
-        matchers.add(new CharacterMatcher<>(this, ' ', length));
-        return this;
-    }
-
-    @Override
-    public DefaultDefiner<E> spaces(Integer minLength, Integer maxLength) {
-        matchers.add(new CharacterMatcher<>(this, ' ', minLength, maxLength));
-        return this;
-    }
-
-    @Override
     public DefaultDefiner<E> character(char... values) {
         matchers.add(new CharacterMatcher<>(this, values, 1));
         return this;
@@ -144,6 +120,30 @@ public class DefaultDefiner<E> implements Definer<E> {
     @Override
     public DefaultDefiner<E> characters(char[] values, Integer minLength, Integer maxLength) {
         matchers.add(new CharacterMatcher<>(this, values, minLength, maxLength));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> space() {
+        matchers.add(new CharacterMatcher<>(this, ' ', 1));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> spaces() {
+        matchers.add(new CharacterMatcher<>(this, ' ', null));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> spaces(int length) {
+        matchers.add(new CharacterMatcher<>(this, ' ', length));
+        return this;
+    }
+
+    @Override
+    public DefaultDefiner<E> spaces(Integer minLength, Integer maxLength) {
+        matchers.add(new CharacterMatcher<>(this, ' ', minLength, maxLength));
         return this;
     }
 

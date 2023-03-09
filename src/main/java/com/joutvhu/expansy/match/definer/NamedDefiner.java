@@ -82,30 +82,6 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T space() {
-        this.dub(parent.space());
-        return parent;
-    }
-
-    @Override
-    public T spaces() {
-        this.dub(parent.spaces());
-        return parent;
-    }
-
-    @Override
-    public T spaces(int length) {
-        this.dub(parent.spaces(length));
-        return parent;
-    }
-
-    @Override
-    public T spaces(Integer minLength, Integer maxLength) {
-        this.dub(parent.spaces(minLength, maxLength));
-        return parent;
-    }
-
-    @Override
     public T character(char... values) {
         this.dub(parent.character(values));
         return parent;
@@ -126,6 +102,30 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     @Override
     public T characters(char[] values, Integer minLength, Integer maxLength) {
         this.dub(parent.characters(values, minLength, maxLength));
+        return parent;
+    }
+
+    @Override
+    public T space() {
+        this.dub(parent.space());
+        return parent;
+    }
+
+    @Override
+    public T spaces() {
+        this.dub(parent.spaces());
+        return parent;
+    }
+
+    @Override
+    public T spaces(int length) {
+        this.dub(parent.spaces(length));
+        return parent;
+    }
+
+    @Override
+    public T spaces(Integer minLength, Integer maxLength) {
+        this.dub(parent.spaces(minLength, maxLength));
         return parent;
     }
 

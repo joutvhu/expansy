@@ -25,6 +25,10 @@ public class BoolFunctionMatcher<E> extends Matcher<E> {
         super(parent);
         if (checker == null)
             throw new DefineException("The checker must be non-null.");
+        if (minLength != null && minLength < 1)
+            throw new DefineException("The minLength cannot be less than 1.");
+        if (maxLength != null && maxLength < 1)
+            throw new DefineException("The maxLength cannot be less than 1.");
         this.checker = checker;
         this.minLength = minLength;
         this.maxLength = maxLength;

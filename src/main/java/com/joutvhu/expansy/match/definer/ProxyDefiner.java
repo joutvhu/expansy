@@ -89,30 +89,6 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T space() {
-        container.space();
-        return master;
-    }
-
-    @Override
-    public T spaces() {
-        container.spaces();
-        return master;
-    }
-
-    @Override
-    public T spaces(int length) {
-        container.spaces(length);
-        return master;
-    }
-
-    @Override
-    public T spaces(Integer minLength, Integer maxLength) {
-        container.spaces(minLength, maxLength);
-        return master;
-    }
-
-    @Override
     public T character(char... values) {
         container.character(values);
         return master;
@@ -133,6 +109,30 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     @Override
     public T characters(char[] values, Integer minLength, Integer maxLength) {
         container.characters(values, minLength, maxLength);
+        return master;
+    }
+
+    @Override
+    public T space() {
+        container.space();
+        return master;
+    }
+
+    @Override
+    public T spaces() {
+        container.spaces();
+        return master;
+    }
+
+    @Override
+    public T spaces(int length) {
+        container.spaces(length);
+        return master;
+    }
+
+    @Override
+    public T spaces(Integer minLength, Integer maxLength) {
+        container.spaces(minLength, maxLength);
         return master;
     }
 

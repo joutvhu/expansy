@@ -18,7 +18,7 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
 
     @Override
     public Matcher<E> matcher() {
-        return new Matcher<>(this) {
+        return new Matcher<E>(this) {
             @Override
             public void match(Consumer<E> consumer) {
                 List<Matcher<E>> matchers = matchers();

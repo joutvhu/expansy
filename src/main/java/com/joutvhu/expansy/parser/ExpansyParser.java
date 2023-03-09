@@ -7,6 +7,7 @@ import com.joutvhu.expansy.element.Node;
 import com.joutvhu.expansy.io.BranchSelector;
 import com.joutvhu.expansy.io.DefaultSelector;
 import com.joutvhu.expansy.io.Source;
+import com.joutvhu.expansy.io.StringSource;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,7 +29,7 @@ public class ExpansyParser<E> {
     }
 
     protected Analyser<E> analyser(String value) {
-        Source source = new Source(value);
+        Source source = new StringSource(value);
         ExpansyState<E> state = new ExpansyState<>(source, register);
         return state.getAnalyser();
     }

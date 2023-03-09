@@ -33,6 +33,10 @@ public class RegexMatcher<E> extends Matcher<E> {
         super(parent);
         if (pattern == null)
             throw new DefineException("The pattern must be non-null.");
+        if (minLength != null && minLength < 1)
+            throw new DefineException("The minLength cannot be less than 1.");
+        if (maxLength != null && maxLength < 1)
+            throw new DefineException("The maxLength cannot be less than 1.");
         this.pattern = pattern;
         this.minLength = minLength;
         this.maxLength = maxLength;

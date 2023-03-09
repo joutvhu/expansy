@@ -28,6 +28,17 @@ public interface Matches<E, T extends Definer<E>> {
     T size(int length);
 
     /**
+     * Matches any characters provided.
+     */
+    T character(char... characters);
+
+    T characters(char... characters);
+
+    T characters(char[] characters, int length);
+
+    T characters(char[] characters, Integer minLength, Integer maxLength);
+
+    /**
      * Matches any space character
      */
     T space();
@@ -37,17 +48,6 @@ public interface Matches<E, T extends Definer<E>> {
     T spaces(int length);
 
     T spaces(Integer minLength, Integer maxLength);
-
-    /**
-     * Matches any characters provided.
-     */
-    T character(char... values);
-
-    T characters(char... values);
-
-    T characters(char[] values, int length);
-
-    T characters(char[] values, Integer minLength, Integer maxLength);
 
     /**
      * Matches any whitespace character (spaces, tabs, line breaks)

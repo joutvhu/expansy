@@ -44,6 +44,10 @@ public class CharacterMatcher<E> extends Matcher<E> {
         super(parent);
         if (characters == null || characters.length == 0)
             throw new DefineException("The characters must be non-blank.");
+        if (minLength != null && minLength < 0)
+            throw new DefineException("The minLength cannot be less than 0.");
+        if (maxLength != null && maxLength < 1)
+            throw new DefineException("The maxLength cannot be less than 1.");
         this.characters = characters;
         this.minLength = minLength;
         this.maxLength = maxLength;
