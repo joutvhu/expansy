@@ -140,18 +140,58 @@ Used to match registered elements except those listed.
 
 Used to define a matcher group that may or may not appear.
 
+Syntax:
+```
+definer
+    .maybe()
+    ...
+    .end()
+```
+
+
 #### `or`
 
 Could match with a group in the matcher groups.
+
+Syntax:
+```
+definer
+    .or()
+    ...
+    .or()
+    ...
+    .or()
+    ...
+    .end()
+```
 
 #### `loop`
 
 Used to define a matcher group it is repeatable.
 
+Syntax:
+```
+definer
+    .loop()
+    ...
+    .end()
+```
+
 #### `between`
 
 Used to define a matcher group it can repeat and be interspersed by another matcher group.
 
+Syntax:
+```
+definer
+    .between()
+    ... // content to separate.
+    .is()
+    ... // define separator here.
+    .end()
+```
+
+The following example uses `between` to define function parameters separated by commas.
 ```java
 public class FunctionElement implements Element<BigDecimal> {
     @Override
