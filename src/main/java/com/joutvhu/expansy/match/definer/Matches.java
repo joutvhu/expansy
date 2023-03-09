@@ -150,7 +150,7 @@ public interface Matches<E, T extends Definer<E>> {
 
     T pattern(Pattern pattern, Integer minLength, Integer maxLength);
 
-    T check(MatchFunction<E> checker);
+    T match(MatchFunction<E> matcher);
 
     T check(Function<String, Boolean> checker);
 

@@ -429,11 +429,20 @@ Used to match a specified pattern.
 
 - `pattern(Pattern pattern, Integer minLength, Integer maxLength)`
 
+#### `match`
+
+Use a matcher to match.
+
+- `match(MatchFunction<E> matcher)`
+```java
+public void define(Definer<Object> definer) {
+    definer.match(new ArrayMatcher());
+}
+```
+
 #### `check`
 
 Use a method to match.
-
-- `check(MatchFunction<E> checker)`
 
 - `check(Function<String, Boolean> checker)`
 

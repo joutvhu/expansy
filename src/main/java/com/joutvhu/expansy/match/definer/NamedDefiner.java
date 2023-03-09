@@ -370,8 +370,8 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T check(MatchFunction<E> checker) {
-        this.dub(parent.check(checker));
+    public T match(MatchFunction<E> matcher) {
+        this.dub(parent.match(matcher));
         return parent;
     }
 

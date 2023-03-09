@@ -386,8 +386,8 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> check(MatchFunction<E> checker) {
-        matchers.add(new MatchFunctionMatcher<>(this, checker));
+    public DefaultDefiner<E> match(MatchFunction<E> matcher) {
+        matchers.add(new MatchFunctionMatcher<>(this, matcher));
         return this;
     }
 

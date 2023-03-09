@@ -7,17 +7,17 @@ import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.type.MatchFunction;
 
 public class MatchFunctionMatcher<E> extends Matcher<E> {
-    private final MatchFunction<E> checker;
+    private final MatchFunction<E> matcher;
 
-    public MatchFunctionMatcher(Definer<E> parent, MatchFunction<E> checker) {
+    public MatchFunctionMatcher(Definer<E> parent, MatchFunction<E> matcher) {
         super(parent);
-        if (checker == null)
-            throw new DefineException("The checker must be non-null.");
-        this.checker = checker;
+        if (matcher == null)
+            throw new DefineException("The matcher must be non-null.");
+        this.matcher = matcher;
     }
 
     @Override
     public void match(Consumer<E> consumer) {
-        checker.match(consumer);
+        matcher.match(consumer);
     }
 }

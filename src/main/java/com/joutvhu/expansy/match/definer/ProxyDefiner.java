@@ -377,8 +377,8 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T check(MatchFunction<E> checker) {
-        container.check(checker);
+    public T match(MatchFunction<E> matcher) {
+        container.match(matcher);
         return master;
     }
 
