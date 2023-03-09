@@ -11,8 +11,8 @@ import java.util.Set;
 
 @Getter
 public class Branch<E> extends ArrayList<Node<E>> {
-    private Map<String, Object> shared;
-    private Map<Integer, Set<Element<E>>> checking;
+    private final Map<String, Object> shared;
+    private final Map<Integer, Set<Element<E>>> checking;
 
     public Branch() {
         shared = new HashMap<>();

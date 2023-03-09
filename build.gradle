@@ -26,7 +26,6 @@ repositories {
 
 ext {
     versions = [
-            'commons-lang3.version': '3.12.0'
     ]
     managedVersions = [
     ]
@@ -111,7 +110,7 @@ publishing {
 
             pom {
                 name = project.name
-                description = ''
+                description = 'Expansy is an expression analyzer that allows you to define expression elements of your design.'
                 url = 'https://github.com/joutvhu/expansy'
                 licenses {
                     license {
@@ -139,7 +138,7 @@ publishing {
                     name = 'Giao Ho'
                     url = 'https://github.com/joutvhu'
                 }
-                properties = project.ext.versions
+                properties = project.ext.versions instanceof Map ? project.ext.versions : null
                 withXml {
                     def dependencyManagement = asNode().get('dependencyManagement')
                     dependencyManagement.dependencies.dependency.each {

@@ -5,7 +5,7 @@ import com.joutvhu.expansy.match.Definer;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class Function extends Element<String> {
+public class Function implements Element<String> {
     @Override
     public void define(Definer<String> definer) {
         definer

@@ -16,6 +16,7 @@ import com.joutvhu.expansy.util.StringUtils;
 import java.text.MessageFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Deque;
@@ -312,7 +313,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         }
         if (nodes.isEmpty() && error != null)
             throw error;
-        return List.of(mergeNode(node, nodes));
+        return Arrays.asList(mergeNode(node, nodes));
     }
 
     private Consumer<E> newConsumer(Deque<TrackPoints<E>> nodes, StopReason<E> reason, Branch<E> branch) {

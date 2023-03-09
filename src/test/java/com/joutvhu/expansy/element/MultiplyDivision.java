@@ -2,7 +2,7 @@ package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.match.Definer;
 
-public class MultiplyDivision extends Element<String> {
+public class MultiplyDivision implements Element<String> {
     @Override
     public void define(Definer<String> definer) {
         definer

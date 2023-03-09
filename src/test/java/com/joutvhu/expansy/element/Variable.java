@@ -2,7 +2,7 @@ package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.match.Definer;
 
-public class Variable extends Element<String> {
+public class Variable implements Element<String> {
     @Override
     public void define(Definer<String> definer) {
         definer

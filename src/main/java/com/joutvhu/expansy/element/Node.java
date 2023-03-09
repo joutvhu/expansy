@@ -11,8 +11,8 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Node<E> {
+    private final Map<String, List<Object>> children = new HashMap<>();
     private Node<E> parent;
-    private Map<String, List<Object>> children = new HashMap<>();
     private String value;
     private int start;
     private int end;

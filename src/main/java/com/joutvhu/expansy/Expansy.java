@@ -44,7 +44,7 @@ public class Expansy<E> {
     }
 
     public ExpansyParser<E> select(String name) {
-        return new ExpansyParser<>(register, selector, List.of(name));
+        return new ExpansyParser<>(register, selector, Arrays.asList(name));
     }
 
     public ExpansyParser<E> select(String... names) {

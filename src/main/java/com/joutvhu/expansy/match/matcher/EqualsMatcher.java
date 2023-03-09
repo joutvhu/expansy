@@ -7,6 +7,7 @@ import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
 import com.joutvhu.expansy.util.StringUtils;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class EqualsMatcher<E> extends Matcher<E> {
         this.ignoreCase = ignoreCase;
         if (value == null || value.length() == 0)
             throw new IllegalArgumentException("");
-        this.values = List.of(value);
+        this.values = Arrays.asList(value);
     }
 
     public EqualsMatcher(Definer<E> parent, List<String> values) {

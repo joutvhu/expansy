@@ -2,7 +2,7 @@ package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.match.Definer;
 
-public class AddSubtract extends Element<String> {
+public class AddSubtract implements Element<String> {
     @Override
     public void define(Definer<String> definer) {
         definer

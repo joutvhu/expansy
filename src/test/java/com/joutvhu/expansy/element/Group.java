@@ -2,7 +2,7 @@ package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.match.Definer;
 
-public class Group extends Element<String> {
+public class Group implements Element<String> {
     @Override
     public void define(Definer<String> definer) {
         definer
