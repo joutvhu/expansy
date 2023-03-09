@@ -11,7 +11,7 @@ public class QuoteTest {
     @Test
     public void test_quote_1() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
@@ -32,7 +32,7 @@ public class QuoteTest {
     @Test
     public void test_quote_2() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
@@ -54,7 +54,7 @@ public class QuoteTest {
     public void test_quote_3() {
         Assertions.assertThrows(Exception.class, () -> {
             Expansy.<String>instance()
-                    .register(new Element<>() {
+                    .register(new Element<String>() {
                         @Override
                         public void define(Definer<String> definer) {
                             definer
@@ -76,7 +76,7 @@ public class QuoteTest {
     public void test_quote_4() {
         Assertions.assertThrows(Exception.class, () -> {
             Expansy.<String>instance()
-                    .register(new Element<>() {
+                    .register(new Element<String>() {
                         @Override
                         public void define(Definer<String> definer) {
                             definer

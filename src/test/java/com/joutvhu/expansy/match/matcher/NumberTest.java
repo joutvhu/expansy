@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 public class NumberTest {
     private ExpansyParser<BigDecimal> parser() {
         return Expansy.<BigDecimal>instance()
-                .register(new Element<>() {
+                .register(new Element<BigDecimal>() {
                     @Override
                     public void define(Definer<BigDecimal> definer) {
                         definer

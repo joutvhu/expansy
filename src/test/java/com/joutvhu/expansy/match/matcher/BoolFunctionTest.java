@@ -12,7 +12,7 @@ public class BoolFunctionTest {
     @Test
     public void test_func_1() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
@@ -40,7 +40,7 @@ public class BoolFunctionTest {
     public void test_func_2() {
         Assertions.assertThrows(MatchException.class, () -> {
             Expansy.<String>instance()
-                    .register(new Element<>() {
+                    .register(new Element<String>() {
                         @Override
                         public void define(Definer<String> definer) {
                             definer

@@ -11,7 +11,7 @@ public class LoopTest {
     @Test
     public void test_loop() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer

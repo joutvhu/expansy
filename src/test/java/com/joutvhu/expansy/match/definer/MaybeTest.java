@@ -11,7 +11,7 @@ public class MaybeTest {
     @Test
     public void test_maybe() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
@@ -34,7 +34,7 @@ public class MaybeTest {
     @Test
     public void test_maybe_no_match() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer

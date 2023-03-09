@@ -13,12 +13,12 @@ public class MatchFunctionTest {
     @Test
     public void test_func_1() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
                                 .name("value")
-                                .check(consumer -> {
+                                .match(consumer -> {
                                     StopPoint point = consumer.next(3);
                                     if (point != null && "abc".equals(point.getValue()))
                                         consumer.complete();
@@ -40,12 +40,12 @@ public class MatchFunctionTest {
     public void test_func_2() {
         Assertions.assertThrows(MatchException.class, () -> {
             Expansy.<String>instance()
-                    .register(new Element<>() {
+                    .register(new Element<String>() {
                         @Override
                         public void define(Definer<String> definer) {
                             definer
                                     .name("value")
-                                    .check(consumer -> {
+                                    .match(consumer -> {
                                         StopPoint point = consumer.next(3);
                                         if (point != null && "abc".equals(point.getValue()))
                                             consumer.complete();

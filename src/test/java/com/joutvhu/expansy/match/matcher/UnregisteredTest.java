@@ -11,12 +11,12 @@ public class UnregisteredTest {
     @Test
     public void test_element_1() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
                                 .name("value")
-                                .element(new Element<>() {
+                                .element(new Element<String>() {
                                     @Override
                                     public void define(Definer<String> definer) {
                                         definer

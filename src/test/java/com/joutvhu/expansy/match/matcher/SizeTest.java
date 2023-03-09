@@ -11,7 +11,7 @@ public class SizeTest {
     @Test
     public void test_size_1() {
         String result = Expansy.<String>instance()
-                .register(new Element<>() {
+                .register(new Element<String>() {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
@@ -33,7 +33,7 @@ public class SizeTest {
     public void test_size_2() {
         Assertions.assertThrows(Exception.class, () -> {
             Expansy.<String>instance()
-                    .register(new Element<>() {
+                    .register(new Element<String>() {
                         @Override
                         public void define(Definer<String> definer) {
                             definer
