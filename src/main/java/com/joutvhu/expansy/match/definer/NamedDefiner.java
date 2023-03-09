@@ -280,6 +280,18 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
+    public T quote() {
+        this.dub(parent.quote());
+        return parent;
+    }
+
+    @Override
+    public T quote(char... types) {
+        this.dub(parent.quote(types));
+        return parent;
+    }
+
+    @Override
     public T equals(String value) {
         this.dub(parent.equals(value));
         return parent;

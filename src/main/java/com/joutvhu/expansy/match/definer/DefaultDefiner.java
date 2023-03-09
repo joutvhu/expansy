@@ -9,6 +9,7 @@ import com.joutvhu.expansy.match.matcher.EqualsMatcher;
 import com.joutvhu.expansy.match.matcher.ExcludeMatcher;
 import com.joutvhu.expansy.match.matcher.MatchFunctionMatcher;
 import com.joutvhu.expansy.match.matcher.NumericMatcher;
+import com.joutvhu.expansy.match.matcher.QuoteMatcher;
 import com.joutvhu.expansy.match.matcher.RegexMatcher;
 import com.joutvhu.expansy.match.matcher.RegisteredMatcher;
 import com.joutvhu.expansy.match.matcher.UnregisteredMatcher;
@@ -292,6 +293,18 @@ public class DefaultDefiner<E> implements Definer<E> {
     @Override
     public DefaultDefiner<E> word() {
         matchers.add(new WordMatcher<>(this));
+        return this;
+    }
+
+    @Override
+    public Definer<E> quote() {
+        matchers.add(new QuoteMatcher<>(this));
+        return this;
+    }
+
+    @Override
+    public Definer<E> quote(char... types) {
+        matchers.add(new QuoteMatcher<>(this, types));
         return this;
     }
 

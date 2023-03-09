@@ -365,10 +365,9 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                     if (p != null)
                         node.add(matcher.getName(), p);
                     node.add(matcher.getName(), trackPoint.getValue());
-                }
+                } else if (p != null && p.isEmbed())
+                    node.addAll(p);
                 if (p != null) {
-                    if (matcher.getName() == null)
-                        node.addAll(p);
                     if (p.getStart() < node.getStart())
                         node.setStart(p.getStart());
                     if (node.getEnd() < p.getEnd())

@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 public class UnregisteredTest {
     @Test
-    public void test_element_case_1() {
+    public void test_element_1() {
         String result = Expansy.<String>instance()
                 .register(new Element<>() {
                     @Override

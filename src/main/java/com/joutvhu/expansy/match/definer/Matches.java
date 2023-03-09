@@ -120,6 +120,10 @@ public interface Matches<E, T extends Definer<E>> {
      */
     T word();
 
+    T quote();
+
+    T quote(char... types);
+
     T equals(String value);
 
     T equals(String... values);

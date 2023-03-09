@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 public class BoolFunctionTest {
     @Test
-    public void test_func_case_1() {
+    public void test_func_1() {
         String result = Expansy.<String>instance()
                 .register(new Element<>() {
                     @Override
@@ -37,7 +37,7 @@ public class BoolFunctionTest {
     }
 
     @Test
-    public void test_func_case_2() {
+    public void test_func_2() {
         Assertions.assertThrows(MatchException.class, () -> {
             Expansy.<String>instance()
                     .register(new Element<>() {

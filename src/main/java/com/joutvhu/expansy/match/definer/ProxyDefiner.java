@@ -287,6 +287,18 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
+    public T quote() {
+        container.quote();
+        return master;
+    }
+
+    @Override
+    public T quote(char... types) {
+        container.quote(types);
+        return master;
+    }
+
+    @Override
     public T equals(String value) {
         container.equals(value);
         return master;

@@ -16,6 +16,7 @@ public class Node<E> {
     private String value;
     private int start;
     private int end;
+    private boolean embed = true;
     private Element<E> element;
     private TrackPoints<E> trackPoints;
 
@@ -55,6 +56,14 @@ public class Node<E> {
 
     public int getLength() {
         return value.length();
+    }
+
+    public boolean isEmbed() {
+        return embed;
+    }
+
+    public void setEmbed(boolean embed) {
+        this.embed = embed;
     }
 
     public Element<E> getElement() {

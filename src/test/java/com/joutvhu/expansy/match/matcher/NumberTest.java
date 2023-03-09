@@ -30,25 +30,25 @@ public class NumberTest {
     }
 
     @Test
-    public void test_number_case_1() {
+    public void test_number_1() {
         BigDecimal result = parser().parseSingle("1250");
         Assertions.assertEquals(BigDecimal.valueOf(1250), result);
     }
 
     @Test
-    public void test_number_case_2() {
+    public void test_number_2() {
         BigDecimal result = parser().parseSingle("-241");
         Assertions.assertEquals(BigDecimal.valueOf(-241), result);
     }
 
     @Test
-    public void test_number_case_3() {
+    public void test_number_3() {
         BigDecimal result = parser().parseSingle("-241.25");
         Assertions.assertEquals(BigDecimal.valueOf(-241.25), result);
     }
 
     @Test
-    public void test_number_case_4() {
+    public void test_number_4() {
         BigDecimal result = parser().parseSingle("0141.04");
         Assertions.assertEquals(BigDecimal.valueOf(141.04), result);
     }
