@@ -9,9 +9,9 @@ import com.joutvhu.expansy.match.consumer.StopPoint;
 import java.util.function.Function;
 
 public class BoolFunctionMatcher<E> extends Matcher<E> {
-    private Function<String, Boolean> checker;
-    private Integer minLength;
-    private Integer maxLength;
+    private final Function<String, Boolean> checker;
+    private final Integer minLength;
+    private final Integer maxLength;
 
     public BoolFunctionMatcher(Definer<E> parent, Function<String, Boolean> checker) {
         this(parent, checker, 1, null);

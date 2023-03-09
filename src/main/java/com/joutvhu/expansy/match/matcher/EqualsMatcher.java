@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class EqualsMatcher<E> extends Matcher<E> {
-    private boolean ignoreCase;
-    private List<String> values;
+    private final boolean ignoreCase;
+    private final List<String> values;
 
     public EqualsMatcher(Definer<E> parent, String value) {
         this(parent, value, false);

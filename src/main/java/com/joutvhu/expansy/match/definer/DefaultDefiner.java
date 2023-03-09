@@ -12,6 +12,7 @@ import com.joutvhu.expansy.match.matcher.NumericMatcher;
 import com.joutvhu.expansy.match.matcher.QuoteMatcher;
 import com.joutvhu.expansy.match.matcher.RegexMatcher;
 import com.joutvhu.expansy.match.matcher.RegisteredMatcher;
+import com.joutvhu.expansy.match.matcher.SizeMatcher;
 import com.joutvhu.expansy.match.matcher.UnregisteredMatcher;
 import com.joutvhu.expansy.match.matcher.WordMatcher;
 import com.joutvhu.expansy.match.type.MatchFunction;
@@ -90,6 +91,12 @@ public class DefaultDefiner<E> implements Definer<E> {
         BetweenDefiner<E, DefaultDefiner<E>> definer = new BetweenDefiner<>(this, minRepetitions, maxRepetitions);
         matchers.add(definer.matcher());
         return definer;
+    }
+
+    @Override
+    public Definer<E> size(int length) {
+        matchers.add(new SizeMatcher<>(this, length));
+        return this;
     }
 
     @Override

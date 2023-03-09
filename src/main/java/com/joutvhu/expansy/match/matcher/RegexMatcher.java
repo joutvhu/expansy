@@ -9,9 +9,9 @@ import com.joutvhu.expansy.match.consumer.StopPoint;
 import java.util.regex.Pattern;
 
 public class RegexMatcher<E> extends Matcher<E> {
-    private Pattern pattern;
-    private Integer minLength;
-    private Integer maxLength;
+    private final Pattern pattern;
+    private final Integer minLength;
+    private final Integer maxLength;
 
     public RegexMatcher(Definer<E> parent, String regex) {
         this(parent, regex, 0, 1, null);

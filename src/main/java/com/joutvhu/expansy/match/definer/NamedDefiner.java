@@ -76,6 +76,12 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
+    public T size(int length) {
+        this.dub(parent.size(length));
+        return parent;
+    }
+
+    @Override
     public T space() {
         this.dub(parent.space());
         return parent;

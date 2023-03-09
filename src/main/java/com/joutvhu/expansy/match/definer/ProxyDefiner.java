@@ -83,6 +83,12 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
+    public T size(int length) {
+        container.size(length);
+        return master;
+    }
+
+    @Override
     public T space() {
         container.space();
         return master;

@@ -25,6 +25,8 @@ public interface Matches<E, T extends Definer<E>> {
 
     BetweenDefiner<E, ?> between(int minRepetitions, Integer maxRepetitions);
 
+    T size(int length);
+
     /**
      * Matches any space character
      */

@@ -9,24 +9,24 @@ import com.joutvhu.expansy.util.ArrayUtils;
 import com.joutvhu.expansy.util.Joiner;
 
 public class CharacterMatcher<E> extends Matcher<E> {
-    public static char[] WHITESPACE = new char[]{
+    public static final char[] WHITESPACE = new char[]{
             ' ', '\t', '\n'
     };
-    public static char[] DIGIT = new char[]{
+    public static final char[] DIGIT = new char[]{
             '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
-    public static char[] LOWERCASE = new char[]{
+    public static final char[] LOWERCASE = new char[]{
             'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'
     };
-    public static char[] UPPERCASE = new char[]{
+    public static final char[] UPPERCASE = new char[]{
             'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
     };
-    public static char[] ALPHABET = ArrayUtils.addAll(LOWERCASE, UPPERCASE);
-    public static char[] ALPHANUMERIC = ArrayUtils.addAll(ALPHABET, DIGIT);
+    public static final char[] ALPHABET = ArrayUtils.addAll(LOWERCASE, UPPERCASE);
+    public static final char[] ALPHANUMERIC = ArrayUtils.addAll(ALPHABET, DIGIT);
 
-    private char[] characters;
-    private Integer minLength;
-    private Integer maxLength;
+    private final char[] characters;
+    private final Integer minLength;
+    private final Integer maxLength;
 
     public CharacterMatcher(Definer<E> parent, char character, Integer length) {
         this(parent, new char[]{character}, length, length);

@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class RegisteredMatcher<E> extends ElementMatcher<E> {
-    private List<String> names;
+    private final List<String> names;
 
     public RegisteredMatcher(Definer<E> parent) {
         super(parent);

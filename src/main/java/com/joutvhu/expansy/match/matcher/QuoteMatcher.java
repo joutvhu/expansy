@@ -7,7 +7,7 @@ import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
 
 public class QuoteMatcher<E> extends Matcher<E> {
-    private char[] types;
+    private final char[] types;
 
     public QuoteMatcher(Definer<E> parent) {
         this(parent, '"', '\'');

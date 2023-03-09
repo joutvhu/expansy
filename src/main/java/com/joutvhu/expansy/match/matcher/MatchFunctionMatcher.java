@@ -7,7 +7,7 @@ import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.type.MatchFunction;
 
 public class MatchFunctionMatcher<E> extends Matcher<E> {
-    private MatchFunction<E> checker;
+    private final MatchFunction<E> checker;
 
     public MatchFunctionMatcher(Definer<E> parent, MatchFunction<E> checker) {
         super(parent);

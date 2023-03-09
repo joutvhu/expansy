@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UnregisteredMatcher<E> extends ElementMatcher<E> {
-    private List<Element<E>> elements;
+    private final List<Element<E>> elements;
 
     public UnregisteredMatcher(Definer<E> parent, Element<E> element) {
         super(parent);

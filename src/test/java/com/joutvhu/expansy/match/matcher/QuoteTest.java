@@ -52,21 +52,45 @@ public class QuoteTest {
 
     @Test
     public void test_quote_3() {
-        String result = Expansy.<String>instance()
-                .register(new Element<>() {
-                    @Override
-                    public void define(Definer<String> definer) {
-                        definer
-                                .quote();
-                    }
+        Assertions.assertThrows(Exception.class, () -> {
+            Expansy.<String>instance()
+                    .register(new Element<>() {
+                        @Override
+                        public void define(Definer<String> definer) {
+                            definer
+                                    .name("value")
+                                    .quote('\'');
+                        }
 
-                    @Override
-                    public String render(Node<String> node) {
-                        return "value:" + node.getNode("value").getString("quote");
-                    }
-                })
-                .selectAll()
-                .parseSingle("'abc123'");
-        Assertions.assertEquals("value:abc123", result);
+                        @Override
+                        public String render(Node<String> node) {
+                            return "value:" + node.getNode("value").getString("quote");
+                        }
+                    })
+                    .selectAll()
+                    .parseSingle("'abc123");
+        });
+    }
+
+    @Test
+    public void test_quote_4() {
+        Assertions.assertThrows(Exception.class, () -> {
+            Expansy.<String>instance()
+                    .register(new Element<>() {
+                        @Override
+                        public void define(Definer<String> definer) {
+                            definer
+                                    .name("value")
+                                    .quote('\'');
+                        }
+
+                        @Override
+                        public String render(Node<String> node) {
+                            return "value:" + node.getNode("value").getString("quote");
+                        }
+                    })
+                    .selectAll()
+                    .parseSingle("abc123'");
+        });
     }
 }

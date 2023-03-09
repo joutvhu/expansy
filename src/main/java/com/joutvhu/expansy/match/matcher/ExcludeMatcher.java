@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ExcludeMatcher<E> extends ElementMatcher<E> {
-    private List<String> names;
+    private final List<String> names;
 
     public ExcludeMatcher(Definer<E> parent, String element) {
         super(parent);
