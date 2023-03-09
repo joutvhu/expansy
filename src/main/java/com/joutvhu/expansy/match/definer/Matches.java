@@ -118,7 +118,7 @@ public interface Matches<E, T extends Definer<E>> {
     T numeric();
 
     /**
-     * Matches any word character (alphanumeric & underscore).
+     * Matches a word (any alphanumeric or underscore).
      */
     T word();
 
