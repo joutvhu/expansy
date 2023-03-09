@@ -56,29 +56,100 @@ Each element need to implement `define` and `render` methods.
 
 ## Match functions
 
-- `size` matches a string of characters of the specified length.
-- `character` matches specified characters.
-- `space` matches space character.
-- `whitespace` matches any whitespace character (spaces, tabs, line breaks)
-- `digit` matches any digit character (0-9).
-- `lowercase` matches any lowercase character.
-- `uppercase` matches any uppercase character.
-- `alphabet` matches any alphabet character.
-- `alphanumeric` matches any alphanumeric character.
-- `numeric` matches a numeric.
-- `word` matches a word (any alphanumeric or underscore).
-- `quote` matches a quote.
-- `equals` matches the specified strings.
-- `equalsIgnoreCase` matches the specified strings but ignore case.
-- `pattern` matches a specified pattern.
-- `check` use a method to match.
-- `element` matches the provided elements.
-- `elements` matches all registered elements.
-- `include` matches the listed elements.
-- `exclude` matches registered elements except those listed.
-- `maybe` to define a matcher group that may or may not appear.
-- `or` could match with a matcher group in the matcher groups.
-- `loop` to define a matcher group it is repeatable.
-- `between` to define a matcher group it can repeat and be interspersed by another matcher group.
+#### `size`
+
+Used to match a string of characters of the specified length.
+
+#### `character`
+
+Used to match specified characters.
+
+#### `space`
+
+Used to match space character.
+
+#### `whitespace`
+
+Used to match any whitespace character (spaces, tabs, line breaks).
+
+#### `digit`
+
+Used to match any digit character (0-9).
+
+#### `lowercase`
+
+Used to match any lowercase character.
+
+#### `uppercase`
+
+Used to match any uppercase character.
+
+#### `alphabet`
+
+Used to match any alphabet character.
+
+#### `alphanumeric`
+
+Used to match any alphanumeric character.
+
+#### `numeric`
+
+Used to match a numeric.
+
+#### `word`
+
+Used to match a word (any alphanumeric or underscore).
+
+#### `quote`
+
+Used to match a quote.
+
+#### `equals`
+
+Used to match the specified strings.
+
+#### `equalsIgnoreCase`
+
+Used to match the specified strings but ignore case.
+
+#### `pattern`
+
+Used to match a specified pattern.
+
+#### `check`
+
+Use a method to match.
+
+#### `element`
+
+Used to match the provided elements.
+
+#### `elements`
+
+Used to match all registered elements.
+
+#### `include`
+
+Used to match the listed elements.
+
+#### `exclude`
+
+Used to match registered elements except those listed.
+
+#### `maybe`
+
+Used to define a matcher group that may or may not appear.
+
+#### `or`
+
+Could match with a group in the matcher groups.
+
+#### `loop`
+
+Used to define a matcher group it is repeatable.
+
+#### `between`
+
+Used to define a matcher group it can repeat and be interspersed by another matcher group.
 
 ## Render
