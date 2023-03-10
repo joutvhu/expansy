@@ -302,9 +302,12 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                 StopReason<E> newErrorReason = StopReason.or(errorReason, reason);
                 if (newErrorReason != errorReason) {
                     errorReason = newErrorReason;
-                    String message = StringUtils.isNotBlank(errorReason.getMessage()) ? errorReason.getMessage() :
-                            MessageFormat.format("Unable to parse \"{0}\".", errorReason.getContent());
-                    error = ExpansyException.or(error, new MatchException(message, errorReason.getPosition(), errorReason.getContent()));
+                    if (error == null || !(error instanceof MatchException) ||
+                            ((MatchException) error).getIndex() < errorReason.getPosition()) {
+                        String message = StringUtils.isNotBlank(errorReason.getMessage()) ? errorReason.getMessage() :
+                                MessageFormat.format("Unable to parse \"{0}\".", errorReason.getContent());
+                        error = new MatchException(message, errorReason.getPosition(), errorReason.getContent());
+                    }
                 }
                 if (consumer == null) {
                     throw error;
