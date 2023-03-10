@@ -33,19 +33,14 @@ public class ExpansyParser<E> {
         return state.getAnalyser();
     }
 
-    protected Analyser<E> analyser(String value) {
-        Source source = new StringSource(value);
-        return analyser(source);
-    }
-
     public List<Branch<E>> analysis(Source source) {
         Analyser<E> analyser = analyser(source);
         return analyser.analyse(elements);
     }
 
     public List<Branch<E>> analysis(String value) {
-        Analyser<E> analyser = analyser(value);
-        return analyser.analyse(elements);
+        Source source = new StringSource(value);
+        return analysis(source);
     }
 
     public E parseSingle(Source source) {
