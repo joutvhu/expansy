@@ -8,17 +8,17 @@ public final class StopReason<E> {
     private final String message;
     private final Integer position;
     private final String content;
-    private final List<TrackPoints<E>> pointBranches;
+    private final List<TrackPoints<E>> cases;
 
-    StopReason(List<?> pointBranches, String message, Integer position, String content) {
+    StopReason(List<?> cases, String message, Integer position, String content) {
         this.message = message;
-        this.pointBranches = (List<TrackPoints<E>>) pointBranches;
+        this.cases = (List<TrackPoints<E>>) cases;
         this.position = position;
         this.content = content;
     }
 
     public boolean isSuccess() {
-        return pointBranches != null && !pointBranches.isEmpty();
+        return cases != null && !cases.isEmpty();
     }
 
     public String getMessage() {
@@ -34,19 +34,19 @@ public final class StopReason<E> {
     }
 
     public boolean isSingle() {
-        return pointBranches != null && pointBranches.size() == 1;
+        return cases != null && cases.size() == 1;
     }
 
     public TrackPoints<E> getTrackPoints() {
-        return pointBranches == null || pointBranches.isEmpty() ? null : pointBranches.get(0);
+        return cases == null || cases.isEmpty() ? null : cases.get(0);
     }
 
-    public List<TrackPoints<E>> getPointBranches() {
-        return pointBranches;
+    public List<TrackPoints<E>> getCases() {
+        return cases;
     }
 
     public void setMatcher(Matcher<E> matcher) {
-        for (TrackPoints<E> trackPoints : pointBranches) {
+        for (TrackPoints<E> trackPoints : cases) {
             trackPoints.setMatcher(matcher);
         }
     }
@@ -55,7 +55,7 @@ public final class StopReason<E> {
         StopReason<E> reason = null;
         try {
             matcher.match(consumer);
-            reason = new StopReason<>(consumer.pointBranches(), null,
+            reason = new StopReason<>(consumer.cases(), null,
                     consumer.current().getIndex(), consumer.current().getValue());
         } catch (StopReasonThrowable e) {
             reason = (StopReason<E>) e.reason();

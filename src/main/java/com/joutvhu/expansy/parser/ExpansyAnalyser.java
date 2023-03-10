@@ -176,17 +176,17 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
     }
 
     @Override
-    public List<Node<E>> analyseMatchers(Collection<Matcher<E>> matchers, Branch<E> branch, List<TrackPoints<E>> trackPoints) {
+    public List<Node<E>> analyseMatchers(Collection<Matcher<E>> matchers, Branch<E> branch, List<TrackPoints<E>> cases) {
         Matcher<E>[] array = matchers.toArray(new Matcher[0]);
         List<Node<E>> result = new ArrayList<>();
         ExpansyException error = null;
-        for (TrackPoints<E> points : trackPoints) {
-            Node<E> node = points.lastNode();
+        for (TrackPoints<E> trackPoints : cases) {
+            Node<E> node = trackPoints.lastNode();
             if (node != null) {
                 try {
                     Node<E> cloneNode = node.clone();
                     List<Node<E>> children = analyseMatchers(array, 0, cloneNode.getEnd(), null, branch, cloneNode);
-                    children.forEach(eNode -> eNode.setTrackPoints(points));
+                    children.forEach(eNode -> eNode.setTrackPoints(trackPoints));
                     result.addAll(children);
                 } catch (Exception e) {
                     error = ExpansyException.or(error, e);
@@ -251,10 +251,10 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         return analyseMatchers(matchers, 0, node.getEnd(), null, branch, node.clone());
     }
 
-    private List<Node<E>> analyseMatchers(Matcher<E>[] matchers, int start, List<TrackPoints<E>> pointBranches, Branch<E> branch, Node<E> node) {
+    private List<Node<E>> analyseMatchers(Matcher<E>[] matchers, int start, List<TrackPoints<E>> cases, Branch<E> branch, Node<E> node) {
         List<Node<E>> result = new ArrayList<>();
         ExpansyException error = null;
-        for (TrackPoints<E> trackPoints : pointBranches) {
+        for (TrackPoints<E> trackPoints : cases) {
             try {
                 List<Node<E>> nodes = analyseMatchers(matchers, start, null, trackPoints, branch, node.clone());
                 if (nodes != null) result.addAll(nodes);
@@ -287,7 +287,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                     consumer = newConsumer(nodes, reason, branch);
                 } else {
                     try {
-                        return analyseMatchers(matchers, i, reason.getPointBranches(), branch, mergeNode(node, nodes));
+                        return analyseMatchers(matchers, i, reason.getCases(), branch, mergeNode(node, nodes));
                     } catch (Exception e) {
                         if (nodes.isEmpty()) throw e;
                         consumer = newConsumer(nodes, branch);
@@ -340,11 +340,11 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
     }
 
     private TrackPoint<E> selectPoint(Deque<TrackPoints<E>> nodes, StopReason<E> reason) {
-        List<TrackPoints<E>> pointBranches = reason.getPointBranches();
-        if (pointBranches.isEmpty())
+        List<TrackPoints<E>> cases = reason.getCases();
+        if (cases.isEmpty())
             throw new MatchException(reason.getMessage(), reason.getPosition(), reason.getContent());
-        TrackPoints<E> points = pointBranches.get(0);
-        nodes.push(points);
+        TrackPoints<E> trackPoints = cases.get(0);
+        nodes.push(trackPoints);
         TrackPoint<E> point = selectPoint(nodes);
         if (point != null) {
             return point;

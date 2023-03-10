@@ -42,21 +42,21 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
             @Override
             public void match(Consumer<E> consumer) {
                 List<Matcher<E>> matchers = matchers();
-                List<TrackPoints<E>> trackPoints = new ArrayList<>();
-                TrackPoints<E> points = new TrackPoints<>();
-                trackPoints.add(points);
+                List<TrackPoints<E>> cases = new ArrayList<>();
+                TrackPoints<E> trackPoints = new TrackPoints<>();
+                cases.add(trackPoints);
 
                 List<Node<E>> nodes = new ArrayList<>();
                 Node<E> node = new Node<>(consumer.state());
                 node.setStart(consumer.offset());
                 node.setEnd(consumer.offset());
                 node.setValue("");
+                node.setTrackPoints(trackPoints);
                 nodes.add(node);
-                node.setTrackPoints(points);
 
                 if (minRepetitions != null && minRepetitions == 0) {
-                    points.push(new TrackPoint<>(node));
-                    consumer.setPointBranches(trackPoints);
+                    trackPoints.push(new TrackPoint<>(node));
+                    consumer.setCases(cases);
                 }
                 Analyser<E> analyser = consumer.state().getAnalyser();
                 for (int i = 0; true; i++) {
@@ -65,14 +65,14 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
                     try {
                         nodes = analyser.analyseMatchers(matchers, nodes, consumer.branch());
                         if (!nodes.isEmpty() && (minRepetitions == null || minRepetitions == 0 || minRepetitions <= i)) {
-                            trackPoints = new ArrayList<>();
+                            cases = new ArrayList<>();
                             for (Node<E> eNode : nodes) {
-                                points = eNode.getTrackPoints().clone();
-                                points.push(new TrackPoint<>(eNode));
-                                eNode.setTrackPoints(points);
-                                trackPoints.add(points);
+                                trackPoints = eNode.getTrackPoints().clone();
+                                trackPoints.push(new TrackPoint<>(eNode));
+                                eNode.setTrackPoints(trackPoints);
+                                cases.add(trackPoints);
                             }
-                            consumer.setPointBranches(trackPoints);
+                            consumer.setCases(cases);
                         }
                         if (maxRepetitions != null && maxRepetitions >= i)
                             consumer.close();

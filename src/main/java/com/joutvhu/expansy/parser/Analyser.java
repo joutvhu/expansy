@@ -34,7 +34,7 @@ public interface Analyser<E> {
 
     List<Node<E>> analyseMatchers(Collection<Matcher<E>> matchers, Node<E> node, Branch<E> branch);
 
-    List<Node<E>> analyseMatchers(Collection<Matcher<E>> matchers, Branch<E> branch, List<TrackPoints<E>> trackPoints);
+    List<Node<E>> analyseMatchers(Collection<Matcher<E>> matchers, Branch<E> branch, List<TrackPoints<E>> cases);
 
     List<Node<E>> analyseMatchers(Collection<Matcher<E>> matchers, Branch<E> branch, TrackPoints<E> trackPoints);
 

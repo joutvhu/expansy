@@ -17,7 +17,7 @@ public class Consumer<E> {
     protected final int offset;
     protected final ExpansyState<E> state;
     protected TrackPoints<E> trackPoints;
-    protected List<TrackPoints<E>> pointBranches;
+    protected List<TrackPoints<E>> cases;
     protected Branch<E> branch;
     protected StopPoint point;
 
@@ -36,7 +36,7 @@ public class Consumer<E> {
         this.branch = branch;
         this.point = new StopPoint("", offset);
         this.trackPoints = new TrackPoints<>();
-        this.pointBranches = new ArrayList<>();
+        this.cases = new ArrayList<>();
     }
 
     public Branch<E> branch() {
@@ -109,7 +109,7 @@ public class Consumer<E> {
     }
 
     public int branchesSize() {
-        return pointBranches.size();
+        return cases.size();
     }
 
     public void removeBefore(int position) {
@@ -140,49 +140,49 @@ public class Consumer<E> {
 
     public void fork() {
         if (!trackPoints.isEmpty()) {
-            pointBranches.add(trackPoints);
+            cases.add(trackPoints);
             trackPoints = new TrackPoints<>();
         }
     }
 
-    public void setPointBranches(List<TrackPoints<E>> pointBranches) {
-        this.pointBranches = pointBranches;
+    public void setCases(List<TrackPoints<E>> cases) {
+        this.cases = cases;
     }
 
-    List<TrackPoints<E>> pointBranches() {
+    List<TrackPoints<E>> cases() {
         if (!trackPoints.isEmpty())
-            pointBranches.add(trackPoints);
-        return pointBranches;
+            cases.add(trackPoints);
+        return cases;
     }
 
     private void forEach(java.util.function.Consumer<TrackPoints<E>> action) {
-        pointBranches.forEach(action);
+        cases.forEach(action);
         action.accept(trackPoints);
     }
 
     private void addForAll(List<Node<E>> nodes, Integer position) {
-        List<TrackPoints<E>> pointBranches = new ArrayList<>();
+        List<TrackPoints<E>> cases = new ArrayList<>();
         for (Node<E> node : nodes) {
-            List<TrackPoints<E>> branches = clonePointBranches();
-            for (TrackPoints<E> trackPoints : branches) {
+            List<TrackPoints<E>> cloneCases = cloneCases();
+            for (TrackPoints<E> trackPoints : cloneCases) {
                 if (position == null)
                     trackPoints.add(new TrackPoint<>(node));
                 else
                     trackPoints.add(position, new TrackPoint<>(node));
             }
-            pointBranches.addAll(branches);
+            cases.addAll(cloneCases);
         }
-        this.pointBranches = pointBranches;
+        this.cases = cases;
     }
 
-    private List<TrackPoints<E>> clonePointBranches() {
-        List<TrackPoints<E>> pointBranches = new ArrayList<>();
-        pointBranches.addAll(this.pointBranches);
+    private List<TrackPoints<E>> cloneCases() {
+        List<TrackPoints<E>> cases = new ArrayList<>();
+        cases.addAll(this.cases);
         if (!trackPoints.isEmpty())
-            pointBranches.add(trackPoints);
-        if (pointBranches.isEmpty())
-            pointBranches.add(new TrackPoints<>());
-        return pointBranches;
+            cases.add(trackPoints);
+        if (cases.isEmpty())
+            cases.add(new TrackPoints<>());
+        return cases;
     }
 
     /**
@@ -318,7 +318,7 @@ public class Consumer<E> {
     }
 
     public void close() {
-        throw new StopReasonThrowable(pointBranches(), null, point.getIndex(), point.getValue());
+        throw new StopReasonThrowable(cases(), null, point.getIndex(), point.getValue());
     }
 
     public void complete() {
@@ -328,11 +328,11 @@ public class Consumer<E> {
 
     public void error(String pattern, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
-        throw new StopReasonThrowable(pointBranches(), message, point.getIndex(), point.getValue());
+        throw new StopReasonThrowable(cases(), message, point.getIndex(), point.getValue());
     }
 
     public void errorAt(String pattern, Integer index, String content, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
-        throw new StopReasonThrowable(pointBranches(), message, index, content);
+        throw new StopReasonThrowable(cases(), message, index, content);
     }
 }
