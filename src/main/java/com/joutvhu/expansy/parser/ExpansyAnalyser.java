@@ -207,7 +207,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                 List<Node<E>> children = analyseMatchers(matchers, 0, cloneNode.getEnd(), null, branch, cloneNode);
                 TrackPoints<E> trackPoints = cloneNode.getTrackPoints();
                 if (trackPoints != null)
-                    result.forEach(eNode -> eNode.setTrackPoints(trackPoints));
+                    children.forEach(eNode -> eNode.setTrackPoints(trackPoints));
                 result.addAll(children);
             } catch (Exception e) {
                 error = ExpansyException.or(error, e);
