@@ -418,16 +418,46 @@ public void define(Definer<Object> definer) {
 Used to match a specified pattern.
 
 - `pattern(String regex)`
+```java
+public void define(Definer<Object> definer) {
+    definer.pattern("^-?[0-9]+(\\.[0-9]+)?$");
+}
+```
 
 - `pattern(String regex, int length)`
+```java
+public void define(Definer<Object> definer) {
+    definer.pattern("^-?[0-9]+(\\.[0-9]+)?$", 16);
+}
+```
 
 - `pattern(String regex, Integer minLength, Integer maxLength)`
+```java
+public void define(Definer<Object> definer) {
+    definer.pattern("^-?[0-9]+(\\.[0-9]+)?$", 12, 32);
+}
+```
 
 - `pattern(Pattern pattern)`
+```java
+public void define(Definer<Object> definer) {
+    definer.pattern(Pattern.compile("^-?[0-9]+(\\.[0-9]+)?$", 0));
+}
+```
 
 - `pattern(Pattern pattern, int length)`
+```java
+public void define(Definer<Object> definer) {
+    definer.pattern(Pattern.compile("^-?[0-9]+(\\.[0-9]+)?$", 0), 16);
+}
+```
 
 - `pattern(Pattern pattern, Integer minLength, Integer maxLength)`
+```java
+public void define(Definer<Object> definer) {
+    definer.pattern(Pattern.compile("^-?[0-9]+(\\.[0-9]+)?$", 0), 12, 32);
+}
+```
 
 #### `match`
 
@@ -455,10 +485,25 @@ Use a method to match.
 Used to match the provided elements.
 
 - `element(Element<E> element)`
+```java
+public void define(Definer<Object> definer) {
+    definer.element(new NumberElement());
+}
+```
 
 - `element(Element<E>... elements)`
+```java
+public void define(Definer<Object> definer) {
+    definer.element(new MultiplyElement(), new DivisionElement());
+}
+```
 
 - `element(List<Element<E>> elements)`
+```java
+public void define(Definer<Object> definer) {
+    definer.element(Arrays.asList(new MultiplyElement(), new DivisionElement()));
+}
+```
 
 #### `elements`
 
@@ -529,7 +574,7 @@ Syntax:
 ```
 definer
     .maybe()
-    ...
+    ... // content may or may not be appear
     .end()
 ```
 
@@ -542,11 +587,11 @@ Syntax:
 ```
 definer
     .or()
-    ...
+    ... // case 1
     .or()
-    ...
+    ... // case 2
     .or()
-    ...
+    ... // case 3
     .end()
 ```
 
@@ -558,8 +603,33 @@ Syntax:
 ```
 definer
     .loop()
-    ...
+    ... // repeatable content
     .end()
+```
+
+
+```java
+public class VariableElement implements Element<Object> {
+    @Override
+    public void define(Definer<Object> definer) {
+        definer
+            .equals("$")
+            .name("name")
+            .word()
+            .loop()
+                .or()
+                    .character('.')
+                    .name("child")
+                    .word()
+                .or()
+                    .equals("[")
+                    .name("child")
+                    .quote('\'')
+                    .equals("]")
+                .end()
+            .end();
+    }
+}
 ```
 
 #### `between`
@@ -570,9 +640,9 @@ Syntax:
 ```
 definer
     .between()
-    ... // content to separate.
+    ... // content to separate
     .is()
-    ... // define separator here.
+    ... // define separator here
     .end()
 ```
 
@@ -582,19 +652,19 @@ public class FunctionElement implements Element<BigDecimal> {
     @Override
     public void define(Definer<BigDecimal> definer) {
         definer
-                .equals("#")
-                .name("name")
-                .word()        // Function name
-                .equals("(")
-                .between()
+            .equals("#")
+            .name("name")
+            .word()        // Function name
+            .equals("(")
+            .between()
                 .spaces()
                 .name("param")
                 .elements()    // The parameter can be any element
                 .spaces()
-                .is()
+            .is()
                 .equals(",")   // There is a comma between the parameters
-                .end()
-                .equals(")");
+            .end()
+            .equals(")");
     }
 }
 ```
