@@ -28,10 +28,19 @@ public class ExpansyParser<E> {
         this.elements = elements == null || elements.isEmpty() ? register.elements() : register.get(elements);
     }
 
-    protected Analyser<E> analyser(String value) {
-        Source source = new StringSource(value);
+    protected Analyser<E> analyser(Source source) {
         ExpansyState<E> state = new ExpansyState<>(source, register);
         return state.getAnalyser();
+    }
+
+    protected Analyser<E> analyser(String value) {
+        Source source = new StringSource(value);
+        return analyser(source);
+    }
+
+    public List<Branch<E>> analysis(Source source) {
+        Analyser<E> analyser = analyser(source);
+        return analyser.analyse(elements);
     }
 
     public List<Branch<E>> analysis(String value) {
@@ -39,8 +48,8 @@ public class ExpansyParser<E> {
         return analyser.analyse(elements);
     }
 
-    public E parseSingle(String value) {
-        List<Branch<E>> branches = analysis(value);
+    public E parseSingle(Source source) {
+        List<Branch<E>> branches = analysis(source);
         branches = selector.order(branches);
         for (Branch<E> branch : branches) {
             if (branch.size() == 1) {
@@ -51,9 +60,14 @@ public class ExpansyParser<E> {
         return null;
     }
 
-    public List<E> parse(String value) {
+    public E parseSingle(String value) {
+        Source source = new StringSource(value);
+        return parseSingle(source);
+    }
+
+    public List<E> parse(Source source) {
         List<E> results = new ArrayList<>();
-        List<Branch<E>> branches = analysis(value);
+        List<Branch<E>> branches = analysis(source);
         Branch<E> branch = selector.select(branches);
         if (branch == null)
             return null;
@@ -62,5 +76,10 @@ public class ExpansyParser<E> {
             if (v != null) results.add(v);
         }
         return results;
+    }
+
+    public List<E> parse(String value) {
+        Source source = new StringSource(value);
+        return parse(source);
     }
 }
