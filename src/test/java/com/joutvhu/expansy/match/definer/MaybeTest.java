@@ -26,7 +26,7 @@ public class MaybeTest {
                         return "value:" + node.getString("value");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("vdvshr4358e_gaer");
         Assertions.assertEquals("value:vdvshr4358e_gaer", result);
     }
@@ -52,7 +52,7 @@ public class MaybeTest {
                         return "key:" + node.getString("key") + ";group:" + node.getString("group") + ";value:" + node.getString("value");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("a");
         Assertions.assertEquals("key:a;group:;value:null", result);
     }

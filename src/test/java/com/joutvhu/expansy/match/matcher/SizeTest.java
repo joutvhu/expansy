@@ -24,7 +24,7 @@ public class SizeTest {
                         return "value:" + node.getString("value");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("qwerty");
         Assertions.assertEquals("value:qwerty", result);
     }
@@ -46,7 +46,7 @@ public class SizeTest {
                             return "value:" + node.getString("value");
                         }
                     })
-                    .selectAll()
+                    .useAll()
                     .parseSingle("qwert");
         });
     }

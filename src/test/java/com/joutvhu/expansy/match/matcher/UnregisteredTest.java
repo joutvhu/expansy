@@ -36,7 +36,7 @@ public class UnregisteredTest {
                         return "value:" + node.getNode("value").render();
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("abc123");
         Assertions.assertEquals("value:xxx", result);
     }

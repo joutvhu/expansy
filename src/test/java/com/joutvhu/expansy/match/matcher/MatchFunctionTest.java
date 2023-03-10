@@ -31,7 +31,7 @@ public class MatchFunctionTest {
                         return "value:" + node.getString("value");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("abc");
         Assertions.assertEquals("value:abc", result);
     }
@@ -58,7 +58,7 @@ public class MatchFunctionTest {
                             return "value:" + node.getString("value");
                         }
                     })
-                    .selectAll()
+                    .useAll()
                     .parseSingle("wqfe");
         });
     }

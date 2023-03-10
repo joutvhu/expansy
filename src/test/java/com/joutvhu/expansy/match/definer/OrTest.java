@@ -29,7 +29,7 @@ public class OrTest {
                         return "value:" + node.getString("value");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("FGH");
         Assertions.assertEquals("value:FGH", result);
     }
@@ -55,7 +55,7 @@ public class OrTest {
                         return "value:" + node.getString("value");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("ftd");
         Assertions.assertEquals("value:ftd", result);
     }

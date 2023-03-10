@@ -24,7 +24,7 @@ public class QuoteTest {
                         return "value:" + node.getString("value");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("'abc123'");
         Assertions.assertEquals("value:'abc123'", result);
     }
@@ -45,7 +45,7 @@ public class QuoteTest {
                         return "value:" + node.getNode("value").getString("quote");
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("'abc123'");
         Assertions.assertEquals("value:abc123", result);
     }
@@ -67,7 +67,7 @@ public class QuoteTest {
                             return "value:" + node.getNode("value").getString("quote");
                         }
                     })
-                    .selectAll()
+                    .useAll()
                     .parseSingle("'abc123");
         });
     }
@@ -89,7 +89,7 @@ public class QuoteTest {
                             return "value:" + node.getNode("value").getString("quote");
                         }
                     })
-                    .selectAll()
+                    .useAll()
                     .parseSingle("abc123'");
         });
     }

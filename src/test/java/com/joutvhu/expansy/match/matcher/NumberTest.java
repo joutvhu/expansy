@@ -26,7 +26,7 @@ public class NumberTest {
                         return new BigDecimal(node.getString("value"));
                     }
                 })
-                .selectAll();
+                .useAll();
     }
 
     @Test

@@ -22,7 +22,7 @@ public class Expansy<E> {
         return new Expansy<>();
     }
 
-    public Expansy<E> setRegister(ElementRegister<E> register) {
+    public Expansy<E> register(ElementRegister<E> register) {
         if (register != null)
             this.register = register;
         return this;
@@ -33,25 +33,25 @@ public class Expansy<E> {
         return this;
     }
 
-    public Expansy<E> setSelector(BranchSelector selector) {
+    public Expansy<E> selector(BranchSelector selector) {
         if (selector != null)
             this.selector = selector;
         return this;
     }
 
-    public ExpansyParser<E> selectAll() {
+    public ExpansyParser<E> useAll() {
         return new ExpansyParser<>(register, selector, null);
     }
 
-    public ExpansyParser<E> select(String name) {
+    public ExpansyParser<E> use(String name) {
         return new ExpansyParser<>(register, selector, Arrays.asList(name));
     }
 
-    public ExpansyParser<E> select(String... names) {
+    public ExpansyParser<E> use(String... names) {
         return new ExpansyParser<>(register, selector, Arrays.asList(names));
     }
 
-    public ExpansyParser<E> select(List<String> names) {
+    public ExpansyParser<E> use(List<String> names) {
         return new ExpansyParser<>(register, selector, names);
     }
 }

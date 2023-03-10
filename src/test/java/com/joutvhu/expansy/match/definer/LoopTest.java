@@ -29,7 +29,7 @@ public class LoopTest {
                                 ";code:" + String.join(",", node.getAllString("code"));
                     }
                 })
-                .selectAll()
+                .useAll()
                 .parseSingle("55A15c15r005r");
         Assertions.assertEquals("index:55,15,15,005;code:A,c,r,r", result);
     }
