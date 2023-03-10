@@ -42,31 +42,17 @@ public class Branch<E> extends ArrayList<Node<E>> {
         add(node);
     }
 
-    /**
-     * Highlight an Element being checked at the specified position.
-     */
-    public void start(int index, Element<E> element) {
+    public boolean start(int index, Element<E> element) {
         Set<Element<E>> elements = checking.get(index);
         if (elements == null) {
             elements = new HashSet<>();
             checking.put(index, elements);
-        }
-        elements.add(element);
-    }
-
-    /**
-     * Checks if an element is checking at the specified position.
-     */
-    public boolean started(int index, Element<E> element) {
-        Set<Element<E>> elements = checking.get(index);
-        if (elements == null)
+        } else if (elements.contains(element))
             return false;
-        return elements.contains(element);
+        elements.add(element);
+        return true;
     }
 
-    /**
-     *
-     */
     public void complete(int index, Element<E> element) {
         Set<Element<E>> elements = checking.get(index);
         if (elements != null)

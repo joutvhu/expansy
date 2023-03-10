@@ -44,10 +44,8 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         List<Branch<E>> branches = new ArrayList<>();
         ExpansyException error = null;
         for (Element<E> element : elements) {
-            if (branch == null || !branch.started(offset, element)) {
+            if (branch == null || branch.start(offset, element)) {
                 try {
-                    if (branch != null)
-                        branch.start(offset, element);
                     List<Node<E>> nodes = analyseElement(element, offset, branch);
                     for (Node<E> node : nodes) {
                         if (!node.isEmpty()) {
@@ -114,10 +112,8 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         ExpansyException error = null;
         if (offset < state.getLength()) {
             for (Element<E> element : elements) {
-                if (branch == null || !branch.started(offset, element)) {
+                if (branch == null || branch.start(offset, element)) {
                     try {
-                        if (branch != null)
-                            branch.start(offset, element);
                         List<Node<E>> nodes = analyseElement(element, offset, branch);
                         nodes.forEach(node -> {
                             if (!node.isEmpty())
