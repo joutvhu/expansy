@@ -25,10 +25,13 @@ public interface Matches<E, T extends Definer<E>> {
 
     BetweenDefiner<E, ?> between(int minRepetitions, Integer maxRepetitions);
 
+    /**
+     * Matches a string of characters of the specified length
+     */
     T size(int length);
 
     /**
-     * Matches any characters provided.
+     * Matches any characters provided
      */
     T character(char... characters);
 
@@ -61,7 +64,7 @@ public interface Matches<E, T extends Definer<E>> {
     T whitespaces(Integer minLength, Integer maxLength);
 
     /**
-     * Matches any digit character (0-9). Equivalent to [0-9].
+     * Matches any digit character (0-9).
      */
     T digit();
 
@@ -115,6 +118,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T alphanumerics(Integer minLength, Integer maxLength);
 
+    /**
+     * Matches a numeric.
+     */
     T numeric();
 
     /**
@@ -122,22 +128,34 @@ public interface Matches<E, T extends Definer<E>> {
      */
     T word();
 
+    /**
+     * Matches a quote.
+     */
     T quote();
 
     T quote(char... types);
 
+    /**
+     * Matches the specified strings.
+     */
     T equals(String value);
 
     T equals(String... values);
 
     T equals(List<String> values);
 
+    /**
+     * Matches the specified strings but ignore case.
+     */
     T equalsIgnoreCase(String value);
 
     T equalsIgnoreCase(String... values);
 
     T equalsIgnoreCase(List<String> values);
 
+    /**
+     * Matches the specified pattern.
+     */
     T pattern(String regex);
 
     T pattern(String regex, int length);
@@ -150,14 +168,23 @@ public interface Matches<E, T extends Definer<E>> {
 
     T pattern(Pattern pattern, Integer minLength, Integer maxLength);
 
+    /**
+     * Use a matcher to match
+     */
     T match(MatchFunction<E> matcher);
 
+    /**
+     * Use a method to match
+     */
     T check(Function<String, Boolean> checker);
 
     T check(Function<String, Boolean> checker, int length);
 
     T check(Function<String, Boolean> checker, Integer minLength, Integer maxLength);
 
+    /**
+     * Matches the provided elements
+     */
     T element(Element<E> element);
 
     T element(Element<E>... elements);
@@ -170,7 +197,7 @@ public interface Matches<E, T extends Definer<E>> {
     T elements();
 
     /**
-     * Matches all registered elements with the specified name
+     * Matches registered elements with the specified name
      */
     T include(String element);
 
@@ -178,6 +205,9 @@ public interface Matches<E, T extends Definer<E>> {
 
     T include(List<String> elements);
 
+    /**
+     * Matches registered elements except those listed
+     */
     T exclude(String element);
 
     T exclude(String... elements);

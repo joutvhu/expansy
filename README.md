@@ -71,28 +71,28 @@ public void define(Definer<Object> definer) {
 
 Used to match specified characters.
 
-- `character(char... characters)` 
+- `character(char... characters)` match one character contained in the `characters` array.
 ```java
 public void define(Definer<Object> definer) {
     definer.character('a', 'b');
 }
 ```
 
-- `characters(char... characters)`
+- `characters(char... characters)` match multiple characters contained in the `characters` array.
 ```java
 public void define(Definer<Object> definer) {
     definer.characters('1', '2', '3');
 }
 ```
 
-- `characters(char[] characters, int length)`
+- `characters(char[] characters, int length)` match `{length}` characters, each of which must be contained in the `characters` array.
 ```java
 public void define(Definer<Object> definer) {
     definer.characters(new char[]{'1', '2', '3'), 10);
 }
 ```
 
-- `characters(char[] characters, Integer minLength, Integer maxLength)`
+- `characters(char[] characters, Integer minLength, Integer maxLength)` match a minimum of `{minLength}` characters and a maximum of `{maxLength}` characters, each of which must be contained in the `characters` array.
 ```java
 public void define(Definer<Object> definer) {
     definer.characters(new char[]{'1', '2', '3'), 10, 20);
@@ -103,28 +103,28 @@ public void define(Definer<Object> definer) {
 
 Used to match space character.
 
-- `space()`
+- `space()` match one space character.
 ```java
 public void define(Definer<Object> definer) {
     definer.space();
 }
 ```
 
-- `spaces()`
+- `spaces()` match multiple space characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.spaces();
 }
 ```
 
-- `spaces(int length)`
+- `spaces(int length)` match `{length}` space characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.spaces(10);
 }
 ```
 
-- `spaces(Integer minLength, Integer maxLength)`
+- `spaces(Integer minLength, Integer maxLength)` match a minimum of `{minLength}` space characters and a maximum of `{maxLength}` space characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.spaces(10, 20);
@@ -135,28 +135,28 @@ public void define(Definer<Object> definer) {
 
 Used to match any whitespace character (spaces, tabs, line breaks).
 
-- `whitespace()`
+- `whitespace()` match one whitespace character.
 ```java
 public void define(Definer<Object> definer) {
     definer.whitespace();
 }
 ```
 
-- `whitespaces()`
+- `whitespaces()` match multiple whitespace characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.whitespaces();
 }
 ```
 
-- `whitespaces(int length)`
+- `whitespaces(int length)` match `{length}` whitespace characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.whitespaces(10);
 }
 ```
 
-- `whitespaces(Integer minLength, Integer maxLength)`
+- `whitespaces(Integer minLength, Integer maxLength)` match a minimum of `{minLength}` whitespace characters and a maximum of `{maxLength}` whitespace characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.whitespaces(10, 20);
@@ -167,28 +167,28 @@ public void define(Definer<Object> definer) {
 
 Used to match any digit character (0-9).
 
-- `digit()`
+- `digit()` match one digit character.
 ```java
 public void define(Definer<Object> definer) {
     definer.digit();
 }
 ```
 
-- `digits()`
+- `digits()` match multiple digit characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.digits();
 }
 ```
 
-- `digits(int length)`
+- `digits(int length)` match `{length}` digit characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.digits(10);
 }
 ```
 
-- `digits(Integer minLength, Integer maxLength)`
+- `digits(Integer minLength, Integer maxLength)` match a minimum of `{minLength}` digit characters and a maximum of `{maxLength}` digit characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.digits(10, 20);
@@ -199,28 +199,28 @@ public void define(Definer<Object> definer) {
 
 Used to match any lowercase character.
 
-- `lowercase()`
+- `lowercase()` match one lowercase character.
 ```java
 public void define(Definer<Object> definer) {
     definer.lowercase();
 }
 ```
 
-- `lowercases()`
+- `lowercases()` match multiple lowercase characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.lowercases();
 }
 ```
 
-- `lowercases(int length)`
+- `lowercases(int length)` match `{length}` lowercase characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.lowercases(10);
 }
 ```
 
-- `lowercases(Integer minLength, Integer maxLength)`
+- `lowercases(Integer minLength, Integer maxLength)` match a minimum of `{minLength}` lowercase characters and a maximum of `{maxLength}` lowercase characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.lowercases(10, 20);
@@ -231,28 +231,28 @@ public void define(Definer<Object> definer) {
 
 Used to match any uppercase character.
 
-- `uppercase()`
+- `uppercase()` match one uppercase character.
 ```java
 public void define(Definer<Object> definer) {
     definer.uppercase();
 }
 ```
 
-- `uppercases()`
+- `uppercases()` match multiple uppercase characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.uppercases();
 }
 ```
 
-- `uppercases(int length)`
+- `uppercases(int length)` match `{length}` uppercase characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.uppercases(10);
 }
 ```
 
-- `uppercases(Integer minLength, Integer maxLength)`
+- `uppercases(Integer minLength, Integer maxLength)` match a minimum of `{minLength}` uppercase characters and a maximum of `{maxLength}` uppercase characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.uppercases(10, 20);
@@ -263,28 +263,28 @@ public void define(Definer<Object> definer) {
 
 Used to match any alphabet character.
 
-- `alphabet()`
+- `alphabet()` match one alphabet character.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphabet();
 }
 ```
 
-- `alphabets()`
+- `alphabets()` match multiple alphabet characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphabets();
 }
 ```
 
-- `alphabets(int length)`
+- `alphabets(int length)` match `{length}` alphabet characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphabets(10);
 }
 ```
 
-- `alphabets(Integer minLength, Integer maxLength)`
+- `alphabets(Integer minLength, Integer maxLength)` match a minimum of `{minLength}` alphabet characters and a maximum of `{maxLength}` alphabet characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphabets(10, 20);
@@ -295,28 +295,28 @@ public void define(Definer<Object> definer) {
 
 Used to match any alphanumeric character.
 
-- `alphanumeric()`
+- `alphanumeric()` match one alphanumeric character.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphanumeric();
 }
 ```
 
-- `alphanumerics()`
+- `alphanumerics()` match multiple alphanumeric characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphanumerics();
 }
 ```
 
-- `alphanumerics(int length)`
+- `alphanumerics(int length)` match `{length}` alphanumeric characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphanumerics(10);
 }
 ```
 
-- `alphanumerics(Integer minLength, Integer maxLength)`
+- `alphanumerics(Integer minLength, Integer maxLength)` match a minimum of `{minLength}` alphanumeric characters and a maximum of `{maxLength}` alphanumeric characters.
 ```java
 public void define(Definer<Object> definer) {
     definer.alphanumerics(10, 20);
