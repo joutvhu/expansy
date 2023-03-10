@@ -56,7 +56,7 @@ Each element need to implement `define` and `render` methods.
 
 ## Match functions
 
-#### `size`
+### `size`
 
 Used to match a string of characters of the specified length.
 
@@ -67,7 +67,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `character`
+### `character`
 
 Used to match specified characters.
 
@@ -99,7 +99,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `space`
+### `space`
 
 Used to match space character.
 
@@ -131,7 +131,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `whitespace`
+### `whitespace`
 
 Used to match any whitespace character (spaces, tabs, line breaks).
 
@@ -163,7 +163,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `digit`
+### `digit`
 
 Used to match any digit character (0-9).
 
@@ -195,7 +195,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `lowercase`
+### `lowercase`
 
 Used to match any lowercase character.
 
@@ -227,7 +227,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `uppercase`
+### `uppercase`
 
 Used to match any uppercase character.
 
@@ -259,7 +259,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `alphabet`
+### `alphabet`
 
 Used to match any alphabet character.
 
@@ -291,7 +291,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `alphanumeric`
+### `alphanumeric`
 
 Used to match any alphanumeric character.
 
@@ -323,7 +323,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `numeric`
+### `numeric`
 
 Used to match a numeric.
 
@@ -334,7 +334,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `word`
+### `word`
 
 Used to match a word (any alphanumeric or underscore).
 
@@ -345,7 +345,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `quote`
+### `quote`
 
 Used to match a quote.
 
@@ -363,7 +363,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `equals`
+### `equals`
 
 Used to match the specified strings.
 
@@ -388,7 +388,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `equalsIgnoreCase`
+### `equalsIgnoreCase`
 
 Used to match the specified strings but ignore case.
 
@@ -413,7 +413,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `pattern`
+### `pattern`
 
 Used to match a specified pattern.
 
@@ -459,7 +459,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `match`
+### `match`
 
 Use a matcher to match.
 
@@ -470,7 +470,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `check`
+### `check`
 
 Use a method to match.
 
@@ -480,7 +480,7 @@ Use a method to match.
 
 - `check(Function<String, Boolean> checker, Integer minLength, Integer maxLength)`
 
-#### `element`
+### `element`
 
 Used to match the provided elements.
 
@@ -505,7 +505,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `elements`
+### `elements`
 
 Used to match all registered elements.
 
@@ -516,7 +516,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `include`
+### `include`
 
 Used to match the listed elements.
 
@@ -541,7 +541,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `exclude`
+### `exclude`
 
 Used to match registered elements except those listed.
 
@@ -566,7 +566,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-#### `maybe`
+### `maybe`
 
 Used to define a matcher group that may or may not appear.
 
@@ -579,7 +579,7 @@ definer
 ```
 
 
-#### `or`
+### `or`
 
 Could match with a group in the matcher groups.
 
@@ -595,7 +595,7 @@ definer
     .end()
 ```
 
-#### `loop`
+### `loop`
 
 Used to define a matcher group it is repeatable.
 
@@ -632,7 +632,7 @@ public class VariableElement implements Element<Object> {
 }
 ```
 
-#### `between`
+### `between`
 
 Used to define a matcher group it can repeat and be interspersed by another matcher group.
 
