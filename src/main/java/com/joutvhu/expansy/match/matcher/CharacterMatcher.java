@@ -56,7 +56,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
     @Override
     public void match(Consumer<E> consumer) {
         StopPoint point;
-        if (minLength == null || minLength <= 0)
+        if (minLength == null || minLength == 0)
             consumer.push();
         if (minLength != null && minLength > 0) {
             point = consumer.next(minLength);

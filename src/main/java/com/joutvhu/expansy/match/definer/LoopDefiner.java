@@ -1,6 +1,7 @@
 package com.joutvhu.expansy.match.definer;
 
 import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
@@ -27,6 +28,10 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
 
     public LoopDefiner(T parent, Integer minRepetitions, Integer maxRepetitions) {
         this.parent = parent;
+        if (minRepetitions != null && minRepetitions < 0)
+            throw new DefineException("The minRepetitions cannot be less than 0.");
+        if (maxRepetitions != null && maxRepetitions < 1)
+            throw new DefineException("The maxRepetitions cannot be less than 1.");
         this.minRepetitions = minRepetitions;
         this.maxRepetitions = maxRepetitions;
     }

@@ -77,4 +77,9 @@ public final class StopReason<E> {
             return e2;
         return e1;
     }
+
+    public static void throwReason(Throwable e) {
+        if (e instanceof StopReasonThrowable)
+            throw (StopReasonThrowable) e;
+    }
 }

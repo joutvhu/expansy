@@ -475,10 +475,40 @@ public void define(Definer<Object> definer) {
 Use a method to match.
 
 - `check(Function<String, Boolean> checker)`
+```java
+public void define(Definer<Object> definer) {
+    definer.check(value -> {
+        if (value == null || value.length() > 3)
+            return false;
+        if ("abc".equals(value))
+            return true;
+        return null;
+    });
+}
+```
 
 - `check(Function<String, Boolean> checker, int length)`
+```java
+public void define(Definer<Object> definer) {
+    definer.check(value -> {
+        return "abc".equals(value);
+    }, 3);
+}
+```
 
 - `check(Function<String, Boolean> checker, Integer minLength, Integer maxLength)`
+```java
+public void define(Definer<Object> definer) {
+    definer.check((String value) -> {
+        if (value != null && value.startsWith("{")) {
+            if (value.endsWith("}"))
+                return true;
+            return null;
+        }
+        return false;
+    }, 3, 5);
+}
+```
 
 ### `element`
 
@@ -595,6 +625,9 @@ definer
     .end()
 ```
 
+You can declare as many cases as you want.
+The cases at the top will take precedence.
+
 ### `loop`
 
 Used to define a matcher group it is repeatable.
@@ -607,6 +640,9 @@ definer
     .end()
 ```
 
+The `loop()` can be replaced by the following variants:
+- `loop(int repetitions)`
+- `loop(int minRepetitions, Integer maxRepetitions)`
 
 ```java
 public class VariableElement implements Element<Object> {
@@ -645,6 +681,10 @@ definer
     ... // define separator here
     .end()
 ```
+
+The `between()` can be replaced by the following variants:
+- `between(int repetitions)`
+- `between(int minRepetitions, Integer maxRepetitions)`
 
 The following example uses `between` to define function parameters separated by commas.
 ```java
