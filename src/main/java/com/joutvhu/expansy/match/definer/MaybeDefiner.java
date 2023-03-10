@@ -10,7 +10,7 @@ import com.joutvhu.expansy.parser.Analyser;
 import java.util.List;
 
 public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, MaybeDefiner<E, T>> {
-    private T parent;
+    private final T parent;
 
     public MaybeDefiner(T parent) {
         this.parent = parent;

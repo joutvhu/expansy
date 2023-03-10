@@ -43,7 +43,7 @@ public class QuoteMatcher<E> extends Matcher<E> {
         String value = point.getValue();
         if (value.length() > 1) {
             String quoteValue = value.substring(1, value.length() - 1);
-            Node<E> node = new Node<>();
+            Node<E> node = new Node<>(consumer.state());
             node.setStart(point.getOffset());
             node.setEnd(point.getIndex());
             node.setEmbed(false);

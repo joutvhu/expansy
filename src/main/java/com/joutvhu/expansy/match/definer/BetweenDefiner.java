@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, BetweenDefiner<E, T>> {
-    private T parent;
-    private Integer minRepetitions;
-    private Integer maxRepetitions;
+    private final T parent;
+    private final Integer minRepetitions;
+    private final Integer maxRepetitions;
     private IsDefiner<E, T> between;
 
     public BetweenDefiner(T parent) {
@@ -44,7 +44,7 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
                 trackPoints.add(points);
 
                 List<Node<E>> nodes = new ArrayList<>();
-                Node<E> node = new Node<>();
+                Node<E> node = new Node<>(consumer.state());
                 node.setStart(consumer.offset());
                 node.setEnd(consumer.offset());
                 node.setValue("");

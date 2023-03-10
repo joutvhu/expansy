@@ -23,7 +23,7 @@ import java.util.Deque;
 import java.util.List;
 
 public class ExpansyAnalyser<E> implements Analyser<E> {
-    private ExpansyState<E> state;
+    private final ExpansyState<E> state;
 
     ExpansyAnalyser(ExpansyState<E> state) {
         this.state = state;
@@ -163,7 +163,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
     }
 
     private List<Node<E>> analyseMatchers(Matcher<E>[] matchers, Integer offset, Branch<E> branch) {
-        Node<E> node = new Node<>();
+        Node<E> node = new Node<>(state);
         node.setStart(offset != null ? offset : 0);
         node.setEnd(node.getStart());
         return analyseMatchers(matchers, 0, offset, null, branch, node);

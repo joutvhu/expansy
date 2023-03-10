@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, OrDefiner<E, T>> {
-    private T parent;
-    private List<OrDefiner<E, T>> definers;
+    private final T parent;
+    private final List<OrDefiner<E, T>> definers;
 
     public OrDefiner(T parent) {
         this.parent = parent;

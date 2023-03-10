@@ -1,6 +1,7 @@
 package com.joutvhu.expansy.element;
 
 import com.joutvhu.expansy.match.consumer.TrackPoints;
+import com.joutvhu.expansy.parser.ExpansyState;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Node<E> {
+    private final ExpansyState<E> state;
     private final Map<String, List<Object>> children = new HashMap<>();
     private Node<E> parent;
     private String value;
@@ -19,6 +21,14 @@ public class Node<E> {
     private boolean embed = true;
     private Element<E> element;
     private TrackPoints<E> trackPoints;
+
+    public Node(ExpansyState<E> state) {
+        this.state = state;
+    }
+
+    public ExpansyState<E> getState() {
+        return state;
+    }
 
     public int getStart() {
         return start;
@@ -273,7 +283,7 @@ public class Node<E> {
     }
 
     public Node<E> clone() {
-        Node<E> result = new Node<>();
+        Node<E> result = new Node<>(state);
         result.setParent(parent);
         result.setStart(start);
         result.setEnd(end);

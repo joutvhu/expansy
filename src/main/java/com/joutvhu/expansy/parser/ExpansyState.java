@@ -29,6 +29,10 @@ public class ExpansyState<E> {
         shared.put(key, value);
     }
 
+    void putAll(Map<String, Object> model) {
+        shared.putAll(model);
+    }
+
     public int getLength() {
         return source.length();
     }
