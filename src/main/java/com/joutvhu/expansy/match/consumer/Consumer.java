@@ -1,7 +1,7 @@
 package com.joutvhu.expansy.match.consumer;
 
 import com.joutvhu.expansy.element.Branch;
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.parser.ExpansyState;
 import com.joutvhu.expansy.util.StringUtils;
@@ -160,9 +160,9 @@ public class Consumer<E> {
         action.accept(trackPoints);
     }
 
-    private void addForAll(List<Node<E>> nodes, Integer position) {
+    private void addForAll(List<NodeImpl<E>> nodes, Integer position) {
         List<TrackPoints<E>> cases = new ArrayList<>();
-        for (Node<E> node : nodes) {
+        for (NodeImpl<E> node : nodes) {
             List<TrackPoints<E>> cloneCases = cloneCases();
             for (TrackPoints<E> trackPoints : cloneCases) {
                 if (position == null)
@@ -198,7 +198,7 @@ public class Consumer<E> {
         trackPoints.push(at(index));
     }
 
-    public void only(Node<E> node) {
+    public void only(NodeImpl<E> node) {
         trackPoints.clear();
         trackPoints.push(new TrackPoint<>(node));
     }
@@ -217,7 +217,7 @@ public class Consumer<E> {
         });
     }
 
-    public void onlyForAll(Node<E> node) {
+    public void onlyForAll(NodeImpl<E> node) {
         forEach(value -> {
             value.clear();
             value.push(new TrackPoint<>(node));
@@ -235,7 +235,7 @@ public class Consumer<E> {
         trackPoints.add(at(index));
     }
 
-    public void add(Node<E> node) {
+    public void add(NodeImpl<E> node) {
         trackPoints.add(new TrackPoint<>(node));
     }
 
@@ -247,11 +247,11 @@ public class Consumer<E> {
         forEach(value -> value.add(at(index)));
     }
 
-    public void addForAll(Node<E> node) {
+    public void addForAll(NodeImpl<E> node) {
         forEach(value -> value.add(new TrackPoint<>(node)));
     }
 
-    public void addForAll(List<Node<E>> nodes) {
+    public void addForAll(List<NodeImpl<E>> nodes) {
         addForAll(nodes, null);
     }
 
@@ -266,7 +266,7 @@ public class Consumer<E> {
         trackPoints.add(position, at(index));
     }
 
-    public void insert(int position, Node<E> node) {
+    public void insert(int position, NodeImpl<E> node) {
         trackPoints.add(position, new TrackPoint<>(node));
     }
 
@@ -278,11 +278,11 @@ public class Consumer<E> {
         forEach(value -> value.add(position, at(index)));
     }
 
-    public void insertForAll(int position, Node<E> node) {
+    public void insertForAll(int position, NodeImpl<E> node) {
         forEach(value -> value.add(position, new TrackPoint<>(node)));
     }
 
-    public void insertForAll(int position, List<Node<E>> nodes) {
+    public void insertForAll(int position, List<NodeImpl<E>> nodes) {
         addForAll(nodes, position);
     }
 
@@ -297,7 +297,7 @@ public class Consumer<E> {
         trackPoints.push(at(index));
     }
 
-    public void push(Node<E> node) {
+    public void push(NodeImpl<E> node) {
         trackPoints.push(new TrackPoint<>(node));
     }
 
@@ -309,11 +309,11 @@ public class Consumer<E> {
         forEach(value -> value.push(at(index)));
     }
 
-    public void pushForAll(Node<E> node) {
+    public void pushForAll(NodeImpl<E> node) {
         forEach(value -> value.push(new TrackPoint<>(node)));
     }
 
-    public void pushForAll(List<Node<E>> nodes) {
+    public void pushForAll(List<NodeImpl<E>> nodes) {
         addForAll(nodes, 0);
     }
 

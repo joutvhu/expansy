@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.definer;
 
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
@@ -48,8 +48,8 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
                 TrackPoints<E> trackPoints = new TrackPoints<>();
                 cases.add(trackPoints);
 
-                List<Node<E>> nodes = new ArrayList<>();
-                Node<E> node = new Node<>(consumer.state());
+                List<NodeImpl<E>> nodes = new ArrayList<>();
+                NodeImpl<E> node = new NodeImpl<>(consumer.state());
                 node.setStart(consumer.offset());
                 node.setEnd(consumer.offset());
                 node.setValue("");
@@ -69,7 +69,7 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
                             r++;
                             if (!nodes.isEmpty() && (minRepetitions == null || minRepetitions <= r)) {
                                 cases = new ArrayList<>();
-                                for (Node<E> eNode : nodes) {
+                                for (NodeImpl<E> eNode : nodes) {
                                     trackPoints = eNode.getTrackPoints().clone();
                                     trackPoints.push(new TrackPoint<>(eNode));
                                     eNode.setTrackPoints(trackPoints);

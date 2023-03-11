@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.definer;
 
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
@@ -26,8 +26,8 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
                 if (!matchers.isEmpty()) {
                     try {
                         Analyser<E> analyser = consumer.state().getAnalyser();
-                        List<Node<E>> nodes = analyser.analyseMatchers(matchers, consumer);
-                        for (Node<E> node : nodes) {
+                        List<NodeImpl<E>> nodes = analyser.analyseMatchers(matchers, consumer);
+                        for (NodeImpl<E> node : nodes) {
                             if (consumer.size() == 0)
                                 consumer.push();
                             consumer.push(node);

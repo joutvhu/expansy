@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.consumer;
 
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 import com.joutvhu.expansy.match.Matcher;
 
 import java.util.LinkedList;
@@ -19,7 +19,7 @@ public class TrackPoints<E> extends LinkedList<TrackPoint<E>> {
         this.matcher = matcher;
     }
 
-    public Node<E> lastNode() {
+    public NodeImpl<E> lastNode() {
         TrackPoint<E> point = getLast();
         return point != null ? point.getNode() : null;
     }

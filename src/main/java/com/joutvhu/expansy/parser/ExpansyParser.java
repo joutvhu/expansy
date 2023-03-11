@@ -3,7 +3,7 @@ package com.joutvhu.expansy.parser;
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.ElementRegister;
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 import com.joutvhu.expansy.io.BranchSelector;
 import com.joutvhu.expansy.io.DefaultSelector;
 import com.joutvhu.expansy.io.Source;
@@ -59,7 +59,7 @@ public class ExpansyParser<E> {
         branches = selector.order(branches);
         for (Branch<E> branch : branches) {
             if (branch.size() == 1) {
-                Node<E> node = branch.get(0);
+                NodeImpl<E> node = branch.get(0);
                 return node.getElement().render(node);
             }
         }
@@ -85,7 +85,7 @@ public class ExpansyParser<E> {
         Branch<E> branch = selector.select(branches);
         if (branch == null)
             return null;
-        for (Node<E> node : branch) {
+        for (NodeImpl<E> node : branch) {
             E v = node.render();
             if (v != null) results.add(v);
         }

@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.consumer;
 
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ public class TrackPoint<E> implements Serializable {
 
     private final int index;
     private final String value;
-    private final Node<E> node;
+    private final NodeImpl<E> node;
 
     public TrackPoint(int index, String value) {
         this.index = index;
@@ -17,7 +17,7 @@ public class TrackPoint<E> implements Serializable {
         this.node = null;
     }
 
-    public TrackPoint(Node<E> node) {
+    public TrackPoint(NodeImpl<E> node) {
         this.index = node.getEnd();
         this.value = node.getValue();
         this.node = node;
@@ -31,7 +31,7 @@ public class TrackPoint<E> implements Serializable {
         return value;
     }
 
-    public Node<E> getNode() {
+    public NodeImpl<E> getNode() {
         return node;
     }
 }

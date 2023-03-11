@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.definer;
 
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
@@ -36,7 +36,7 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
                 for (OrDefiner<E, T> definer : definers) {
                     try {
                         List<Matcher<E>> matchers = definer.matchers();
-                        List<Node<E>> nodes = analyser.analyseMatchers(matchers, consumer);
+                        List<NodeImpl<E>> nodes = analyser.analyseMatchers(matchers, consumer);
                         consumer.addForAll(nodes);
                     } catch (MatchException e) {
                         error = MatchException.or(error, e);

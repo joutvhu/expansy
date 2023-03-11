@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Getter
-public class Branch<E> extends ArrayList<Node<E>> {
+public class Branch<E> extends ArrayList<NodeImpl<E>> {
     private final Map<String, Object> shared;
     private final Map<Integer, Set<Element<E>>> checking;
 
@@ -29,9 +29,9 @@ public class Branch<E> extends ArrayList<Node<E>> {
         return results;
     }
 
-    public void push(Node<E> node) {
+    public void push(NodeImpl<E> node) {
         while (!isEmpty()) {
-            Node<E> lastNode = last();
+            NodeImpl<E> lastNode = last();
             if (lastNode == null)
                 break;
             if (lastNode.getStart() >= node.getStart())
@@ -76,7 +76,7 @@ public class Branch<E> extends ArrayList<Node<E>> {
     /**
      * Returns the first node in this branch.
      */
-    public Node<E> first() {
+    public NodeImpl<E> first() {
         int len = size();
         return len > 0 ? get(0) : null;
     }
@@ -90,14 +90,14 @@ public class Branch<E> extends ArrayList<Node<E>> {
     /**
      * Returns the node at the specified position in this branch.
      */
-    public Node<E> at(int index) {
+    public NodeImpl<E> at(int index) {
         return get(index);
     }
 
     /**
      * Returns the last node in this branch.
      */
-    public Node<E> last() {
+    public NodeImpl<E> last() {
         int len = size();
         return len > 0 ? get(len - 1) : null;
     }
@@ -111,7 +111,7 @@ public class Branch<E> extends ArrayList<Node<E>> {
     /**
      * Replace a node at the specified position with a new node
      */
-    public void replace(int index, Node<E> node) {
+    public void replace(int index, NodeImpl<E> node) {
         boolean shouldRemove = true;
         if (index < 0)
             index = 0;
@@ -127,14 +127,14 @@ public class Branch<E> extends ArrayList<Node<E>> {
     /**
      * Replace first node with a new node
      */
-    public void replaceFirst(Node<E> node) {
+    public void replaceFirst(NodeImpl<E> node) {
         replace(0, node);
     }
 
     /**
      * Replace last node with a new node
      */
-    public void replaceLast(Node<E> node) {
+    public void replaceLast(NodeImpl<E> node) {
         replace(size() - 1, node);
     }
 

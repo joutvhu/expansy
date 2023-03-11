@@ -1,6 +1,6 @@
 package com.joutvhu.expansy.match.matcher;
 
-import com.joutvhu.expansy.element.Node;
+import com.joutvhu.expansy.element.NodeImpl;
 import com.joutvhu.expansy.exception.DefineException;
 import com.joutvhu.expansy.match.Definer;
 import com.joutvhu.expansy.match.Matcher;
@@ -43,7 +43,7 @@ public class QuoteMatcher<E> extends Matcher<E> {
         String value = point.getValue();
         if (value.length() > 1) {
             String quoteValue = value.substring(1, value.length() - 1);
-            Node<E> node = new Node<>(consumer.state());
+            NodeImpl<E> node = new NodeImpl<>(consumer.state());
             node.setStart(point.getOffset());
             node.setEnd(point.getIndex());
             node.setEmbed(false);
