@@ -52,6 +52,16 @@ Each element need to implement `define` and `render` methods.
 - The `render` method is used to create the result object based on the analyzed node.
 - Also, you can override the `name` method to name the element (_optional_). If you don't overwrite the default is the name of the element class.
 
+After you have created the elements, register them and use.
+```java
+Expansy<BigDecimal> expansy = Expansy
+        .instance()
+        ... // register other elements
+        .register(new NumberElement());
+
+BigDecimal result = expansy.useAll().parseSingle("5 + 5 * 3");
+```
+
 ## Match functions
 
 ### `size`
@@ -741,6 +751,7 @@ public class FunctionElement implements Element<BigDecimal> {
 The `render` method is used to generate the result of the expression. The `render` method will receive a `Node`.
 
 The `Node` is the result of the expression string after being analysed, you can use it to get parts of expression.
+The `Node` represents only part of an expression, not the entire input expression.
 
 Use the `name(String name)` function to name parts of an expression and then get it in `render` method.
 
@@ -797,3 +808,52 @@ public class MultiplyOrDivision implements Element<BigDecimal> {
     }
 }
 ```
+
+# Branch
+
+A `Branch` represents a way of arranging the elements to match the input expression.
+A `Branch` can contain one or more Nodes.
+
+The expression analyzing can return multiple branches.
+`BranchSelector` is used to select a branch when you call`parse` or `parseSingle`.
+
+```java
+List<Branch<BigDecimal>> branchs = expansy.useAll().analysis("8 - 3 + 3");
+```
+
+If you define addition like this
+```java
+public void define(Definer<BigDecimal> definer) {
+    definer
+        .name("first")
+        .elements()
+        .spaces()
+        .name("operator")
+        .equals("+")
+        .spaces()
+        .name("second")
+        .elements();
+}
+```
+And use it to analysis the expression `1 + 2 + 3`, you can get 2 branches:
+```
+Branch1:
+- Node:+
+  - Node:+
+    - Node:1
+    - Node:2
+  - Node:3
+
+Branch2:
+- Node:+
+  - Node:1
+  - Node:+
+    - Node:2
+    - Node:3
+```
+
+To apply the precedence of the operation you can use `exclude()` instead of `elements()` to exclude some elements at `first` or `second`.
+See examples in the [Render](#render) section.
+Use the following rule:
+- The `first` will exclude operations with lower precedence than the current operation.
+- The `second` will exclude operations with lower or equal precedence than the current operation.
