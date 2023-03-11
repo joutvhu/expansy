@@ -856,4 +856,5 @@ To apply the precedence of the operation you can use `exclude()` instead of `ele
 See examples in the [Render](#render) section.
 Use the following rule:
 - The `first` will exclude operations with lower precedence than the current operation.
-- The `second` will exclude operations with lower or equal precedence than the current operation.
+- The `second` will exclude operations with lower or equal (because the priority is left-to-right) precedence than the current operation.
+
