@@ -606,7 +606,6 @@ definer
     .end()
 ```
 
-
 ### `or`
 
 Could match with a group in the matcher groups.
@@ -625,6 +624,32 @@ definer
 
 You can declare as many cases as you want.
 The cases at the top will take precedence.
+
+```java
+public class GroupMultiply implements Element<BigDecimal> {
+    @Override
+    public void define(Definer<BigDecimal> definer) {
+        definer
+            .or()
+                .name("first")
+                .include("Group")
+                .name("second")
+                .include("Number")
+            .or()
+                .name("first")
+                .include("Number")
+                .name("second")
+                .include("Group")
+            .or()
+                .name("first")
+                .include("Group")
+                .name("second")
+                .include("Group")
+            .end();
+    }
+    ...
+}
+```
 
 ### `loop`
 
