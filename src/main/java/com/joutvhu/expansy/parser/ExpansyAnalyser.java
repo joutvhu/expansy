@@ -52,7 +52,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                             Branch<E> newBranch = branch.clone();
                             newBranch.push(node);
                             try {
-                                if (state.getLength() <= node.getEnd()) {
+                                if (state.length() <= node.getEnd()) {
                                     branches.add(newBranch);
                                 } else {
                                     List<Branch<E>> values = analyse(elements, node.getEnd(), newBranch);
@@ -110,7 +110,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
     public List<Node<E>> analyseElements(Collection<Element<E>> elements, Integer offset, Branch<E> branch) {
         List<Node<E>> results = new ArrayList<>();
         ExpansyException error = null;
-        if (offset < state.getLength()) {
+        if (offset < state.length()) {
             for (Element<E> element : elements) {
                 if (branch == null || branch.start(offset, element)) {
                     try {

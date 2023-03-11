@@ -33,7 +33,7 @@ public class ExpansyState<E> {
         shared.putAll(model);
     }
 
-    public int getLength() {
+    public int length() {
         return source.length();
     }
 }

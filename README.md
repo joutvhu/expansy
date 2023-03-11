@@ -42,8 +42,6 @@ public class NumberElement implements Element<BigDecimal> {
     @Override
     public BigDecimal render(Node<BigDecimal> node) {
         String value = node.getString("value");
-        if (value == null || value.length() == 0)
-            return null;
         return new BigDecimal(value);
     }
 }
@@ -640,9 +638,10 @@ definer
     .end()
 ```
 
-The `loop()` can be replaced by the following variants:
-- `loop(int repetitions)`
-- `loop(int minRepetitions, Integer maxRepetitions)`
+The following are variations of the `loop()` function:
+- `loop()` the minimum number of repetitions is 0 and unlimited number of repetitions.
+- `loop(int repetitions)` used to indicate the exact number of repetitions.
+- `loop(int minRepetitions, Integer maxRepetitions)` used to indicate the minimum and maximum number of repetitions.
 
 ```java
 public class VariableElement implements Element<Object> {
@@ -665,6 +664,7 @@ public class VariableElement implements Element<Object> {
                 .end()
             .end();
     }
+    ...
 }
 ```
 
@@ -682,9 +682,10 @@ definer
     .end()
 ```
 
-The `between()` can be replaced by the following variants:
-- `between(int repetitions)`
-- `between(int minRepetitions, Integer maxRepetitions)`
+The following are variations of the `between()` function:
+- `between()` the minimum number of repetitions is 0 and unlimited number of repetitions.
+- `between(int repetitions)` used to indicate the exact number of repetitions.
+- `between(int minRepetitions, Integer maxRepetitions)` used to indicate the minimum and maximum number of repetitions.
 
 The following example uses `between` to define function parameters separated by commas.
 ```java
@@ -706,7 +707,68 @@ public class FunctionElement implements Element<BigDecimal> {
             .end()
             .equals(")");
     }
+    ...
 }
 ```
 
 ## Render
+
+The `render` method is used to generate the result of the expression. The `render` method will receive a `Node`.
+
+The `Node` is the result of the expression string after being analysed, you can use it to get parts of expression.
+
+Use the `name(String name)` function to name parts of an expression and then get it in `render` method.
+
+```java
+public class Add implements Element<BigDecimal> {
+    @Override
+    public void define(Definer<BigDecimal> definer) {
+        definer
+                .name("first")
+                .elements()
+                .spaces()
+                .equals("+")
+                .spaces()
+                .name("second")
+                .exclude("Add", "Subtract");
+    }
+
+    @Override
+    public BigDecimal render(Node<BigDecimal> node) {
+        BigDecimal first = node.getNode("first").render();
+        BigDecimal second = node.getNode("second").render();
+        return first.add(second);
+    }
+}
+```
+
+The structure of `Node` is similar to a tree, it can contain child Nodes.
+A node's children can be another node or a string.
+
+```java
+public class MultiplyOrDivision implements Element<BigDecimal> {
+    @Override
+    public void define(Definer<BigDecimal> definer) {
+        definer
+                .name("first")
+                .exclude("AddOrSubtract")
+                .spaces()
+                .name("operator")
+                .equals("/", "*")
+                .spaces()
+                .name("second")
+                .exclude("AddOrSubtract", "MultiplyOrDivision");
+    }
+
+    @Override
+    public BigDecimal render(Node<BigDecimal> node) {
+        BigDecimal first = node.getNode("first").render();
+        BigDecimal second = node.getNode("second").render();
+        String operator = node.getString("operator");
+        if ("*".equals(operator))
+            return first.multiply(second);
+        else
+            return first.divide(second);
+    }
+}
+```
