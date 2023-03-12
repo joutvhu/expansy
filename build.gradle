@@ -59,7 +59,7 @@ jar {
     manifest {
         attributes 'Built-By': 'joutvhu (Giao Ho)'
         attributes 'Build-Date': java.time.Instant.now().toString()
-        attributes 'Bundle-Name': 'Spring Dynamic JPA'
+        attributes 'Bundle-Name': 'Expansy'
         attributes 'Bundle-Vendor': project.group
         attributes 'Bundle-SymbolicName': project.name
         attributes 'Bundle-Version': project.version
