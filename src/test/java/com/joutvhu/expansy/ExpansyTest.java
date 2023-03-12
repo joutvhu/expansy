@@ -133,4 +133,30 @@ public class ExpansyTest {
         String result = expansy.useAll().parseSingle("(9-3)+(8-3+3)");
         Assertions.assertEquals("AS(G(AS(N(9)-N(3)))+G(AS(AS(N(8)-N(3))+N(3))))", result);
     }
+
+    @Test
+    public void test_success_1() {
+        String result = expansy.useAll().parseSingle("(9+(8-3+3)-3)+(8-3+3+(8-3+3))");
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    public void test_success_2() {
+        String result = expansy.useAll().parseSingle("(9+(8-3+3)-3+12*77-65+76)+(8-3+3+(8-3+3))");
+        Assertions.assertNotNull(result);
+    }
+
+    @Test
+    public void test_error_1() {
+        Assertions.assertThrows(Exception.class, () -> {
+            expansy.useAll().parseSingle("(9+(8-3+3-3)+(8-3+3+(8-3+3))");
+        });
+    }
+
+    @Test
+    public void test_error_2() {
+        Assertions.assertThrows(Exception.class, () -> {
+            expansy.useAll().parseSingle("(9+(8-3)+3-3)+(8-3+3+(8-)3+3))");
+        });
+    }
 }
