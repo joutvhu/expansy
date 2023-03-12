@@ -58,10 +58,8 @@ public class ExpansyParser<E> {
         List<Branch<E>> branches = analysis(source, model);
         branches = selector.order(branches);
         for (Branch<E> branch : branches) {
-            if (branch.size() == 1) {
-                NodeImpl<E> node = branch.get(0);
-                return node.getElement().render(node);
-            }
+            if (branch.size() == 1)
+                return branch.first().render();
         }
         return null;
     }
@@ -80,16 +78,9 @@ public class ExpansyParser<E> {
     }
 
     public List<E> parse(Source source, Map<String, Object> model) {
-        List<E> results = new ArrayList<>();
         List<Branch<E>> branches = analysis(source, model);
         Branch<E> branch = selector.select(branches);
-        if (branch == null)
-            return null;
-        for (NodeImpl<E> node : branch) {
-            E v = node.render();
-            if (v != null) results.add(v);
-        }
-        return results;
+        return branch != null ? branch.render() : null;
     }
 
     public List<E> parse(Source source) {
