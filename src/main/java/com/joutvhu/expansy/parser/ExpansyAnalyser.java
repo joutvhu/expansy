@@ -142,13 +142,18 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
 
     @Override
     public List<NodeImpl<E>> analyseElement(Element<E> element, Integer offset, Branch<E> branch) {
-        List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
         List<NodeImpl<E>> nodes = state.getFromCache(offset, element);
         if (nodes == null) {
-            nodes = analyseMatchers(matchers, offset, branch);
-            nodes.forEach(value -> value.setElement(element));
-            state.putToCache(offset, element, nodes);
-            return nodes;
+            try {
+                List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
+                nodes = analyseMatchers(matchers, offset, branch);
+                nodes.forEach(value -> value.setElement(element));
+                state.putToCache(offset, element, nodes);
+                return nodes;
+            } catch (ExpansyException error) {
+                state.putToCache(offset, element, error);
+                throw error;
+            }
         } else {
             return nodes.stream().map(NodeImpl::clone).collect(Collectors.toList());
         }

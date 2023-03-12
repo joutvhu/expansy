@@ -4,6 +4,7 @@ import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.ElementRegister;
 import com.joutvhu.expansy.element.NodeCache;
 import com.joutvhu.expansy.element.NodeImpl;
+import com.joutvhu.expansy.exception.ExpansyException;
 import com.joutvhu.expansy.io.Source;
 import lombok.Getter;
 
@@ -29,7 +30,12 @@ public class ExpansyState<E> {
 
     public void putToCache(int offset, Element<E> element, List<NodeImpl<E>> nodes) {
         if (cache != null)
-            cache.putIfAbsent(offset, element, nodes);
+            cache.put(offset, element, nodes);
+    }
+
+    public void putToCache(int offset, Element<E> element, ExpansyException exception) {
+        if (cache != null)
+            cache.put(offset, element, exception);
     }
 
     public List<NodeImpl<E>> getFromCache(int offset, Element<E> element) {
