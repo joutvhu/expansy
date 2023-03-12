@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Deque;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ExpansyAnalyser<E> implements Analyser<E> {
     private final ExpansyState<E> state;
@@ -142,9 +143,15 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
     @Override
     public List<NodeImpl<E>> analyseElement(Element<E> element, Integer offset, Branch<E> branch) {
         List<Matcher<E>> matchers = DefinerUtil.matchersOf(element);
-        List<NodeImpl<E>> node = analyseMatchers(matchers, offset, branch);
-        node.forEach(value -> value.setElement(element));
-        return node;
+        List<NodeImpl<E>> nodes = state.getFromCache(offset, element);
+        if (nodes == null) {
+            nodes = analyseMatchers(matchers, offset, branch);
+            nodes.forEach(value -> value.setElement(element));
+            state.putToCache(offset, element, nodes);
+            return nodes;
+        } else {
+            return nodes.stream().map(NodeImpl::clone).collect(Collectors.toList());
+        }
     }
 
     @Override
