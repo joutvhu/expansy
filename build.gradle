@@ -138,7 +138,7 @@ publishing {
                     name = 'Giao Ho'
                     url = 'https://github.com/joutvhu'
                 }
-                properties = project.ext.versions instanceof Map ? project.ext.versions : null
+                properties = project.ext.versions instanceof Map ? project.ext.versions : new HashMap<>()
                 withXml {
                     def dependencyManagement = asNode().get('dependencyManagement')
                     dependencyManagement.dependencies.dependency.each {
