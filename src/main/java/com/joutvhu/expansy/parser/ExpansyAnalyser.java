@@ -23,6 +23,12 @@ import java.util.Deque;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Used to analysis the expression into Nodes or Branches.
+ *
+ * @author Giao Ho
+ * @since 1.0.0
+ */
 public class ExpansyAnalyser<E> implements Analyser<E> {
     private final ExpansyState<E> state;
 
@@ -30,6 +36,11 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         this.state = state;
     }
 
+    /**
+     * Analysis the entire expression into Branches.
+     *
+     * @param elements in the root level
+     */
     @Override
     public List<Branch<E>> analyse(Collection<Element<E>> elements) {
         return analyse(elements, 0, new Branch<>());

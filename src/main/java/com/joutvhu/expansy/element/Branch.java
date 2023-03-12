@@ -9,6 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Branch represents a way of arranging the elements to match the input expression.
+ *
+ * @author Giao Ho
+ * @since 1.0.0
+ */
 @Getter
 public class Branch<E> extends ArrayList<NodeImpl<E>> {
     private final Map<String, Object> shared;

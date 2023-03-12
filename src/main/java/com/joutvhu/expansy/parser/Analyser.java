@@ -11,6 +11,12 @@ import com.joutvhu.expansy.match.consumer.TrackPoints;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Used to analysis the expression into Nodes or Branches.
+ *
+ * @author Giao Ho
+ * @since 1.0.0
+ */
 public interface Analyser<E> {
     List<Branch<E>> analyse(Collection<Element<E>> elements);
 

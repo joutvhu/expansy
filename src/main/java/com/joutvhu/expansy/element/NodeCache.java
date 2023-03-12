@@ -7,6 +7,13 @@ import lombok.EqualsAndHashCode;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Used to save the result when analyzing an element at an offset.
+ * Avoid re-analyzing the element in another branch.
+ *
+ * @author Giao Ho
+ * @since 1.0.0
+ */
 public class NodeCache<E> {
     private final HashMap<NodeKey, NodeResult> cache = new HashMap<>();
 
