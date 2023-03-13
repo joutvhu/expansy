@@ -7,7 +7,7 @@ Expansy is an expression analyzer that allows you to declare expression elements
 - If you are using Gradle just add the following dependency to your `build.gradle`.
 
 ```groovy
-implementation "com.github.joutvhu:expansy:1.0.0"
+implementation "com.github.joutvhu:expansy:1.0.1"
 ```
 
 - Or add the following dependency to your `pom.xml` if you are using Maven.
@@ -16,7 +16,7 @@ implementation "com.github.joutvhu:expansy:1.0.0"
 <dependency>
     <groupId>com.github.joutvhu</groupId>
     <artifactId>expansy</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
