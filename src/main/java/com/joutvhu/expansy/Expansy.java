@@ -2,11 +2,15 @@ package com.joutvhu.expansy;
 
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.ElementRegister;
+import com.joutvhu.expansy.element.StaticStructure;
+import com.joutvhu.expansy.element.Structure;
 import com.joutvhu.expansy.io.BranchSelector;
 import com.joutvhu.expansy.io.DefaultSelector;
 import com.joutvhu.expansy.parser.ExpansyParser;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Expansy<E> {
@@ -39,19 +43,20 @@ public class Expansy<E> {
         return this;
     }
 
-    public ExpansyParser<E> useAll() {
-        return new ExpansyParser<>(register, selector, null);
-    }
-
-    public ExpansyParser<E> use(String name) {
-        return new ExpansyParser<>(register, selector, Arrays.asList(name));
-    }
-
-    public ExpansyParser<E> use(String... names) {
-        return new ExpansyParser<>(register, selector, Arrays.asList(names));
+    public ExpansyParser<E> use(Structure<E> structure) {
+        structure.setRegister(register);
+        return new ExpansyParser<>(register, selector, structure);
     }
 
     public ExpansyParser<E> use(List<String> names) {
-        return new ExpansyParser<>(register, selector, names);
+        return use(new StaticStructure<>(names));
+    }
+
+    public ExpansyParser<E> use(String... names) {
+        return use(Arrays.asList(names));
+    }
+
+    public ExpansyParser<E> useAll() {
+        return use(new ArrayList<>());
     }
 }

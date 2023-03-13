@@ -3,6 +3,7 @@ package com.joutvhu.expansy.parser;
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.NodeImpl;
+import com.joutvhu.expansy.element.Structure;
 import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.TrackPoint;
@@ -18,6 +19,8 @@ import java.util.List;
  * @since 1.0.0
  */
 public interface Analyser<E> {
+    List<Branch<E>> analyse(Structure<E> structure);
+
     List<Branch<E>> analyse(Collection<Element<E>> elements);
 
     List<Branch<E>> analyse(Collection<Element<E>> elements, Consumer<E> consumer);

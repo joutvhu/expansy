@@ -3,6 +3,7 @@ package com.joutvhu.expansy.parser;
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.NodeImpl;
+import com.joutvhu.expansy.element.Structure;
 import com.joutvhu.expansy.exception.ExpansyException;
 import com.joutvhu.expansy.exception.MatchException;
 import com.joutvhu.expansy.match.Matcher;
@@ -36,6 +37,12 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         this.state = state;
     }
 
+    @Override
+    public List<Branch<E>> analyse(Structure<E> structure) {
+        Branch<E> branch = new Branch<>();
+        return analyse(structure.next(branch), structure, 0, branch);
+    }
+
     /**
      * Analysis the entire expression into Branches.
      *
@@ -53,6 +60,10 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
 
     @Override
     public List<Branch<E>> analyse(Collection<Element<E>> elements, Integer offset, Branch<E> branch) {
+        return analyse(elements, null, offset, branch);
+    }
+
+    private List<Branch<E>> analyse(Collection<Element<E>> elements, Structure<E> structure, Integer offset, Branch<E> branch) {
         List<Branch<E>> branches = new ArrayList<>();
         ExpansyException error = null;
         for (Element<E> element : elements) {
@@ -67,7 +78,8 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                                 if (state.length() <= node.getEnd()) {
                                     branches.add(newBranch);
                                 } else {
-                                    List<Branch<E>> values = analyse(elements, node.getEnd(), newBranch);
+                                    Collection<Element<E>> nextElements = structure != null ? structure.next(newBranch) : elements;
+                                    List<Branch<E>> values = analyse(nextElements, structure, node.getEnd(), newBranch);
                                     branches.addAll(values);
                                 }
                             } catch (Exception e) {

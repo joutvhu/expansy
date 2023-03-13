@@ -1,32 +1,45 @@
 package com.joutvhu.expansy.parser;
 
 import com.joutvhu.expansy.element.Branch;
-import com.joutvhu.expansy.element.Element;
 import com.joutvhu.expansy.element.ElementRegister;
-import com.joutvhu.expansy.element.NodeImpl;
+import com.joutvhu.expansy.element.StaticStructure;
+import com.joutvhu.expansy.element.Structure;
 import com.joutvhu.expansy.io.BranchSelector;
 import com.joutvhu.expansy.io.DefaultSelector;
 import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.io.StringSource;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class ExpansyParser<E> {
     private final ElementRegister<E> register;
-    private final Collection<Element<E>> elements;
+    private final Structure<E> structure;
     private final BranchSelector selector;
 
-    public ExpansyParser(ElementRegister<E> register, List<String> elements) {
-        this(register, new DefaultSelector(), elements);
+    @Deprecated
+    public ExpansyParser(ElementRegister<E> register, List<String> names) {
+        this(register, new DefaultSelector(), names);
     }
 
-    public ExpansyParser(ElementRegister<E> register, BranchSelector selector, List<String> elements) {
+    @Deprecated
+    public ExpansyParser(ElementRegister<E> register, BranchSelector selector, List<String> names) {
+        this(register, selector, ((Function<Object, Structure<E>>) o -> {
+            Structure<E> structure = new StaticStructure<>(names);
+            structure.setRegister(register);
+            return structure;
+        }).apply(null));
+    }
+
+    public ExpansyParser(ElementRegister<E> register, Structure<E> structure) {
+        this(register, new DefaultSelector(), structure);
+    }
+
+    public ExpansyParser(ElementRegister<E> register, BranchSelector selector, Structure<E> structure) {
         this.register = register;
         this.selector = selector;
-        this.elements = elements == null || elements.isEmpty() ? register.elements() : register.get(elements);
+        this.structure = structure;
     }
 
     protected Analyser<E> analyser(Source source, Map<String, Object> model) {
@@ -38,7 +51,7 @@ public class ExpansyParser<E> {
 
     public List<Branch<E>> analysis(Source source, Map<String, Object> model) {
         Analyser<E> analyser = analyser(source, model);
-        return analyser.analyse(elements);
+        return analyser.analyse(structure);
     }
 
     public List<Branch<E>> analysis(Source source) {
