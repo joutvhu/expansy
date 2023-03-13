@@ -52,7 +52,6 @@ public final class OrDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, Or
         };
     }
 
-    @Override
     public OrDefiner<E, T> or() {
         return new OrDefiner<>(parent, definers);
     }

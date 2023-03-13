@@ -42,11 +42,6 @@ public final class MaybeDefiner<E, T extends Definer<E>> extends ProxyDefiner<E,
         };
     }
 
-    @Override
-    public OrDefiner<E, MaybeDefiner<E, T>> or() {
-        return (OrDefiner<E, MaybeDefiner<E, T>>) super.or();
-    }
-
     public T end() {
         return parent;
     }

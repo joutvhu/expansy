@@ -48,7 +48,7 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public OrDefiner<E, ?> or() {
+    public OrDefiner<E, T> options() {
         return add(new OrDefiner<>(master));
     }
 

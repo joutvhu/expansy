@@ -15,7 +15,7 @@ public class OrTest {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
-                                .or()
+                                .options()
                                 .name("value")
                                 .uppercases(3)
                                 .or()
@@ -41,7 +41,7 @@ public class OrTest {
                     @Override
                     public void define(Definer<String> definer) {
                         definer
-                                .or()
+                                .options()
                                 .name("value")
                                 .uppercases(3)
                                 .or()

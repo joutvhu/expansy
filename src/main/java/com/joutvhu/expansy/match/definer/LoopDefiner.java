@@ -85,11 +85,6 @@ public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, 
         };
     }
 
-    @Override
-    public OrDefiner<E, LoopDefiner<E, T>> or() {
-        return (OrDefiner<E, LoopDefiner<E, T>>) super.or();
-    }
-
     public T end() {
         return parent;
     }

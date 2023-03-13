@@ -45,7 +45,7 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public OrDefiner<E, ?> or() {
+    public OrDefiner<E, ?> options() {
         OrDefiner<E, DefaultDefiner<E>> definer = new OrDefiner<>(this);
         matchers.add(definer.matcher());
         return definer;

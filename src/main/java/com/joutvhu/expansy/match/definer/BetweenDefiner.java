@@ -95,21 +95,11 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
         return between;
     }
 
-    @Override
-    public OrDefiner<E, BetweenDefiner<E, T>> or() {
-        return (OrDefiner<E, BetweenDefiner<E, T>>) super.or();
-    }
-
     public class IsDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, IsDefiner<E, T>> {
         private final T parent;
 
         IsDefiner(T parent) {
             this.parent = parent;
-        }
-
-        @Override
-        public OrDefiner<E, IsDefiner<E, T>> or() {
-            return (OrDefiner<E, IsDefiner<E, T>>) super.or();
         }
 
         public T end() {

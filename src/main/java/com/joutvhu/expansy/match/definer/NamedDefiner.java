@@ -39,10 +39,8 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public OrDefiner<E, T> or() {
-        if (parent instanceof OrDefiner)
-            throw new DefineException("Unable to name a selection of OrDefiner.");
-        return this.dub(parent.or());
+    public OrDefiner<E, T> options() {
+        return this.dub(parent.options());
     }
 
     @Override

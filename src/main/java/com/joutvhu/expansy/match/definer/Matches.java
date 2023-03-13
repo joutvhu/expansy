@@ -24,7 +24,7 @@ public interface Matches<E, T extends Definer<E>> {
     /**
      * Could match with a group in the matcher groups.
      */
-    OrDefiner<E, ?> or();
+    OrDefiner<E, ?> options();
 
     /**
      * Used to define a matcher group it is repeatable.

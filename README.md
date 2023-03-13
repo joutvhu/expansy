@@ -7,7 +7,7 @@ Expansy is an expression analyzer that allows you to declare expression elements
 - If you are using Gradle just add the following dependency to your `build.gradle`.
 
 ```groovy
-implementation "com.github.joutvhu:expansy:1.0.1"
+implementation "com.github.joutvhu:expansy:1.0.2"
 ```
 
 - Or add the following dependency to your `pom.xml` if you are using Maven.
@@ -16,7 +16,7 @@ implementation "com.github.joutvhu:expansy:1.0.1"
 <dependency>
     <groupId>com.github.joutvhu</groupId>
     <artifactId>expansy</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
@@ -616,14 +616,14 @@ definer
     .end()
 ```
 
-### `or`
+### `options`
 
 Could match with a group in the matcher groups.
 
 Syntax:
 ```
 definer
-    .or()
+    .options()
     ... // case 1
     .or()
     ... // case 2
@@ -640,7 +640,7 @@ public class GroupMultiply implements Element<BigDecimal> {
     @Override
     public void define(Definer<BigDecimal> definer) {
         definer
-            .or()
+            .options()
                 .name("first")
                 .include("Group")
                 .name("second")
@@ -687,7 +687,7 @@ public class VariableElement implements Element<Object> {
             .name("name")
             .word()
             .loop()
-                .or()
+                .options()
                     .character('.')
                     .name("child")
                     .word()
