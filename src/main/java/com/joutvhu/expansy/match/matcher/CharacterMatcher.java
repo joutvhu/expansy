@@ -55,6 +55,7 @@ public class CharacterMatcher<E> extends Matcher<E> {
     }
 
     @Override
+    @SuppressWarnings("java:S2259")
     public void match(Consumer<E> consumer) {
         StopPoint point;
         if (minLength == null || minLength == 0)

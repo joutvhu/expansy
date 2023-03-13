@@ -3,6 +3,7 @@ package com.joutvhu.expansy.element;
 import com.joutvhu.expansy.match.consumer.TrackPoints;
 import com.joutvhu.expansy.parser.ExpansyState;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,9 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class NodeImpl<E> implements Node<E> {
+public class NodeImpl<E> implements Node<E>, Serializable {
+    private static final long serialVersionUID = -5509553998914844927L;
+
     private final ExpansyState<E> state;
     private final Map<String, List<Object>> children = new HashMap<>();
     private NodeImpl<E> parent;
@@ -124,30 +127,18 @@ public class NodeImpl<E> implements Node<E> {
     }
 
     public void add(String key, String value) {
-        List<Object> values = children.get(key);
-        if (values == null) {
-            values = new ArrayList<>();
-            children.put(key, values);
-        }
+        List<Object> values = children.computeIfAbsent(key, k -> new ArrayList<>());
         values.add(value);
     }
 
     public void add(String key, NodeImpl<E> value) {
-        List<Object> values = children.get(key);
-        if (values == null) {
-            values = new ArrayList<>();
-            children.put(key, values);
-        }
+        List<Object> values = children.computeIfAbsent(key, k -> new ArrayList<>());
         value.setParent(this);
         values.add(value);
     }
 
     public void addAll(String key, List<Object> objects) {
-        List<Object> values = children.get(key);
-        if (values == null) {
-            values = new ArrayList<>();
-            children.put(key, values);
-        }
+        List<Object> values = children.computeIfAbsent(key, k -> new ArrayList<>());
         for (Object o : objects) {
             if (o instanceof String)
                 values.add(o);
@@ -185,22 +176,22 @@ public class NodeImpl<E> implements Node<E> {
         List<Object> values = children.get(key);
         if (values == null)
             return null;
-        for (Object value : values) {
-            if (value instanceof String)
-                return (String) value;
-            if (value instanceof NodeImpl)
-                return ((NodeImpl<E>) value).getValue();
+        for (Object v : values) {
+            if (v instanceof String)
+                return (String) v;
+            if (v instanceof NodeImpl)
+                return ((NodeImpl<E>) v).getValue();
         }
         return null;
     }
 
     @Override
     public String getAsString(String key, int index) {
-        Object value = get(key, index);
-        if (value instanceof String)
-            return (String) value;
-        if (value instanceof NodeImpl)
-            return ((NodeImpl<E>) value).getValue();
+        Object v = get(key, index);
+        if (v instanceof String)
+            return (String) v;
+        if (v instanceof NodeImpl)
+            return ((NodeImpl<E>) v).getValue();
         return null;
     }
 
@@ -210,11 +201,11 @@ public class NodeImpl<E> implements Node<E> {
         if (values == null)
             return new ArrayList<>();
         return values.stream()
-                .map(value -> {
-                    if (value instanceof String)
-                        return (String) value;
-                    if (value instanceof NodeImpl)
-                        return ((NodeImpl<E>) value).getValue();
+                .map(v -> {
+                    if (v instanceof String)
+                        return (String) v;
+                    if (v instanceof NodeImpl)
+                        return ((NodeImpl<E>) v).getValue();
                     return null;
                 })
                 .filter(Objects::nonNull)
@@ -229,18 +220,18 @@ public class NodeImpl<E> implements Node<E> {
         List<Object> values = children.get(key);
         if (values == null)
             return null;
-        for (Object value : values) {
-            if (value instanceof String)
-                return (String) value;
+        for (Object v : values) {
+            if (v instanceof String)
+                return (String) v;
         }
         return null;
     }
 
     @Override
     public String getString(String key, int index) {
-        Object value = get(key, index);
-        if (value instanceof String)
-            return (String) value;
+        Object v = get(key, index);
+        if (v instanceof String)
+            return (String) v;
         return null;
     }
 
@@ -253,9 +244,9 @@ public class NodeImpl<E> implements Node<E> {
         if (values == null)
             return new ArrayList<>();
         return values.stream()
-                .map(value -> {
-                    if (value instanceof String)
-                        return (String) value;
+                .map(v -> {
+                    if (v instanceof String)
+                        return (String) v;
                     return null;
                 })
                 .filter(Objects::nonNull)
@@ -271,9 +262,9 @@ public class NodeImpl<E> implements Node<E> {
         if (values == null)
             return null;
         return values.stream()
-                .map(value -> {
-                    if (value instanceof String)
-                        return (String) value;
+                .map(v -> {
+                    if (v instanceof String)
+                        return (String) v;
                     return null;
                 })
                 .filter(Objects::nonNull)
@@ -290,18 +281,18 @@ public class NodeImpl<E> implements Node<E> {
         List<Object> values = children.get(key);
         if (values == null)
             return null;
-        for (Object value : values) {
-            if (value instanceof NodeImpl)
-                return (NodeImpl<E>) value;
+        for (Object v : values) {
+            if (v instanceof NodeImpl)
+                return (NodeImpl<E>) v;
         }
         return null;
     }
 
     @Override
     public Node<E> getNode(String key, int index) {
-        Object value = get(key, index);
-        if (value instanceof NodeImpl)
-            return (NodeImpl<E>) value;
+        Object v = get(key, index);
+        if (v instanceof NodeImpl)
+            return (NodeImpl<E>) v;
         return null;
     }
 
@@ -314,8 +305,8 @@ public class NodeImpl<E> implements Node<E> {
         if (values == null)
             return new ArrayList<>();
         return values.stream()
-                .filter(value -> value instanceof NodeImpl)
-                .map(value -> (NodeImpl<E>) value)
+                .filter(NodeImpl.class::isInstance)
+                .map(v -> (NodeImpl<E>) v)
                 .collect(Collectors.toList());
     }
 
@@ -328,14 +319,15 @@ public class NodeImpl<E> implements Node<E> {
         if (values == null)
             return null;
         return values.stream()
-                .filter(value -> value instanceof NodeImpl)
-                .map(value -> (NodeImpl<E>) value)
+                .filter(NodeImpl.class::isInstance)
+                .map(v -> (NodeImpl<E>) v)
                 .skip(index)
                 .findFirst()
                 .orElse(null);
     }
 
     @Override
+    @SuppressWarnings("java:S2975")
     public NodeImpl<E> clone() {
         NodeImpl<E> result = new NodeImpl<>(state);
         result.setParent(parent);

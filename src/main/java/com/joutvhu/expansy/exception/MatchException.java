@@ -1,11 +1,13 @@
 package com.joutvhu.expansy.exception;
 
 public class MatchException extends ExpansyException {
-    private Integer index;
-    private String content;
+    private static final long serialVersionUID = -3504927316729367835L;
+
+    private final Integer index;
+    private final String content;
 
     public MatchException(String message) {
-        super(message);
+        this(message, null, null);
     }
 
     public MatchException(String message, Integer index, String content) {
@@ -16,22 +18,16 @@ public class MatchException extends ExpansyException {
 
     public MatchException(String message, Throwable cause) {
         super(message, cause);
+        this.index = null;
+        this.content = null;
     }
 
     public Integer getIndex() {
         return index;
     }
 
-    public void setIndex(Integer index) {
-        this.index = index;
-    }
-
     public String getContent() {
         return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public static MatchException of(Exception e) {

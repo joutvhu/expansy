@@ -38,9 +38,10 @@ public class ExpansyState<E> {
             cache.put(offset, element, exception);
     }
 
+    @SuppressWarnings("java:S1168")
     public List<NodeImpl<E>> getFromCache(int offset, Element<E> element) {
         if (cache != null)
-            cache.get(offset, element);
+            return cache.get(offset, element);
         return null;
     }
 

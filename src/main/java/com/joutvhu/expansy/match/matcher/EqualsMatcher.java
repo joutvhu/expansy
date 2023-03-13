@@ -47,6 +47,7 @@ public class EqualsMatcher<E> extends Matcher<E> {
     }
 
     @Override
+    @SuppressWarnings("java:S2259")
     public void match(Consumer<E> consumer) {
         int len = 0;
         StopPoint point = null;

@@ -2,8 +2,12 @@ package com.joutvhu.expansy.match.consumer;
 
 import lombok.Getter;
 
+import java.io.Serializable;
+
 @Getter
-public class StopPoint {
+public class StopPoint implements Serializable {
+    private static final long serialVersionUID = -2160182568269344661L;
+
     private final int offset;
     private String value;
 

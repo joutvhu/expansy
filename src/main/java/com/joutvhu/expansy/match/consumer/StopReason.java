@@ -2,9 +2,12 @@ package com.joutvhu.expansy.match.consumer;
 
 import com.joutvhu.expansy.match.Matcher;
 
+import java.io.Serializable;
 import java.util.List;
 
-public final class StopReason<E> {
+public final class StopReason<E> implements Serializable {
+    private static final long serialVersionUID = 8704070960054730674L;
+
     private final String message;
     private final Integer position;
     private final String content;

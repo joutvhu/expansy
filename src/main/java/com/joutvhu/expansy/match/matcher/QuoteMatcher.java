@@ -16,12 +16,13 @@ public class QuoteMatcher<E> extends Matcher<E> {
 
     public QuoteMatcher(Definer<E> parent, char... types) {
         super(parent);
-        if (types == null && types.length == 0)
+        if (types == null || types.length == 0)
             throw new DefineException("Quote type is not provided.");
         this.types = types;
     }
 
     @Override
+    @SuppressWarnings("java:S2259")
     public void match(Consumer<E> consumer) {
         StopPoint point = consumer.next();
         if (point == null)

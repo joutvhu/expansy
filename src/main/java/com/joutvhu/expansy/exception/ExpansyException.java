@@ -1,6 +1,8 @@
 package com.joutvhu.expansy.exception;
 
 public class ExpansyException extends RuntimeException {
+    private static final long serialVersionUID = -663725956886961705L;
+
     public ExpansyException() {
     }
 

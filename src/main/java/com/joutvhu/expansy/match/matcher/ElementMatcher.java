@@ -14,7 +14,7 @@ import java.util.List;
 
 @SuppressWarnings("java:S3776")
 abstract class ElementMatcher<E> extends Matcher<E> {
-    public ElementMatcher(Definer<E> parent) {
+    protected ElementMatcher(Definer<E> parent) {
         super(parent);
     }
 

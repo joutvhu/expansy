@@ -17,6 +17,8 @@ import java.util.Set;
  */
 @Getter
 public class Branch<E> extends ArrayList<NodeImpl<E>> {
+    private static final long serialVersionUID = -4488419079411629580L;
+
     private final transient Map<String, Object> shared;
     private final transient Map<Integer, Set<Element<E>>> checking;
 

@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
  * @author Giao Ho
  * @since 1.0.0
  */
+@SuppressWarnings("java:S1452")
 public interface Matches<E, T extends Definer<E>> {
     /**
      * Define a matcher group that may or may not appear.

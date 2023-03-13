@@ -69,7 +69,7 @@ public class Consumer<E> {
             return point;
         if (length < 0)
             throw new ExpansyException("The length must be greater than 0.");
-        String value = source.read(point.getIndex(), length);
+        String value = source.read(point != null ? point.getIndex() : offset, length);
         if (StringUtils.isNotEmpty(value) && value.length() == length) {
             point = point != null ? point.next(value) : new StopPoint(value, offset);
             return point;
@@ -82,7 +82,7 @@ public class Consumer<E> {
             return point;
         if (length < 0)
             throw new ExpansyException("The length must be greater than 0.");
-        String value = source.read(point.getIndex(), length);
+        String value = source.read(point != null ? point.getIndex() : offset, length);
         if (value != null) {
             point = point != null ? point.next(value) : new StopPoint(value, offset);
         }
@@ -164,28 +164,27 @@ public class Consumer<E> {
     }
 
     private void addForAll(List<NodeImpl<E>> nodes, Integer position) {
-        List<TrackPoints<E>> cases = new ArrayList<>();
+        List<TrackPoints<E>> values = new ArrayList<>();
         for (NodeImpl<E> node : nodes) {
             List<TrackPoints<E>> cloneCases = cloneCases();
-            for (TrackPoints<E> trackPoints : cloneCases) {
+            for (TrackPoints<E> tp : cloneCases) {
                 if (position == null)
-                    trackPoints.add(new TrackPoint<>(node));
+                    tp.add(new TrackPoint<>(node));
                 else
-                    trackPoints.add(position, new TrackPoint<>(node));
+                    tp.add(position, new TrackPoint<>(node));
             }
-            cases.addAll(cloneCases);
+            values.addAll(cloneCases);
         }
-        this.cases = cases;
+        this.cases = values;
     }
 
     private List<TrackPoints<E>> cloneCases() {
-        List<TrackPoints<E>> cases = new ArrayList<>();
-        cases.addAll(this.cases);
+        List<TrackPoints<E>> values = new ArrayList<>(this.cases);
         if (!trackPoints.isEmpty())
-            cases.add(trackPoints);
-        if (cases.isEmpty())
-            cases.add(new TrackPoints<>());
-        return cases;
+            values.add(trackPoints);
+        if (values.isEmpty())
+            values.add(new TrackPoints<>());
+        return values;
     }
 
     /**
@@ -320,21 +319,21 @@ public class Consumer<E> {
         addForAll(nodes, 0);
     }
 
-    public void close() throws StopReasonThrowable {
+    public void close() {
         throw new StopReasonThrowable(cases(), null, point.getIndex(), point.getValue());
     }
 
-    public void complete() throws StopReasonThrowable {
+    public void complete() {
         this.push();
         this.close();
     }
 
-    public void error(String pattern, Object... arguments) throws StopReasonThrowable {
+    public void error(String pattern, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
         throw new StopReasonThrowable(cases(), message, point.getIndex(), point.getValue());
     }
 
-    public void errorAt(String pattern, Integer index, String content, Object... arguments) throws StopReasonThrowable {
+    public void errorAt(String pattern, Integer index, String content, Object... arguments) {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
         throw new StopReasonThrowable(cases(), message, index, content);
     }

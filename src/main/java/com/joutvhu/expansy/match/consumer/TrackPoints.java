@@ -34,6 +34,7 @@ public class TrackPoints<E> extends LinkedList<TrackPoint<E>> {
     }
 
     @Override
+    @SuppressWarnings("java:S2975")
     public TrackPoints<E> clone() {
         TrackPoints<E> trackPoints = new TrackPoints<>();
         trackPoints.addAll(this);

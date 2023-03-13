@@ -16,6 +16,8 @@ import java.util.Map;
  * @since 1.0.0
  */
 public class ElementRegister<E> extends HashMap<String, Element<E>> {
+    private static final long serialVersionUID = -5196622126331046694L;
+
     public void register(Element<E> element) {
         register(element.name(), element);
     }

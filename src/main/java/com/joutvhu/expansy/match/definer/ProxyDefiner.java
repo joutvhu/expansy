@@ -13,17 +13,17 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     protected T master;
     protected Definer<E> container;
 
-    public ProxyDefiner() {
+    protected ProxyDefiner() {
         this.master = (T) this;
         this.container = new DefaultDefiner<>();
     }
 
-    public ProxyDefiner(T master) {
+    protected ProxyDefiner(T master) {
         this.master = master;
         this.container = new DefaultDefiner<>();
     }
 
-    public ProxyDefiner(T master, Definer<E> container) {
+    protected ProxyDefiner(T master, Definer<E> container) {
         this.master = master;
         this.container = container;
     }
