@@ -8,6 +8,7 @@ import com.joutvhu.expansy.match.consumer.StopPoint;
 import com.joutvhu.expansy.util.ArrayUtils;
 import com.joutvhu.expansy.util.Joiner;
 
+@SuppressWarnings("java:S3776")
 public class CharacterMatcher<E> extends Matcher<E> {
     public static final char[] WHITESPACE = new char[]{
             ' ', '\t', '\n'

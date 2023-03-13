@@ -13,6 +13,7 @@ import com.joutvhu.expansy.parser.Analyser;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("java:S3776")
 public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, BetweenDefiner<E, T>> {
     private final T parent;
     private final Integer minRepetitions;
@@ -38,6 +39,7 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
     }
 
     @Override
+    @SuppressWarnings("java:S127")
     public Matcher<E> matcher() {
         return new Matcher<E>(this) {
             @Override

@@ -17,8 +17,8 @@ import java.util.Set;
  */
 @Getter
 public class Branch<E> extends ArrayList<NodeImpl<E>> {
-    private final Map<String, Object> shared;
-    private final Map<Integer, Set<Element<E>>> checking;
+    private final transient Map<String, Object> shared;
+    private final transient Map<Integer, Set<Element<E>>> checking;
 
     public Branch() {
         shared = new HashMap<>();
@@ -148,6 +148,7 @@ public class Branch<E> extends ArrayList<NodeImpl<E>> {
      * Returns a copy of this branch.
      */
     @Override
+    @SuppressWarnings("java:S2975")
     public Branch<E> clone() {
         Branch<E> branch = new Branch<>();
         branch.shared.putAll(shared);

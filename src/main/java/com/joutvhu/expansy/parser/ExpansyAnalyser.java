@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  * @author Giao Ho
  * @since 1.0.0
  */
+@SuppressWarnings("java:S3776")
 public class ExpansyAnalyser<E> implements Analyser<E> {
     private final ExpansyState<E> state;
 
@@ -63,6 +64,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
         return analyse(elements, null, offset, branch);
     }
 
+    @SuppressWarnings("java:S1141")
     private List<Branch<E>> analyse(Collection<Element<E>> elements, Structure<E> structure, Integer offset, Branch<E> branch) {
         List<Branch<E>> branches = new ArrayList<>();
         ExpansyException error = null;
@@ -72,7 +74,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                     List<NodeImpl<E>> nodes = analyseElement(element, offset, branch);
                     for (NodeImpl<E> node : nodes) {
                         if (!node.isEmpty()) {
-                            Branch<E> newBranch = branch.clone();
+                            Branch<E> newBranch = branch != null ? branch.clone() : new Branch<>();
                             newBranch.push(node);
                             try {
                                 if (state.length() <= node.getEnd()) {
@@ -88,7 +90,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                         }
                     }
                 } catch (Exception e) {
-                    error = MatchException.or(error, MatchException.of(e));
+                    error = ExpansyException.or(error, MatchException.of(e));
                 } finally {
                     if (branch != null)
                         branch.complete(offset, element);
@@ -340,7 +342,7 @@ public class ExpansyAnalyser<E> implements Analyser<E> {
                         error = new MatchException(message, errorReason.getPosition(), errorReason.getContent());
                     }
                 }
-                if (consumer == null) {
+                if (consumer == null && error != null) {
                     throw error;
                 }
             }

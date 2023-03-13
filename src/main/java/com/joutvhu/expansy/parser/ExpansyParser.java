@@ -18,12 +18,20 @@ public class ExpansyParser<E> {
     private final Structure<E> structure;
     private final BranchSelector selector;
 
+    /**
+     * @deprecated Use Structure instead of Element names.
+     */
     @Deprecated
+    @SuppressWarnings("java:S1123")
     public ExpansyParser(ElementRegister<E> register, List<String> names) {
         this(register, new DefaultSelector(), names);
     }
 
+    /**
+     * @deprecated Use Structure instead of Element names.
+     */
     @Deprecated
+    @SuppressWarnings({"java:S1123", "java:S1117"})
     public ExpansyParser(ElementRegister<E> register, BranchSelector selector, List<String> names) {
         this(register, selector, ((Function<Object, Structure<E>>) o -> {
             Structure<E> structure = new StaticStructure<>(names);

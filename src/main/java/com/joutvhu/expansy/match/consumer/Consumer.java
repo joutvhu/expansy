@@ -2,6 +2,7 @@ package com.joutvhu.expansy.match.consumer;
 
 import com.joutvhu.expansy.element.Branch;
 import com.joutvhu.expansy.element.NodeImpl;
+import com.joutvhu.expansy.exception.ExpansyException;
 import com.joutvhu.expansy.io.Source;
 import com.joutvhu.expansy.parser.ExpansyState;
 import com.joutvhu.expansy.util.StringUtils;
@@ -66,7 +67,8 @@ public class Consumer<E> {
     public StopPoint next(int length) {
         if (length == 0)
             return point;
-        assert (length > 0);
+        if (length < 0)
+            throw new ExpansyException("The length must be greater than 0.");
         String value = source.read(point.getIndex(), length);
         if (StringUtils.isNotEmpty(value) && value.length() == length) {
             point = point != null ? point.next(value) : new StopPoint(value, offset);
@@ -78,7 +80,8 @@ public class Consumer<E> {
     public StopPoint tryNext(int length) {
         if (length == 0)
             return point;
-        assert (length > 0);
+        if (length < 0)
+            throw new ExpansyException("The length must be greater than 0.");
         String value = source.read(point.getIndex(), length);
         if (value != null) {
             point = point != null ? point.next(value) : new StopPoint(value, offset);
@@ -317,21 +320,21 @@ public class Consumer<E> {
         addForAll(nodes, 0);
     }
 
-    public void close() {
+    public void close() throws StopReasonThrowable {
         throw new StopReasonThrowable(cases(), null, point.getIndex(), point.getValue());
     }
 
-    public void complete() {
+    public void complete() throws StopReasonThrowable {
         this.push();
         this.close();
     }
 
-    public void error(String pattern, Object... arguments) {
+    public void error(String pattern, Object... arguments) throws StopReasonThrowable {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
         throw new StopReasonThrowable(cases(), message, point.getIndex(), point.getValue());
     }
 
-    public void errorAt(String pattern, Integer index, String content, Object... arguments) {
+    public void errorAt(String pattern, Integer index, String content, Object... arguments) throws StopReasonThrowable {
         String message = arguments.length == 0 ? pattern : MessageFormat.format(pattern, arguments);
         throw new StopReasonThrowable(cases(), message, index, content);
     }

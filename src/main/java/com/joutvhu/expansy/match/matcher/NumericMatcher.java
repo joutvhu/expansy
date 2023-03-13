@@ -5,6 +5,7 @@ import com.joutvhu.expansy.match.Matcher;
 import com.joutvhu.expansy.match.consumer.Consumer;
 import com.joutvhu.expansy.match.consumer.StopPoint;
 
+@SuppressWarnings("java:S3776")
 public class NumericMatcher<E> extends Matcher<E> {
     public NumericMatcher(Definer<E> parent) {
         super(parent);

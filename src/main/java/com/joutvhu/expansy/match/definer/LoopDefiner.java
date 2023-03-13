@@ -13,6 +13,7 @@ import com.joutvhu.expansy.parser.Analyser;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("java:S3776")
 public final class LoopDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, LoopDefiner<E, T>> {
     private T parent;
     private Integer minRepetitions;

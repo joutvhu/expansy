@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("java:S3776")
 public class EqualsMatcher<E> extends Matcher<E> {
     private final boolean ignoreCase;
     private final List<String> values;

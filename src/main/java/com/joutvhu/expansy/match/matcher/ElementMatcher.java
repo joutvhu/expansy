@@ -12,6 +12,7 @@ import com.joutvhu.expansy.parser.Analyser;
 import java.util.Collection;
 import java.util.List;
 
+@SuppressWarnings("java:S3776")
 abstract class ElementMatcher<E> extends Matcher<E> {
     public ElementMatcher(Definer<E> parent) {
         super(parent);
