@@ -371,7 +371,7 @@ public void define(Definer<Object> definer) {
 }
 ```
 
-### `equals`
+### `equalsWith`
 
 Used to match the specified strings.
 
