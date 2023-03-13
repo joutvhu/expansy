@@ -101,9 +101,9 @@ public final class BetweenDefiner<E, T extends Definer<E>> extends ProxyDefiner<
     }
 
     public class IsDefiner<E, T extends Definer<E>> extends ProxyDefiner<E, IsDefiner<E, T>> {
-        private T parent;
+        private final T parent;
 
-        public IsDefiner(T parent) {
+        IsDefiner(T parent) {
             this.parent = parent;
         }
 
