@@ -232,17 +232,17 @@ public interface Matches<E, T extends Definer<E>> {
     /**
      * Matches the specified strings.
      */
-    T equals(String value);
+    T equalsWith(String value);
 
     /**
      * Matches the specified strings.
      */
-    T equals(String... values);
+    T equalsWith(String... values);
 
     /**
      * Matches the specified strings.
      */
-    T equals(List<String> values);
+    T equalsWith(List<String> values);
 
     /**
      * Matches the specified strings but ignore case.

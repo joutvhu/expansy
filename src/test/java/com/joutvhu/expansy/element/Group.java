@@ -6,10 +6,10 @@ public class Group implements Element<String> {
     @Override
     public void define(Definer<String> definer) {
         definer
-                .equals("(")
+                .equalsWith("(")
                 .name("operator")
                 .elements()
-                .equals(")");
+                .equalsWith(")");
     }
 
     @Override

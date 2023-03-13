@@ -10,7 +10,7 @@ public class AddSubtract implements Element<String> {
                 .elements()
                 .spaces()
                 .name("operator")
-                .equals("+", "-")
+                .equalsWith("+", "-")
                 .spaces()
                 .name("second")
                 .exclude("AddSubtract");

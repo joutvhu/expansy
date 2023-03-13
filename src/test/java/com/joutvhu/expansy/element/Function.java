@@ -9,19 +9,19 @@ public class Function implements Element<String> {
     @Override
     public void define(Definer<String> definer) {
         definer
-                .equals("#")
+                .equalsWith("#")
                 .name("name")
                 .pattern("^[a-zA-Z_$][a-zA-Z_0-9]*$")
-                .equals("(")
+                .equalsWith("(")
                 .between()
                 .spaces()
                 .name("param")
                 .elements()
                 .spaces()
                 .is()
-                .equals(",")
+                .equalsWith(",")
                 .end()
-                .equals(")");
+                .equalsWith(")");
     }
 
     @Override

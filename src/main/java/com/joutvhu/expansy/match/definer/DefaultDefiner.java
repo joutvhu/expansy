@@ -316,18 +316,18 @@ public class DefaultDefiner<E> implements Definer<E> {
     }
 
     @Override
-    public DefaultDefiner<E> equals(String value) {
+    public DefaultDefiner<E> equalsWith(String value) {
         matchers.add(new EqualsMatcher<>(this, value));
         return this;
     }
 
     @Override
-    public DefaultDefiner<E> equals(String... values) {
-        return equals(Arrays.asList(values));
+    public DefaultDefiner<E> equalsWith(String... values) {
+        return equalsWith(Arrays.asList(values));
     }
 
     @Override
-    public DefaultDefiner<E> equals(List<String> values) {
+    public DefaultDefiner<E> equalsWith(List<String> values) {
         matchers.add(new EqualsMatcher<>(this, values));
         return this;
     }

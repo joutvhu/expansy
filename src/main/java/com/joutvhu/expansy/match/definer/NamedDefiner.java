@@ -298,20 +298,20 @@ public final class NamedDefiner<E, T extends Definer<E>> implements Matches<E, T
     }
 
     @Override
-    public T equals(String value) {
-        this.dub(parent.equals(value));
+    public T equalsWith(String value) {
+        this.dub(parent.equalsWith(value));
         return parent;
     }
 
     @Override
-    public T equals(String... values) {
-        this.dub(parent.equals(values));
+    public T equalsWith(String... values) {
+        this.dub(parent.equalsWith(values));
         return parent;
     }
 
     @Override
-    public T equals(List<String> values) {
-        this.dub(parent.equals(values));
+    public T equalsWith(List<String> values) {
+        this.dub(parent.equalsWith(values));
         return parent;
     }
 

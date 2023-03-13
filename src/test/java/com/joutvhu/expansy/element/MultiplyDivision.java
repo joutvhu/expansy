@@ -10,7 +10,7 @@ public class MultiplyDivision implements Element<String> {
                 .exclude("AddSubtract")
                 .spaces()
                 .name("operator")
-                .equals("/", "*")
+                .equalsWith("/", "*")
                 .spaces()
                 .name("second")
                 .exclude("AddSubtract", "MultiplyDivision");

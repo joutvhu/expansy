@@ -305,20 +305,20 @@ public abstract class ProxyDefiner<E, T extends Definer<E>> implements Definer<E
     }
 
     @Override
-    public T equals(String value) {
-        container.equals(value);
+    public T equalsWith(String value) {
+        container.equalsWith(value);
         return master;
     }
 
     @Override
-    public T equals(String... values) {
-        container.equals(values);
+    public T equalsWith(String... values) {
+        container.equalsWith(values);
         return master;
     }
 
     @Override
-    public T equals(List<String> values) {
-        container.equals(values);
+    public T equalsWith(List<String> values) {
+        container.equalsWith(values);
         return master;
     }
 

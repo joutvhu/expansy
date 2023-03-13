@@ -375,24 +375,24 @@ public void define(Definer<Object> definer) {
 
 Used to match the specified strings.
 
-- `equals(String value)`
+- `equalsWith(String value)`
 ```java
 public void define(Definer<Object> definer) {
-    definer.equals("abc");
+    definer.equalsWith("abc");
 }
 ```
 
-- `equals(String... values)`
+- `equalsWith(String... values)`
 ```java
 public void define(Definer<Object> definer) {
-    definer.equals("abc", "123");
+    definer.equalsWith("abc", "123");
 }
 ```
 
-- `equals(List<String> values)`
+- `equalsWith(List<String> values)`
 ```java
 public void define(Definer<Object> definer) {
-    definer.equals(Arrays.asList("abc", "123"));
+    definer.equalsWith(Arrays.asList("abc", "123"));
 }
 ```
 
@@ -488,7 +488,7 @@ public void define(Definer<Object> definer) {
     definer.check(value -> {
         if (value == null || value.length() > 3)
             return false;
-        if ("abc".equals(value))
+        if ("abc".equalsWith(value))
             return true;
         return null;
     });
@@ -499,7 +499,7 @@ public void define(Definer<Object> definer) {
 ```java
 public void define(Definer<Object> definer) {
     definer.check(value -> {
-        return "abc".equals(value);
+        return "abc".equalsWith(value);
     }, 3);
 }
 ```
@@ -683,7 +683,7 @@ public class VariableElement implements Element<Object> {
     @Override
     public void define(Definer<Object> definer) {
         definer
-            .equals("$")
+            .equalsWith("$")
             .name("name")
             .word()
             .loop()
@@ -692,10 +692,10 @@ public class VariableElement implements Element<Object> {
                     .name("child")
                     .word()
                 .or()
-                    .equals("[")
+                    .equalsWith("[")
                     .name("child")
                     .quote('\'')
-                    .equals("]")
+                    .equalsWith("]")
                 .end()
             .end();
     }
@@ -728,19 +728,19 @@ public class FunctionElement implements Element<BigDecimal> {
     @Override
     public void define(Definer<BigDecimal> definer) {
         definer
-            .equals("#")
+            .equalsWith("#")
             .name("name")
             .word()        // Function name
-            .equals("(")
+            .equalsWith("(")
             .between()
                 .spaces()
                 .name("param")
                 .elements()    // The parameter can be any element
                 .spaces()
             .is()
-                .equals(",")   // There is a comma between the parameters
+                .equalsWith(",")   // There is a comma between the parameters
             .end()
-            .equals(")");
+            .equalsWith(")");
     }
     ...
 }
@@ -763,7 +763,7 @@ public class Add implements Element<BigDecimal> {
                 .name("first")
                 .elements()
                 .spaces()
-                .equals("+")
+                .equalsWith("+")
                 .spaces()
                 .name("second")
                 .exclude("Add", "Subtract");
@@ -790,7 +790,7 @@ public class MultiplyOrDivision implements Element<BigDecimal> {
                 .exclude("AddOrSubtract")
                 .spaces()
                 .name("operator")
-                .equals("/", "*")
+                .equalsWith("/", "*")
                 .spaces()
                 .name("second")
                 .exclude("AddOrSubtract", "MultiplyOrDivision");
@@ -801,7 +801,7 @@ public class MultiplyOrDivision implements Element<BigDecimal> {
         BigDecimal first = node.getNode("first").render();
         BigDecimal second = node.getNode("second").render();
         String operator = node.getString("operator");
-        if ("*".equals(operator))
+        if ("*".equalsWith(operator))
             return first.multiply(second);
         else
             return first.divide(second);
@@ -829,7 +829,7 @@ public void define(Definer<BigDecimal> definer) {
         .elements()
         .spaces()
         .name("operator")
-        .equals("+")
+        .equalsWith("+")
         .spaces()
         .name("second")
         .elements();

@@ -20,8 +20,8 @@ public class UnregisteredTest {
                                     @Override
                                     public void define(Definer<String> definer) {
                                         definer
-                                                .equals("abc")
-                                                .equals("123");
+                                                .equalsWith("abc")
+                                                .equalsWith("123");
                                     }
 
                                     @Override
