@@ -45,27 +45,27 @@ public interface Matches<E, T extends Definer<E>> {
     BetweenDefiner<E, ?> between(int minRepetitions, Integer maxRepetitions);
 
     /**
-     * Matches a string of characters of the specified {@param length}
+     * Matches a string of characters of the specified length
      */
     T size(int length);
 
     /**
-     * Matches one character contained in the {@param characters} array.
+     * Matches one character contained in the characters array.
      */
     T character(char... characters);
 
     /**
-     * Matches multiple characters contained in the {@param characters} array.
+     * Matches multiple characters contained in the characters array.
      */
     T characters(char... characters);
 
     /**
-     * Matches {@param length} characters, each of which must be contained in the {@param characters} array.
+     * Matches length characters, each of which must be contained in the characters array.
      */
     T characters(char[] characters, int length);
 
     /**
-     * Matches a minimum of {@param minLength} characters and a maximum of {@param maxLength} characters, each of which must be contained in the {@param characters} array.
+     * Matches a minimum of minLength characters and a maximum of maxLength characters, each of which must be contained in the characters array.
      */
     T characters(char[] characters, Integer minLength, Integer maxLength);
 
@@ -80,12 +80,12 @@ public interface Matches<E, T extends Definer<E>> {
     T spaces();
 
     /**
-     * Matches {@param length} space characters.
+     * Matches length space characters.
      */
     T spaces(int length);
 
     /**
-     * Matches a minimum of {@param minLength} space characters and a maximum of {@param maxLength} space characters.
+     * Matches a minimum of minLength space characters and a maximum of maxLength space characters.
      */
     T spaces(Integer minLength, Integer maxLength);
 
@@ -100,12 +100,12 @@ public interface Matches<E, T extends Definer<E>> {
     T whitespaces();
 
     /**
-     * Matches {@param length} whitespace characters.
+     * Matches length whitespace characters.
      */
     T whitespaces(int length);
 
     /**
-     * Matches a minimum of {@param minLength} space characters and a maximum of {@param maxLength} whitespace characters.
+     * Matches a minimum of minLength space characters and a maximum of maxLength whitespace characters.
      */
     T whitespaces(Integer minLength, Integer maxLength);
 
@@ -120,12 +120,12 @@ public interface Matches<E, T extends Definer<E>> {
     T digits();
 
     /**
-     * Matches {@param length} digit characters.
+     * Matches length digit characters.
      */
     T digits(int length);
 
     /**
-     * Matches a minimum of {@param minLength} space characters and a maximum of {@param maxLength} digit characters.
+     * Matches a minimum of minLength space characters and a maximum of maxLength digit characters.
      */
     T digits(Integer minLength, Integer maxLength);
 
@@ -140,12 +140,12 @@ public interface Matches<E, T extends Definer<E>> {
     T lowercases();
 
     /**
-     * Matches {@param length} lowercase characters.
+     * Matches length lowercase characters.
      */
     T lowercases(int length);
 
     /**
-     * Matches a minimum of {@param minLength} space characters and a maximum of {@param maxLength} lowercase characters.
+     * Matches a minimum of minLength space characters and a maximum of maxLength lowercase characters.
      */
     T lowercases(Integer minLength, Integer maxLength);
 
@@ -160,12 +160,12 @@ public interface Matches<E, T extends Definer<E>> {
     T uppercases();
 
     /**
-     * Matches {@param length} uppercase characters.
+     * Matches length uppercase characters.
      */
     T uppercases(int length);
 
     /**
-     * Matches a minimum of {@param minLength} space characters and a maximum of {@param maxLength} uppercase characters.
+     * Matches a minimum of minLength space characters and a maximum of maxLength uppercase characters.
      */
     T uppercases(Integer minLength, Integer maxLength);
 
@@ -180,12 +180,12 @@ public interface Matches<E, T extends Definer<E>> {
     T alphabets();
 
     /**
-     * Matches {@param length} alphabet characters.
+     * Matches length alphabet characters.
      */
     T alphabets(int length);
 
     /**
-     * Matches a minimum of {@param minLength} space characters and a maximum of {@param maxLength} alphabet characters.
+     * Matches a minimum of minLength space characters and a maximum of maxLength alphabet characters.
      */
     T alphabets(Integer minLength, Integer maxLength);
 
@@ -200,12 +200,12 @@ public interface Matches<E, T extends Definer<E>> {
     T alphanumerics();
 
     /**
-     * Matches {@param length} alphanumeric characters.
+     * Matches length alphanumeric characters.
      */
     T alphanumerics(int length);
 
     /**
-     * Matches a minimum of {@param minLength} space characters and a maximum of {@param maxLength} alphanumeric characters.
+     * Matches a minimum of minLength space characters and a maximum of maxLength alphanumeric characters.
      */
     T alphanumerics(Integer minLength, Integer maxLength);
 
